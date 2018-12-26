@@ -17,7 +17,7 @@ import net.proteanit.sql.DbUtils;
  */
 public class Casher extends javax.swing.JFrame {
 
-    private ImportantClass IC = ImportantClass.getInstance();
+    private final ImportantClass IC = ImportantClass.getInstance();
 
     private ArrayList<String> products = new ArrayList<>();
     private ArrayList<Double> productPrice = new ArrayList<>();
