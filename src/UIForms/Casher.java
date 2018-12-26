@@ -21,8 +21,6 @@ public class Casher extends javax.swing.JFrame {
 
     private ArrayList<String> products = new ArrayList<>();
     private ArrayList<Double> productPrice = new ArrayList<>();
-    private ArrayList<String> productType = new ArrayList<>();
-    private ArrayList<String> productSubType = new ArrayList<>();
 
     /**
      * Creates new form Casher
@@ -35,57 +33,24 @@ public class Casher extends javax.swing.JFrame {
 
         initComponents();
 
-        getAllProduct();
+        getAllProductData();
         //This statement to make the form in fullsize.
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    private void getAllProduct() {
+    private void getAllProductData() {
         //clearTextFields();
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select productName from rest_cafe.product");
+            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
+                    + ", productPrice "
+                    + "from rest_cafe.product");
             IC.rs = IC.pst.executeQuery();
             while (IC.rs.next()) {
-                String s = IC.rs.getString("productName");
-                if (!products.contains(s)) {
-                    products.add(s);
-                }
+                products.add(IC.rs.getString("productName"));
+                productPrice.add(IC.rs.getDouble("productPrice"));
             }
             productNameCB.setModel(new DefaultComboBoxModel(products.toArray()));
-            // Get all data for the first product in the list
-            if (products.size() > 0) {
-                getDataOfProduct();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void getDataOfProduct() {
-        try {
-            IC.pst = IC.dbc.conn.prepareStatement("select productPrice, productType, productSubType"
-                    + " from rest_cafe.product"
-                    + " where productName like ?");
-            IC.pst.setString(1, productNameCB.getSelectedItem().toString() + "%");
-            IC.rs = IC.pst.executeQuery();
-
-            while (IC.rs.next()) {
-                productPrice.add(IC.rs.getDouble("productPrice"));
-
-                String s = IC.rs.getString("productType");
-                if (!productType.contains(s)) {
-                    productType.add(s);
-                }
-
-                s = IC.rs.getString("productSubType");
-                if (!productSubType.contains(s)) {
-                    productSubType.add(s);
-                }
-            }
-            productTypeCB.setModel(new DefaultComboBoxModel(productType.toArray()));
-            productSubTypeCB.setModel(new DefaultComboBoxModel(productSubType.toArray()));
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -105,10 +70,6 @@ public class Casher extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         productLabel = new javax.swing.JLabel();
         productNameCB = new javax.swing.JComboBox<>();
-        productTypeLabel = new javax.swing.JLabel();
-        productTypeCB = new javax.swing.JComboBox<>();
-        productSubTypeLabel = new javax.swing.JLabel();
-        productSubTypeCB = new javax.swing.JComboBox<>();
         countLabel = new javax.swing.JLabel();
         countTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -137,10 +98,6 @@ public class Casher extends javax.swing.JFrame {
 
         productLabel.setText("اسم الصنف");
 
-        productTypeLabel.setText("نوع الصنف");
-
-        productSubTypeLabel.setText("نوع الصنف الفرعي");
-
         countLabel.setText("العدد");
 
         jLabel1.setText("ملاحظات");
@@ -153,56 +110,46 @@ public class Casher extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 861, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap(618, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(productLabel)))
+                .addContainerGap())
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(jLabel1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(productSubTypeCB, 0, 175, Short.MAX_VALUE)
-                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(productSubTypeLabel)
-                        .addComponent(countLabel))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(productNameCB, 0, 175, Short.MAX_VALUE)
-                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(productTypeLabel)
-                        .addComponent(productLabel))
-                    .addContainerGap()))
+                    .addContainerGap(579, Short.MAX_VALUE)))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productLabel))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(countLabel)
+                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
                     .addGap(8, 8, 8)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(productSubTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(productSubTypeLabel)
-                                .addComponent(jLabel1))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(countLabel)
-                                .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(productLabel))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(productTypeLabel)
-                                .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel1)
+                            .addGap(42, 42, 42)))
                     .addContainerGap(9, Short.MAX_VALUE)))
         );
 
@@ -221,12 +168,12 @@ public class Casher extends javax.swing.JFrame {
             .addGap(0, 874, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(270, Short.MAX_VALUE)
+                    .addContainerGap(268, Short.MAX_VALUE)
                     .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(271, Short.MAX_VALUE)))
+                    .addContainerGap(269, Short.MAX_VALUE)))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(684, Short.MAX_VALUE)
+                    .addContainerGap(680, Short.MAX_VALUE)
                     .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -264,7 +211,7 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap(122, Short.MAX_VALUE)
@@ -472,10 +419,6 @@ public class Casher extends javax.swing.JFrame {
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JLabel productLabel;
     private javax.swing.JComboBox<String> productNameCB;
-    private javax.swing.JComboBox<String> productSubTypeCB;
-    private javax.swing.JLabel productSubTypeLabel;
-    private javax.swing.JComboBox<String> productTypeCB;
-    private javax.swing.JLabel productTypeLabel;
     private javax.swing.JButton submitBtn;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JButton updateBtn;
