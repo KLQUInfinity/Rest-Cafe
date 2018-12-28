@@ -6,8 +6,14 @@
 package Classes;
 
 import Classes.DBConnection;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -16,7 +22,7 @@ import java.sql.ResultSet;
 public class ImportantClass {
 
     public ImportantClass() {
-        
+
     }
 
     // Singlton
@@ -29,7 +35,7 @@ public class ImportantClass {
         return instance;
     }
 
-    // Variables
+    // <editor-fold defaultstate="collapsed" desc="Variables">
     // This object from DBConnection to make a connection to the database and close it.
     public DBConnection dbc = new DBConnection();
     // This variable store the sql statement.
@@ -38,4 +44,11 @@ public class ImportantClass {
     public ResultSet rs = null;
     // This variable store the jobTitle of user.
     public String jobTitle = "";
+    // </editor-fold>
+
+    public String getDate() {
+        Date date = new Date();
+        final DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
+        return dateformat.format(date);
+    }
 }

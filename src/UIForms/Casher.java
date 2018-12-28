@@ -6,10 +6,17 @@
 package UIForms;
 
 import Classes.ImportantClass;
+import static java.awt.Component.CENTER_ALIGNMENT;
+import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFrame;
-import net.proteanit.sql.DbUtils;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,8 +26,11 @@ public class Casher extends javax.swing.JFrame {
 
     private final ImportantClass IC = ImportantClass.getInstance();
 
-    private ArrayList<String> products = new ArrayList<>();
     private ArrayList<Double> productPrice = new ArrayList<>();
+    //This variable modify in table.
+    private DefaultTableModel dtm;
+    private double totalPrice = 0;
+    private int billNum = 0;
 
     /**
      * Creates new form Casher
@@ -33,27 +43,73 @@ public class Casher extends javax.swing.JFrame {
 
         initComponents();
 
+//        WindowListener exitListener = null;
+//        addWindowListener(prepareWindow(exitListener));
+        casherTable.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
+        casherTable.getTableHeader().setAlignmentY(CENTER_ALIGNMENT);
+        casherTable.setAutoCreateColumnsFromModel(false);
+        dtm = (DefaultTableModel) casherTable.getModel();
         getAllProductData();
+        getLastBillNum(0);
         //This statement to make the form in fullsize.
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+//    private WindowListener prepareWindow(WindowListener exitListener) {
+//        exitListener = new WindowAdapter() {
+//
+//            @Override
+//            public void windowClosing(WindowEvent e) {
+//                Menu m = new Menu();
+//                Casher.this.dispose();
+//                m.setVisible(true);
+//            }
+//        };
+//        return exitListener;
+//    }
     private void getAllProductData() {
-        //clearTextFields();
+        clearTextFields();
         try {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
                     + ", productPrice "
                     + "from rest_cafe.product");
             IC.rs = IC.pst.executeQuery();
+            ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
                 products.add(IC.rs.getString("productName"));
                 productPrice.add(IC.rs.getDouble("productPrice"));
             }
             productNameCB.setModel(new DefaultComboBoxModel(products.toArray()));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void getLastBillNum(int userId) {
+        try {
+            // Get all Product
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from rest_cafe.order");
+            IC.rs = IC.pst.executeQuery();
+            if (IC.rs.next()) {
+                billNum = IC.rs.getInt("max(orderNum)") + 1;
+                orderNumLabel.setText("رقم الطلب : " + billNum);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void clearTextFields() {
+        countTxt.setText("");
+        notesTA.setText("");
+    }
+
+    private void btnEnabled(boolean check) {
+        updateBtn.setEnabled(check);
+        deleteBtn.setEnabled(check);
+        addBtn.setEnabled(!check);
+        clearSelectionBtn.setEnabled(check);
     }
 
     /**
@@ -78,6 +134,7 @@ public class Casher extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
+        clearSelectionBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         casherTable = new javax.swing.JTable();
@@ -100,9 +157,16 @@ public class Casher extends javax.swing.JFrame {
 
         countLabel.setText("العدد");
 
+        countTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countTxtActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("ملاحظات");
 
         notesTA.setColumns(20);
+        notesTA.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         notesTA.setRows(5);
         jScrollPane2.setViewportView(notesTA);
 
@@ -111,24 +175,19 @@ public class Casher extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(618, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(productLabel)))
-                .addContainerGap())
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel1)
-                    .addContainerGap(579, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(productNameCB, 0, 175, Short.MAX_VALUE)
+                    .addComponent(countTxt))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(countLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(productLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,20 +196,19 @@ public class Casher extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productLabel))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(countLabel)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(8, 8, 8)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(42, 42, 42)))
-                    .addContainerGap(9, Short.MAX_VALUE)))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(countLabel)
+                            .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -160,16 +218,32 @@ public class Casher extends javax.swing.JFrame {
         orderNumLabel.setText("رقم الطلب : 0");
 
         addBtn.setText("اضافة صنف");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
+
+        clearSelectionBtn.setText("الغاء الاختيار");
+        clearSelectionBtn.setEnabled(false);
+        clearSelectionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearSelectionBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 874, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(723, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(268, Short.MAX_VALUE)
-                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(439, Short.MAX_VALUE)
+                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(269, Short.MAX_VALUE)))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
@@ -179,7 +253,10 @@ public class Casher extends javax.swing.JFrame {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 48, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(clearSelectionBtn)
+                .addContainerGap(10, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                     .addContainerGap(8, Short.MAX_VALUE)
@@ -196,10 +273,10 @@ public class Casher extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -211,7 +288,7 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap(122, Short.MAX_VALUE)
@@ -226,7 +303,7 @@ public class Casher extends javax.swing.JFrame {
 
             },
             new String [] {
-                "اسم الصنف", "العدد", "السعر", "التاريخ", "المجموع", "ملاحظات"
+                "اسم الصنف", "العدد", "السعر", "المجموع", "التاريخ", "ملاحظات"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -235,6 +312,12 @@ public class Casher extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        casherTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        casherTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                casherTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(casherTable);
@@ -263,8 +346,20 @@ public class Casher extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         updateBtn.setText("تعديل صنف");
+        updateBtn.setEnabled(false);
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setText("حذف صنف");
+        deleteBtn.setEnabled(false);
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -291,7 +386,7 @@ public class Casher extends javax.swing.JFrame {
 
         totalLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        totalLabel.setText("الاجمالي : 0");
+        totalLabel.setText("الاجمالي : 0.0");
 
         submitBtn.setText("تنفيذ الطلب");
         submitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -356,9 +451,110 @@ public class Casher extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        if (!countTxt.getText().equals("")) {
+            try {
+                double price = Integer.parseInt(countTxt.getText()) * productPrice.get(productNameCB.getSelectedIndex());
+
+                Object[] rowData = {productNameCB.getSelectedItem().toString(),
+                    Integer.parseInt(countTxt.getText()),
+                    productPrice.get(productNameCB.getSelectedIndex()),
+                    price,
+                    IC.getDate(),
+                    notesTA.getText()};
+                dtm.addRow(rowData);
+                totalPrice += price;
+                totalLabel.setText("الاجمالي : " + totalPrice);
+                getAllProductData();
+                clearTextFields();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة عدديه");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "من فضلك املا خانة العدد");
+        }
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void casherTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_casherTableMouseClicked
+        if (casherTable.getSelectedRow() != -1) {
+            btnEnabled(true);
+            productNameCB.setSelectedItem(casherTable.getValueAt(casherTable.getSelectedRow(), 0));
+            countTxt.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 1).toString());
+            notesTA.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 5).toString());
+        }
+    }//GEN-LAST:event_casherTableMouseClicked
+
+    private void clearSelectionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearSelectionBtnActionPerformed
+        casherTable.clearSelection();
+        clearTextFields();
+        btnEnabled(false);
+    }//GEN-LAST:event_clearSelectionBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        totalPrice -= Double.parseDouble(casherTable.getValueAt(casherTable.getSelectedRow(), 3).toString());
+        double price = Integer.parseInt(countTxt.getText()) * productPrice.get(productNameCB.getSelectedIndex());
+
+        casherTable.setValueAt(productNameCB.getSelectedItem().toString(), casherTable.getSelectedRow(), 0);
+        casherTable.setValueAt(countTxt.getText(), casherTable.getSelectedRow(), 1);
+        casherTable.setValueAt(productPrice.get(productNameCB.getSelectedIndex()), casherTable.getSelectedRow(), 2);
+        casherTable.setValueAt(price, casherTable.getSelectedRow(), 3);
+        casherTable.setValueAt(IC.getDate(), casherTable.getSelectedRow(), 4);
+        casherTable.setValueAt(notesTA.getText(), casherTable.getSelectedRow(), 5);
+
+        totalPrice += price;
+        totalLabel.setText("الاجمالي : " + totalPrice);
+        clearSelectionBtn.doClick();
+        getAllProductData();
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        totalPrice -= Double.parseDouble(casherTable.getValueAt(casherTable.getSelectedRow(), 3).toString());
+        totalLabel.setText("الاجمالي : " + totalPrice);
+
+        dtm.removeRow(casherTable.getSelectedRow());
+        getAllProductData();
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-        // TODO add your handling code here:
+        if (casherTable.getRowCount() > 0) {
+            int y = JOptionPane.showConfirmDialog(null,
+                    "هل تريد تاكيد الفاتوره؟\nمن فضلك تاكد من العميل بان هذا كل شئ",
+                    "رسالة تاكيد",
+                    JOptionPane.YES_NO_OPTION);
+            if (y == 0) {
+                try {
+                    for (int i = 0; i < casherTable.getRowCount(); i++) {
+                        IC.pst = IC.dbc.conn.prepareStatement("insert into rest_cafe.order("
+                                + "orderNum, orderProduct,"
+                                + "orderCount, orderPrice,"
+                                + "orderTotal, orderDate,"
+                                + "orderNotes)"
+                                + "values(?,?,?,?,?,?,?)");
+
+                        IC.pst.setInt(1, billNum);
+                        IC.pst.setString(2, casherTable.getValueAt(i, 0).toString());
+                        IC.pst.setInt(3, Integer.parseInt(casherTable.getValueAt(i, 1).toString()));
+                        IC.pst.setDouble(4, Double.parseDouble(casherTable.getValueAt(i, 2).toString()));
+                        IC.pst.setDouble(5, Double.parseDouble(casherTable.getValueAt(i, 3).toString()));
+                        IC.pst.setString(6, casherTable.getValueAt(i, 4).toString());
+                        IC.pst.setString(7, casherTable.getValueAt(i, 5).toString());
+
+                        IC.pst.execute();
+                    }
+                    dtm.setRowCount(0);
+                    getLastBillNum(0);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "لايوجد اي بيانات مضافة في الجدول");
+        }
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void countTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countTxtActionPerformed
+        addBtn.doClick();
+    }//GEN-LAST:event_countTxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,6 +597,7 @@ public class Casher extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JTable casherTable;
+    private javax.swing.JButton clearSelectionBtn;
     private javax.swing.JLabel countLabel;
     private javax.swing.JTextField countTxt;
     private javax.swing.JButton deleteBtn;
