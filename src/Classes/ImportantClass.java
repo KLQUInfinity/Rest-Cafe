@@ -25,7 +25,7 @@ public class ImportantClass {
 
     }
 
-    // Singlton
+    // <editor-fold defaultstate="collapsed" desc="Singlton">
     private static ImportantClass instance;
 
     public static ImportantClass getInstance() {
@@ -34,8 +34,9 @@ public class ImportantClass {
         }
         return instance;
     }
-
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
+    
     // This object from DBConnection to make a connection to the database and close it.
     public DBConnection dbc = new DBConnection();
     // This variable store the sql statement.
