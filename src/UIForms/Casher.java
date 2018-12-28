@@ -531,7 +531,7 @@ public class Casher extends javax.swing.JFrame {
             if (y == 0) {
                 try {
                     for (int i = 0; i < casherTable.getRowCount(); i++) {
-                        IC.pst = IC.dbc.conn.prepareStatement("insert into rest_cafe.order("
+                        IC.pst = IC.dbc.conn.prepareStatement("insert into sql12271829.order("
                                 + "orderNum, orderProduct,"
                                 + "orderCount, orderPrice,"
                                 + "orderTotal, orderDate,"
@@ -597,9 +597,6 @@ public class Casher extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Casher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
