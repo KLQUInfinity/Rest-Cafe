@@ -23,7 +23,7 @@ public class DBConnection {
 //            Class.forName("com.mysql.jdbc.Driver");
             //create connection
             //conn = DriverManager.getConnection("jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8120627?useUnicode=yes&characterEncoding=UTF-8", "sql8120627", "pPUVsMuFy3");
-            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/rest_cafe?useSSL=false","root","123456788");
+            conn= DriverManager.getConnection("jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12271829?useSSL=false","sql12271829","mW33iQQxIb");
             check = true;
 
         } catch (Exception e) {

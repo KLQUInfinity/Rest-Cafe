@@ -74,7 +74,7 @@ public class Casher extends javax.swing.JFrame {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
                     + ", productPrice "
-                    + "from rest_cafe.product");
+                    + "from sql12271829.product");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -90,7 +90,7 @@ public class Casher extends javax.swing.JFrame {
     private void getLastBillNum(int userId) {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from rest_cafe.order");
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql12271829.order");
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
@@ -248,11 +248,11 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(143, 143, 143)
-                .addComponent(searchNameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139)
+                .addComponent(searchNameBtn)
                 .addGap(18, 18, 18)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                     .addContainerGap(680, Short.MAX_VALUE)
@@ -267,7 +267,7 @@ public class Casher extends javax.swing.JFrame {
                     .addComponent(clearSelectionBtn)
                     .addComponent(searchNameBtn)
                     .addComponent(addBtn))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addGap(3, 3, 3)
@@ -435,7 +435,7 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
@@ -446,7 +446,7 @@ public class Casher extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 890, 120));
