@@ -6,6 +6,7 @@
 package UIForms;
 
 import Classes.ImportantClass;
+import UIPanels.ProductNameSearch;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -135,6 +136,7 @@ public class Casher extends javax.swing.JFrame {
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
         clearSelectionBtn = new javax.swing.JButton();
+        searchNameBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         casherTable = new javax.swing.JTable();
@@ -232,6 +234,13 @@ public class Casher extends javax.swing.JFrame {
             }
         });
 
+        searchNameBtn.setText("اختيار اسم صنف بالبحث");
+        searchNameBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNameBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -239,12 +248,11 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(723, Short.MAX_VALUE))
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(439, Short.MAX_VALUE)
-                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(269, Short.MAX_VALUE)))
+                .addGap(143, 143, 143)
+                .addComponent(searchNameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(259, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                     .addContainerGap(680, Short.MAX_VALUE)
@@ -255,13 +263,11 @@ public class Casher extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(clearSelectionBtn)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clearSelectionBtn)
+                    .addComponent(searchNameBtn)
+                    .addComponent(addBtn))
                 .addContainerGap(10, Short.MAX_VALUE))
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(8, Short.MAX_VALUE)
-                    .addComponent(addBtn)
-                    .addContainerGap(8, Short.MAX_VALUE)))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addGap(3, 3, 3)
@@ -556,6 +562,15 @@ public class Casher extends javax.swing.JFrame {
         addBtn.doClick();
     }//GEN-LAST:event_countTxtActionPerformed
 
+    private void searchNameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNameBtnActionPerformed
+        ProductNameSearch s = new ProductNameSearch();
+        JOptionPane.showOptionDialog(null, s,
+                "اختيار اسم بالبحث",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.DEFAULT_OPTION,
+                null, new Object[]{}, null);
+    }//GEN-LAST:event_searchNameBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -616,6 +631,7 @@ public class Casher extends javax.swing.JFrame {
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JLabel productLabel;
     private javax.swing.JComboBox<String> productNameCB;
+    private javax.swing.JButton searchNameBtn;
     private javax.swing.JButton submitBtn;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JButton updateBtn;
