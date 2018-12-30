@@ -5,10 +5,6 @@
  */
 package Classes;
 
-import Classes.DBConnection;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -36,7 +32,7 @@ public class ImportantClass {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
-    
+
     // This object from DBConnection to make a connection to the database and close it.
     public DBConnection dbc = new DBConnection();
     // This variable store the sql statement.
@@ -45,6 +41,8 @@ public class ImportantClass {
     public ResultSet rs = null;
     // This variable store the jobTitle of user.
     public String jobTitle = "";
+    // This variable store the user name from the login session
+    public String userName = "admin";
     // </editor-fold>
 
     public String getDate() {
