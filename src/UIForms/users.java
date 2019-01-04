@@ -89,6 +89,8 @@ public class users extends javax.swing.JFrame {
         nationalID = new javax.swing.JTextField();
         address = new javax.swing.JTextField();
         pass = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        type = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("إدارة بيانات المستخدمين ");
@@ -235,17 +237,18 @@ public class users extends javax.swing.JFrame {
 
             },
             new String [] {
-                "م", "الرقم القومي", "العنوان", "رقم التليفون", "الرقم السري", "الاسم"
+                "م", "نوع الموظف", "الرقم القومي", "العنوان", "رقم التليفون", "الرقم السري", "الاسم"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        usersTable.getTableHeader().setReorderingAllowed(false);
         usersTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 usersTableMouseClicked(evt);
@@ -322,6 +325,12 @@ public class users extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setText("نوع الموظف:");
+
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "Cacher", "Order Viewer" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -342,6 +351,18 @@ public class users extends javax.swing.JFrame {
                         .addGap(18, 18, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(type, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(phone, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addComponent(address, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addComponent(nationalID, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -357,20 +378,8 @@ public class users extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(printBtn)
-                            .addComponent(isertBtn)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nationalID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel6)))))
-                .addContainerGap())
+                            .addComponent(isertBtn))))
+                .addGap(26, 26, 26))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(368, 368, 368)
                 .addComponent(jLabel1)
@@ -404,9 +413,13 @@ public class users extends javax.swing.JFrame {
                             .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nationalID, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(nationalID, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(isertBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -488,13 +501,14 @@ public class users extends javax.swing.JFrame {
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         try {
-            String query = "UPDATE user SET  userName=?, userPass=?, userPhoneNum=?,userAddress=?, userNational_ID=? WHERE id='" + Num + "' ";
+            String query = "UPDATE user SET  userName=?, userPass=?, userPhoneNum=?,userAddress=?, userNational_ID=? userType=? WHERE id='" + Num + "' ";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.pst.setString(1, name.getText());
             IC.pst.setString(2, pass.getText());
             IC.pst.setString(3, phone.getText());
             IC.pst.setString(4, address.getText());
             IC.pst.setString(5, nationalID.getText());
+            IC.pst.setString(6, type.getSelectedItem().toString());
             IC.pst.executeUpdate();
             name.setText("");
             pass.setText("");
@@ -528,13 +542,14 @@ public class users extends javax.swing.JFrame {
 
     private void isertBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isertBtnActionPerformed
         try {
-            String query = "INSERT INTO user (userName, userPass, userPhoneNum,userAddress, userNational_ID) VALUES (?, ?, ?, ?, ?) ";
+            String query = "INSERT INTO user (userName, userPass, userPhoneNum,userAddress, userNational_ID,userType) VALUES (?, ?, ?, ?, ?,?) ";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.pst.setString(1, name.getText());
             IC.pst.setString(2, pass.getText());
             IC.pst.setString(3, phone.getText());
             IC.pst.setString(4, address.getText());
             IC.pst.setString(5, nationalID.getText());
+            IC.pst.setString(6, type.getSelectedItem().toString());
             IC.pst.executeUpdate();
             name.setText("");
             pass.setText("");
@@ -607,6 +622,8 @@ public class users extends javax.swing.JFrame {
                 phone.setText(add4);
                 String add5 = IC.rs.getString("userNational_ID");
                 nationalID.setText(add5);
+                String add6 = IC.rs.getString("userType");
+                type.setSelectedItem(add6);
             }
 
         } catch (Exception e) {
@@ -660,6 +677,7 @@ public class users extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -669,6 +687,7 @@ public class users extends javax.swing.JFrame {
     private javax.swing.JTextField phone;
     private javax.swing.JButton printBtn;
     private javax.swing.JButton searchBtn;
+    private javax.swing.JComboBox<String> type;
     private javax.swing.JButton updateBtn;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
