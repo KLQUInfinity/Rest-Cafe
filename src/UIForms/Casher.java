@@ -475,7 +475,6 @@ public class Casher extends javax.swing.JFrame {
                     totalPrice += price;
                     totalLabel.setText("الاجمالي : " + totalPrice);
                     getAllProductData();
-                    clearTextFields();
                 } else {
                     JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
                 }
