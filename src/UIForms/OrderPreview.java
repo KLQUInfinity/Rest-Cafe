@@ -146,15 +146,21 @@ public class OrderPreview extends javax.swing.JFrame {
             .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
         );
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        orderNumLabel.setBackground(new java.awt.Color(255, 0, 0));
         orderNumLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        orderNumLabel.setForeground(new java.awt.Color(255, 255, 255));
         orderNumLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         orderNumLabel.setText("رقم الطلب : 0");
 
+        orderDoneBtn.setBackground(new java.awt.Color(255, 0, 0));
         orderDoneBtn.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        orderDoneBtn.setForeground(new java.awt.Color(255, 255, 255));
         orderDoneBtn.setText("تم تجهيز الطلب");
         orderDoneBtn.setPreferredSize(new java.awt.Dimension(150, 45));
 
@@ -179,13 +185,16 @@ public class OrderPreview extends javax.swing.JFrame {
                     .addGap(21, 21, 21)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(orderDoneBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(orderDoneBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(24, Short.MAX_VALUE)))
         );
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        showNewOrderBtn.setBackground(new java.awt.Color(255, 0, 0));
         showNewOrderBtn.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        showNewOrderBtn.setForeground(new java.awt.Color(255, 255, 255));
         showNewOrderBtn.setText("اظهر طلبات جديدة");
         showNewOrderBtn.setPreferredSize(new java.awt.Dimension(150, 45));
         showNewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -200,19 +209,19 @@ public class OrderPreview extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 462, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addContainerGap(156, Short.MAX_VALUE)
                     .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap(156, Short.MAX_VALUE)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 102, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(0, 29, Short.MAX_VALUE)
-                    .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 28, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(28, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -308,7 +317,7 @@ public class OrderPreview extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
