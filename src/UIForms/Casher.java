@@ -159,11 +159,17 @@ public class Casher extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(890, 548));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        productLabel.setBackground(new java.awt.Color(204, 204, 204));
+        productLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        productLabel.setForeground(new java.awt.Color(255, 0, 0));
         productLabel.setText("اسم الصنف");
 
         productNameCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         productNameCB.setPreferredSize(new java.awt.Dimension(175, 26));
 
+        countLabel.setBackground(new java.awt.Color(204, 204, 204));
+        countLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        countLabel.setForeground(new java.awt.Color(255, 0, 0));
         countLabel.setText("العدد");
 
         countTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +178,8 @@ public class Casher extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("ملاحظات");
 
         notesTA.setColumns(20);
@@ -196,7 +204,7 @@ public class Casher extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(countLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(productLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,11 +230,14 @@ public class Casher extends javax.swing.JFrame {
 
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        orderNumLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        orderNumLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        orderNumLabel.setForeground(new java.awt.Color(255, 0, 0));
         orderNumLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         orderNumLabel.setText("رقم الطلب : 0");
 
-        addBtn.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        addBtn.setBackground(new java.awt.Color(255, 0, 0));
+        addBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        addBtn.setForeground(new java.awt.Color(255, 255, 255));
         addBtn.setText("اضافة صنف");
         addBtn.setPreferredSize(new java.awt.Dimension(166, 43));
         addBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -235,7 +246,9 @@ public class Casher extends javax.swing.JFrame {
             }
         });
 
-        clearSelectionBtn.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        clearSelectionBtn.setBackground(new java.awt.Color(255, 0, 0));
+        clearSelectionBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        clearSelectionBtn.setForeground(new java.awt.Color(255, 255, 255));
         clearSelectionBtn.setText("الغاء الاختيار");
         clearSelectionBtn.setEnabled(false);
         clearSelectionBtn.setPreferredSize(new java.awt.Dimension(166, 43));
@@ -250,29 +263,28 @@ public class Casher extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(38, 38, 38)
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(245, 245, 245)
+                .addGap(244, 244, 244)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(680, Short.MAX_VALUE)
+                    .addContainerGap(668, Short.MAX_VALUE)
                     .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addGap(3, 3, 3)
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addContainerGap()
+                    .addComponent(orderNumLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                     .addGap(3, 3, 3)))
         );
 
@@ -298,7 +310,7 @@ public class Casher extends javax.swing.JFrame {
                 .addContainerGap(75, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(123, Short.MAX_VALUE)
+                    .addContainerGap(100, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -352,6 +364,9 @@ public class Casher extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        updateBtn.setBackground(new java.awt.Color(255, 0, 0));
+        updateBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        updateBtn.setForeground(new java.awt.Color(255, 255, 255));
         updateBtn.setText("تعديل صنف");
         updateBtn.setEnabled(false);
         updateBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -360,6 +375,9 @@ public class Casher extends javax.swing.JFrame {
             }
         });
 
+        deleteBtn.setBackground(new java.awt.Color(255, 0, 0));
+        deleteBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(255, 255, 255));
         deleteBtn.setText("حذف صنف");
         deleteBtn.setEnabled(false);
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -391,10 +409,14 @@ public class Casher extends javax.swing.JFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        totalLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        totalLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        totalLabel.setForeground(new java.awt.Color(255, 0, 0));
         totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalLabel.setText("الاجمالي : 0.0");
 
+        submitBtn.setBackground(new java.awt.Color(255, 0, 0));
+        submitBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        submitBtn.setForeground(new java.awt.Color(255, 255, 255));
         submitBtn.setText("تنفيذ الطلب");
         submitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -407,26 +429,20 @@ public class Casher extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(submitBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(324, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
                 .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(25, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
