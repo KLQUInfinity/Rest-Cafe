@@ -159,12 +159,17 @@ public class Casher extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(890, 548));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
         productLabel.setBackground(new java.awt.Color(204, 204, 204));
         productLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         productLabel.setForeground(new java.awt.Color(255, 0, 0));
         productLabel.setText("اسم الصنف");
 
         productNameCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        productNameCB.setForeground(new java.awt.Color(255, 0, 0));
         productNameCB.setPreferredSize(new java.awt.Dimension(175, 26));
 
         countLabel.setBackground(new java.awt.Color(204, 204, 204));
@@ -172,6 +177,7 @@ public class Casher extends javax.swing.JFrame {
         countLabel.setForeground(new java.awt.Color(255, 0, 0));
         countLabel.setText("العدد");
 
+        countTxt.setForeground(new java.awt.Color(255, 0, 0));
         countTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 countTxtActionPerformed(evt);
@@ -228,6 +234,7 @@ public class Casher extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         orderNumLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -362,6 +369,9 @@ public class Casher extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 188, 890, 230));
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         updateBtn.setBackground(new java.awt.Color(255, 0, 0));
@@ -407,8 +417,10 @@ public class Casher extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        totalLabel.setBackground(new java.awt.Color(255, 255, 255));
         totalLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         totalLabel.setForeground(new java.awt.Color(255, 0, 0));
         totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -604,7 +616,7 @@ public class Casher extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
