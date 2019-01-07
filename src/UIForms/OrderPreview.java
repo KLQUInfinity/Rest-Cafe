@@ -10,6 +10,7 @@ import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import net.proteanit.sql.DbUtils;
@@ -149,12 +150,12 @@ public class OrderPreview extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(187, 187, 187));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         orderNumLabel.setBackground(new java.awt.Color(255, 0, 0));
         orderNumLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        orderNumLabel.setForeground(new java.awt.Color(255, 255, 255));
+        orderNumLabel.setForeground(new java.awt.Color(0, 0, 0));
         orderNumLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         orderNumLabel.setText("رقم الطلب : 0");
 
@@ -163,6 +164,11 @@ public class OrderPreview extends javax.swing.JFrame {
         orderDoneBtn.setForeground(new java.awt.Color(255, 255, 255));
         orderDoneBtn.setText("تم تجهيز الطلب");
         orderDoneBtn.setPreferredSize(new java.awt.Dimension(150, 45));
+        orderDoneBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderDoneBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -189,7 +195,7 @@ public class OrderPreview extends javax.swing.JFrame {
                     .addContainerGap(24, Short.MAX_VALUE)))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(187, 187, 187));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         showNewOrderBtn.setBackground(new java.awt.Color(255, 0, 0));
@@ -216,12 +222,12 @@ public class OrderPreview extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+            .addGap(0, 104, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addContainerGap(20, Short.MAX_VALUE)
                     .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(28, Short.MAX_VALUE)))
+                    .addContainerGap(29, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -242,16 +248,16 @@ public class OrderPreview extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 118, Short.MAX_VALUE)
+            .addGap(0, 120, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -305,6 +311,21 @@ public class OrderPreview extends javax.swing.JFrame {
     private void showNewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showNewOrderBtnActionPerformed
         getAllUnfinishedOrder();
     }//GEN-LAST:event_showNewOrderBtnActionPerformed
+
+    private void orderDoneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderDoneBtnActionPerformed
+        if (Tabs.getTabCount() > 0) {
+            try {
+                IC.pst = IC.dbc.conn.prepareStatement("update sql12271829.order"
+                    + " set orderDone=1"
+                    + " where Patient_Information_PatientID=? and CashingDate=?");
+                IC.rs = IC.pst.executeQuery();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "لا يوجد طلبات لتنفذها");
+        }
+    }//GEN-LAST:event_orderDoneBtnActionPerformed
 
     /**
      * @param args the command line arguments
