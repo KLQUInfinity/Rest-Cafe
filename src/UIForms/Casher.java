@@ -15,7 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +29,7 @@ public class Casher extends javax.swing.JFrame {
     private final ImportantClass IC = ImportantClass.getInstance();
 
     public ArrayList<Double> productPrice = new ArrayList<>();
+
     //This variable modify in table.
     private DefaultTableModel dtm;
     private double totalPrice = 0;
@@ -47,10 +50,14 @@ public class Casher extends javax.swing.JFrame {
 //        addWindowListener(prepareWindow(exitListener));
         casherTable.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
         casherTable.getTableHeader().setAlignmentY(CENTER_ALIGNMENT);
+        DefaultTableCellRenderer c = new DefaultTableCellRenderer();
+        c.setHorizontalAlignment(JLabel.CENTER);
+        c.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        casherTable.setDefaultRenderer(Object.class, c);
         casherTable.setAutoCreateColumnsFromModel(false);
         dtm = (DefaultTableModel) casherTable.getModel();
         getAllProductData();
-        getLastBillNum(IC.userName);
+        getLastBillNum();
         //This statement to make the form in fullsize.
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -73,7 +80,9 @@ public class Casher extends javax.swing.JFrame {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
                     + ", productPrice "
-                    + "from sql12271829.product");
+                    + " from sql12271829.product"
+                    + " where productType=?");
+            IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -86,12 +95,10 @@ public class Casher extends javax.swing.JFrame {
         }
     }
 
-    private void getLastBillNum(String userName) {
+    private void getLastBillNum() {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql12271829.order"
-                    + " where userName = ?");
-            IC.pst.setString(1, userName);
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql12271829.order");
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
@@ -137,6 +144,8 @@ public class Casher extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         notesTA = new javax.swing.JTextArea();
+        productTypeLabel = new javax.swing.JLabel();
+        productTypeCB = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
@@ -193,48 +202,73 @@ public class Casher extends javax.swing.JFrame {
         notesTA.setRows(5);
         jScrollPane2.setViewportView(notesTA);
 
+        productTypeLabel.setBackground(new java.awt.Color(204, 204, 204));
+        productTypeLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        productTypeLabel.setForeground(new java.awt.Color(255, 0, 0));
+        productTypeLabel.setText("نوع الصنف");
+
+        productTypeCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        productTypeCB.setForeground(new java.awt.Color(255, 0, 0));
+        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي" }));
+        productTypeCB.setPreferredSize(new java.awt.Dimension(175, 26));
+        productTypeCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                productTypeCBItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(productNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(countTxt))
+                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(countLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(productLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(productLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)))
+                .addGap(6, 6, 6))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productLabel))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(countLabel)
-                            .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel1)))
-                .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productLabel)
+                    .addComponent(productTypeLabel)
+                    .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(countLabel)
+                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBackground(new java.awt.Color(187, 187, 187));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         orderNumLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -246,7 +280,7 @@ public class Casher extends javax.swing.JFrame {
         addBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         addBtn.setForeground(new java.awt.Color(255, 255, 255));
         addBtn.setText("اضافة صنف");
-        addBtn.setPreferredSize(new java.awt.Dimension(166, 43));
+        addBtn.setPreferredSize(new java.awt.Dimension(166, 40));
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
@@ -258,7 +292,7 @@ public class Casher extends javax.swing.JFrame {
         clearSelectionBtn.setForeground(new java.awt.Color(255, 255, 255));
         clearSelectionBtn.setText("الغاء الاختيار");
         clearSelectionBtn.setEnabled(false);
-        clearSelectionBtn.setPreferredSize(new java.awt.Dimension(166, 43));
+        clearSelectionBtn.setPreferredSize(new java.awt.Dimension(166, 40));
         clearSelectionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearSelectionBtnActionPerformed(evt);
@@ -274,7 +308,7 @@ public class Casher extends javax.swing.JFrame {
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(244, 244, 244)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                     .addContainerGap(668, Short.MAX_VALUE)
@@ -283,15 +317,16 @@ public class Casher extends javax.swing.JFrame {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(orderNumLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                     .addGap(3, 3, 3)))
         );
 
@@ -299,10 +334,9 @@ public class Casher extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -312,12 +346,11 @@ public class Casher extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(0, 81, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(100, Short.MAX_VALUE)
+                    .addContainerGap(118, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -329,11 +362,11 @@ public class Casher extends javax.swing.JFrame {
 
             },
             new String [] {
-                "اسم الصنف", "العدد", "السعر", "المجموع", "التاريخ", "ملاحظات"
+                "نوع الصنف", "ملاحظات", "التاريخ", "المجموع", "السعر", "العدد", "اسم الصنف"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -341,37 +374,30 @@ public class Casher extends javax.swing.JFrame {
             }
         });
         casherTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        casherTable.getTableHeader().setReorderingAllowed(false);
         casherTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 casherTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(casherTable);
-        if (casherTable.getColumnModel().getColumnCount() > 0) {
-            casherTable.getColumnModel().getColumn(0).setResizable(false);
-            casherTable.getColumnModel().getColumn(1).setResizable(false);
-            casherTable.getColumnModel().getColumn(2).setResizable(false);
-            casherTable.getColumnModel().getColumn(3).setResizable(false);
-            casherTable.getColumnModel().getColumn(4).setResizable(false);
-            casherTable.getColumnModel().getColumn(5).setResizable(false);
-        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 188, 890, 230));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 188, 890, 220));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(187, 187, 187));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         updateBtn.setBackground(new java.awt.Color(255, 0, 0));
@@ -379,6 +405,7 @@ public class Casher extends javax.swing.JFrame {
         updateBtn.setForeground(new java.awt.Color(255, 255, 255));
         updateBtn.setText("تعديل صنف");
         updateBtn.setEnabled(false);
+        updateBtn.setPreferredSize(new java.awt.Dimension(150, 78));
         updateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateBtnActionPerformed(evt);
@@ -390,6 +417,7 @@ public class Casher extends javax.swing.JFrame {
         deleteBtn.setForeground(new java.awt.Color(255, 255, 255));
         deleteBtn.setText("حذف صنف");
         deleteBtn.setEnabled(false);
+        deleteBtn.setPreferredSize(new java.awt.Dimension(150, 78));
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBtnActionPerformed(evt);
@@ -402,22 +430,22 @@ public class Casher extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(187, 187, 187));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         totalLabel.setBackground(new java.awt.Color(255, 255, 255));
@@ -443,7 +471,7 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(submitBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -464,21 +492,21 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 890, 120));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 890, 130));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -493,12 +521,13 @@ public class Casher extends javax.swing.JFrame {
                 if (count > 0) {
                     double price = count * productPrice.get(productNameCB.getSelectedIndex());
 
-                    Object[] rowData = {productNameCB.getSelectedItem().toString(),
-                        Integer.parseInt(countTxt.getText()),
-                        productPrice.get(productNameCB.getSelectedIndex()),
-                        price,
+                    Object[] rowData = {productTypeCB.getSelectedItem().toString(),
+                        notesTA.getText(),
                         IC.getDate(),
-                        notesTA.getText()};
+                        price,
+                        productPrice.get(productNameCB.getSelectedIndex()),
+                        Integer.parseInt(countTxt.getText()),
+                        productNameCB.getSelectedItem().toString()};
                     dtm.addRow(rowData);
                     totalPrice += price;
                     totalLabel.setText("الاجمالي : " + totalPrice);
@@ -517,9 +546,10 @@ public class Casher extends javax.swing.JFrame {
     private void casherTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_casherTableMouseClicked
         if (casherTable.getSelectedRow() != -1) {
             btnEnabled(true);
-            productNameCB.setSelectedItem(casherTable.getValueAt(casherTable.getSelectedRow(), 0));
-            countTxt.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 1).toString());
-            notesTA.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 5).toString());
+            productNameCB.setSelectedItem(casherTable.getValueAt(casherTable.getSelectedRow(), 6));
+            productTypeCB.setSelectedItem(casherTable.getValueAt(casherTable.getSelectedRow(), 0));
+            countTxt.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 5).toString());
+            notesTA.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 1).toString());
         }
     }//GEN-LAST:event_casherTableMouseClicked
 
@@ -536,12 +566,13 @@ public class Casher extends javax.swing.JFrame {
                 totalPrice -= Double.parseDouble(casherTable.getValueAt(casherTable.getSelectedRow(), 3).toString());
                 double price = count * productPrice.get(productNameCB.getSelectedIndex());
 
-                casherTable.setValueAt(productNameCB.getSelectedItem().toString(), casherTable.getSelectedRow(), 0);
-                casherTable.setValueAt(countTxt.getText(), casherTable.getSelectedRow(), 1);
-                casherTable.setValueAt(productPrice.get(productNameCB.getSelectedIndex()), casherTable.getSelectedRow(), 2);
+                casherTable.setValueAt(productNameCB.getSelectedItem().toString(), casherTable.getSelectedRow(), 6);
+                casherTable.setValueAt(countTxt.getText(), casherTable.getSelectedRow(), 5);
+                casherTable.setValueAt(productPrice.get(productNameCB.getSelectedIndex()), casherTable.getSelectedRow(), 4);
                 casherTable.setValueAt(price, casherTable.getSelectedRow(), 3);
-                casherTable.setValueAt(IC.getDate(), casherTable.getSelectedRow(), 4);
-                casherTable.setValueAt(notesTA.getText(), casherTable.getSelectedRow(), 5);
+                casherTable.setValueAt(IC.getDate(), casherTable.getSelectedRow(), 2);
+                casherTable.setValueAt(notesTA.getText(), casherTable.getSelectedRow(), 1);
+                casherTable.setValueAt(productTypeCB.getSelectedItem().toString(), casherTable.getSelectedRow(), 0);
 
                 totalPrice += price;
                 totalLabel.setText("الاجمالي : " + totalPrice);
@@ -560,6 +591,7 @@ public class Casher extends javax.swing.JFrame {
         totalLabel.setText("الاجمالي : " + totalPrice);
 
         dtm.removeRow(casherTable.getSelectedRow());
+        clearSelectionBtn.doClick();
         getAllProductData();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -576,22 +608,24 @@ public class Casher extends javax.swing.JFrame {
                                 + "orderNum, orderProduct,"
                                 + "orderCount, orderPrice,"
                                 + "orderTotal, orderDate,"
-                                + "orderNotes, userName)"
-                                + "values(?,?,?,?,?,?,?,?)");
+                                + "orderNotes, userName,"
+                                + "orderType)"
+                                + "values(?,?,?,?,?,?,?,?,?)");
 
                         IC.pst.setInt(1, billNum);
-                        IC.pst.setString(2, casherTable.getValueAt(i, 0).toString());
-                        IC.pst.setInt(3, Integer.parseInt(casherTable.getValueAt(i, 1).toString()));
-                        IC.pst.setDouble(4, Double.parseDouble(casherTable.getValueAt(i, 2).toString()));
+                        IC.pst.setString(2, casherTable.getValueAt(i, 6).toString());
+                        IC.pst.setInt(3, Integer.parseInt(casherTable.getValueAt(i, 5).toString()));
+                        IC.pst.setDouble(4, Double.parseDouble(casherTable.getValueAt(i, 4).toString()));
                         IC.pst.setDouble(5, Double.parseDouble(casherTable.getValueAt(i, 3).toString()));
-                        IC.pst.setString(6, casherTable.getValueAt(i, 4).toString());
-                        IC.pst.setString(7, casherTable.getValueAt(i, 5).toString());
+                        IC.pst.setString(6, casherTable.getValueAt(i, 2).toString());
+                        IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
                         IC.pst.setString(8, IC.userName);
+                        IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
 
                         IC.pst.execute();
                     }
                     dtm.setRowCount(0);
-                    getLastBillNum("");
+                    getLastBillNum();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -604,6 +638,10 @@ public class Casher extends javax.swing.JFrame {
     private void countTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countTxtActionPerformed
         addBtn.doClick();
     }//GEN-LAST:event_countTxtActionPerformed
+
+    private void productTypeCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productTypeCBItemStateChanged
+        getAllProductData();
+    }//GEN-LAST:event_productTypeCBItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -662,6 +700,8 @@ public class Casher extends javax.swing.JFrame {
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JLabel productLabel;
     private javax.swing.JComboBox<String> productNameCB;
+    private javax.swing.JComboBox<String> productTypeCB;
+    private javax.swing.JLabel productTypeLabel;
     private javax.swing.JButton submitBtn;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JButton updateBtn;

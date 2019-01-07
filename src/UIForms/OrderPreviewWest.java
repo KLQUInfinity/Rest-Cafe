@@ -19,7 +19,7 @@ import net.proteanit.sql.DbUtils;
  *
  * @author sayed
  */
-public class OrderPreview extends javax.swing.JFrame {
+public class OrderPreviewWest extends javax.swing.JFrame {
 
     private final ImportantClass IC = ImportantClass.getInstance();
 
@@ -30,7 +30,7 @@ public class OrderPreview extends javax.swing.JFrame {
     private ArrayList<Integer> orderNum = new ArrayList<>();
     private ArrayList<Boolean> tabCreated = new ArrayList<>();
 
-    public OrderPreview() {
+    public OrderPreviewWest() {
         // Check Conection to DB
         if (!IC.dbc.check) {
             IC.dbc.ConnectDB();
@@ -76,7 +76,9 @@ public class OrderPreview extends javax.swing.JFrame {
 
     private void getAllUnfinishedOrder() {
         try {
-            IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum FROM sql12271829.order where orderDone=0");
+            IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
+                    + "FROM sql12271829.order "
+                    + "where orderDone=0 and orderType='غربي'");
             IC.rs = IC.pst.executeQuery();
 
             while (IC.rs.next()) {
@@ -92,7 +94,7 @@ public class OrderPreview extends javax.swing.JFrame {
                     createNewTab(orderNum.get(i));
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
                             + " FROM sql12271829.order"
-                            + " where orderNum=?");
+                            + " where orderNum=? and orderType='غربي'");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
@@ -153,9 +155,9 @@ public class OrderPreview extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(187, 187, 187));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        orderNumLabel.setBackground(new java.awt.Color(255, 0, 0));
+        orderNumLabel.setBackground(new java.awt.Color(255, 255, 255));
         orderNumLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        orderNumLabel.setForeground(new java.awt.Color(0, 0, 0));
+        orderNumLabel.setForeground(new java.awt.Color(255, 0, 0));
         orderNumLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         orderNumLabel.setText("رقم الطلب : 0");
 
@@ -344,20 +346,23 @@ public class OrderPreview extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrderPreview().setVisible(true);
+                new OrderPreviewWest().setVisible(true);
             }
         });
     }
