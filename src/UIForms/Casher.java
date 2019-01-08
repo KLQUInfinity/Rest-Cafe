@@ -5,6 +5,7 @@
  */
 package UIForms;
 
+import Classes.BillingData;
 import Classes.ImportantClass;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
@@ -27,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class Casher extends javax.swing.JFrame {
 
     private final ImportantClass IC = ImportantClass.getInstance();
-
+    BillingData dd = new BillingData();
     public ArrayList<Double> productPrice = new ArrayList<>();
 
     //This variable modify in table.
@@ -621,7 +622,16 @@ public class Casher extends javax.swing.JFrame {
                         IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
                         IC.pst.setString(8, IC.userName);
                         IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
-
+                        
+                        //add order data to be printed 
+                        dd.setProductCount("");
+                        dd.setProductName("");
+                        dd.setProductPrice("");
+                        dd.setProductTotal("");
+                        dd.setBillNum("");
+                        dd.setPriceTotal("");
+                        IC.list.add(dd);
+                        
                         IC.pst.execute();
                     }
                     dtm.setRowCount(0);

@@ -10,8 +10,9 @@ public class BillingData {
     private String productName;
     private String productCount;
     private String productPrice;
-    private String productNotes;
+    private String BillNum;
     private String productTotal;
+    private String PriceTotal;
 
     public BillingData() {
     }
@@ -24,12 +25,16 @@ public class BillingData {
         this.productCount = productCount;
     }
 
+    public void setPriceTotal(String PriceTotal) {
+        this.PriceTotal = PriceTotal;
+    }
+
     public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
     }
 
-    public void setProductNotes(String productNotes) {
-        this.productNotes = productNotes;
+    public void setBillNum(String BillNum) {
+        this.BillNum = BillNum;
     }
 
     public void setProductTotal(String productTotal) {
@@ -48,12 +53,16 @@ public class BillingData {
         return productPrice;
     }
 
-    public String getProductNotes() {
-        return productNotes;
+    public String getBillNum() {
+        return BillNum;
     }
 
     public String getProductTotal() {
         return productTotal;
+    }
+
+    public String getPriceTotal() {
+        return PriceTotal;
     }
 
 }

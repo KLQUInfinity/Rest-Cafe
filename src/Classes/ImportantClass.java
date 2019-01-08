@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -43,6 +44,8 @@ public class ImportantClass {
     public String jobTitle = "";
     // This variable store the user name from the login session
     public String userName = "admin";
+    // This variable store the order content from the casher
+   public ArrayList<BillingData> list=new ArrayList<>();
     // </editor-fold>
 
     public String getDate() {
