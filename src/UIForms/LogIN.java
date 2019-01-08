@@ -17,24 +17,24 @@ public class LogIN extends javax.swing.JFrame {
 
     public LogIN() {
         // Check Conection to DB
-//        if (!IC.dbc.check) {
-//            IC.dbc.ConnectDB();
-//        }
+        if (!IC.dbc.check) {
+            IC.dbc.ConnectDB();
+        }
         initComponents();
         setLocationRelativeTo(null);
-//        IC.jobTitle = "admin";
+        IC.jobTitle = "admin";
     }
 
     public void search(String name, String Pass) {
         try {
-            IC.pst = IC.dbc.conn.prepareStatement("select userName, userPass, from user");
+            IC.pst = IC.dbc.conn.prepareStatement("select userName, userPass,userType  from user");
             IC.rs = IC.pst.executeQuery();
             String n;
             String p;
             while (IC.rs.next()) {
                 n = IC.rs.getString("userName");
                 p = IC.rs.getString("userPass");
-                IC.jobTitle=IC.rs.getString("userType");
+                IC.jobTitle = IC.rs.getString("userType");
                 if (name.equals(n) && Pass.equals(p)) {
                     status = true;
                     break;
@@ -46,15 +46,13 @@ public class LogIN extends javax.swing.JFrame {
     }
 
     public void data() {
-        if (name.getText().equals("admin") && pass.getPassword().toString().equals("9999")) {
-            IC.jobTitle = name.getText();
+        if (name.getText().equals("admin") && pass.getText().equals("9999")) {
             Home h = new Home();
             h.setVisible(true);
             this.dispose();
         } else {
-            search(name.getText(), pass.getPassword().toString());
+            search(name.getText(), pass.getText());
             if (status == true) {
-                IC.jobTitle = name.getText();
                 Home h = new Home();
                 h.setVisible(true);
                 this.dispose();
