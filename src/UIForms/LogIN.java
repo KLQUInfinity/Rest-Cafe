@@ -17,12 +17,12 @@ public class LogIN extends javax.swing.JFrame {
 
     public LogIN() {
         // Check Conection to DB
-        if (!IC.dbc.check) {
-            IC.dbc.ConnectDB();
-        }
+//        if (!IC.dbc.check) {
+//            IC.dbc.ConnectDB();
+//        }
         initComponents();
         setLocationRelativeTo(null);
-        IC.jobTitle = "admin";
+//        IC.jobTitle = "admin";
     }
 
     public void search(String name, String Pass) {
