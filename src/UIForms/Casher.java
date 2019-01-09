@@ -317,6 +317,11 @@ public class Casher extends javax.swing.JFrame {
         table.addCell(cel0);
 
         document.add(table);
+        document.newPage();
+        document.add(table);
+        document.newPage();
+        document.add(table);
+        
         document.close();
     }
 
