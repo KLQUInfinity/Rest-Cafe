@@ -6,6 +6,10 @@
 package UIForms;
 
 import Classes.ImportantClass;
+import com.itextpdf.text.DocumentException;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -218,9 +222,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Casher c = new Casher();
-        c.setVisible(true);
-        dispose();
+            Casher c = new Casher();
+            c.setVisible(true);
+            dispose();  
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
