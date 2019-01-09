@@ -23,6 +23,7 @@ import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
@@ -31,6 +32,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -145,10 +154,32 @@ public class Casher extends javax.swing.JFrame {
         addBtn.setEnabled(!check);
         clearSelectionBtn.setEnabled(check);
     }
+    //print pdf
+    private void pdfPrint() {
+        FileInputStream psStream = null;
+        try {
+            psStream = new FileInputStream("ss.pdf");
+        } catch (FileNotFoundException ffne) {
+            ffne.printStackTrace();
+        }
+        if (psStream == null) {
+            return;
+        }
+        DocFlavor psInFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc myDoc = new SimpleDoc(psStream, psInFormat, null);
+        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+        PrintService services = PrintServiceLookup.lookupDefaultPrintService();
+
+        DocPrintJob job = services.createPrintJob();
+        try {
+            job.print(myDoc, aset);
+        } catch (Exception pe) {
+            pe.printStackTrace();
+        }
+    }
 
     private void printBill() throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
-
         com.itextpdf.text.Font f = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 10f);
         com.itextpdf.text.Font f1 = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 13f);
         PdfWriter.getInstance(document, new FileOutputStream("ss.pdf"));
@@ -214,9 +245,9 @@ public class Casher extends javax.swing.JFrame {
         PdfPCell c7 = new PdfPCell(new Paragraph("الاجمالي", f));
         c7.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c7);
-        BillingData bd=new BillingData();
+        BillingData bd = new BillingData();
         for (int q = 0; q < IC.list.size(); q++) {
-            bd=IC.list.get(q);
+            bd = IC.list.get(q);
             PdfPCell c40 = new PdfPCell(new Paragraph(bd.getProductName(), f));
             c40.setColspan(3);
             table.addCell(c40);
@@ -250,16 +281,14 @@ public class Casher extends javax.swing.JFrame {
         table.addCell(c00);
         table.addCell(c00);
         //الباقي 
-        PdfPCell ce = new PdfPCell(new Paragraph("المدفوع:", f));
-        ce.setColspan(2);
+        PdfPCell ce = new PdfPCell(new Paragraph("المدفوع:" + paidTxt.getText(), f));
+        ce.setColspan(3);
         ce.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(ce);
-        table.addCell(String.valueOf(totalLabel));
-        PdfPCell ce1 = new PdfPCell(new Paragraph("المتبقي:", f));
-        ce1.setColspan(2);
+        PdfPCell ce1 = new PdfPCell(new Paragraph(totalChangeLabel.getText(), f));
+        ce1.setColspan(3);
         ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(ce1);
-        table.addCell(String.valueOf(totalChangeLabel));
         //casher name
         table.addCell(c00);
         table.addCell(c00);
@@ -838,6 +867,7 @@ public class Casher extends javax.swing.JFrame {
 
                     // Print method
                     printBill();
+                    pdfPrint();
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
