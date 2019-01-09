@@ -12,7 +12,6 @@ public class BillingData {
     private String productPrice;
     private String BillNum;
     private String productTotal;
-    private String PriceTotal;
 
     public BillingData() {
     }
@@ -23,10 +22,6 @@ public class BillingData {
 
     public void setProductCount(String productCount) {
         this.productCount = productCount;
-    }
-
-    public void setPriceTotal(String PriceTotal) {
-        this.PriceTotal = PriceTotal;
     }
 
     public void setProductPrice(String productPrice) {
@@ -60,9 +55,4 @@ public class BillingData {
     public String getProductTotal() {
         return productTotal;
     }
-
-    public String getPriceTotal() {
-        return PriceTotal;
-    }
-
 }

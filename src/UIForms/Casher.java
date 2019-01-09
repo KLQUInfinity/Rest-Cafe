@@ -667,7 +667,6 @@ public class Casher extends javax.swing.JFrame {
                         dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
                         dd.setProductTotal(casherTable.getValueAt(i, 3).toString());
                         dd.setBillNum(billNum + "");
-                        dd.setPriceTotal(totalPrice + "");
                         IC.list.add(dd);
 
                         IC.pst.execute();
