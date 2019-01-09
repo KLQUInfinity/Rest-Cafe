@@ -15,7 +15,6 @@ import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -35,6 +34,7 @@ public class Casher extends javax.swing.JFrame {
     private DefaultTableModel dtm;
     private double totalPrice = 0;
     private int billNum = 0;
+    private double paid = 0, change = 0;
 
     /**
      * Creates new form Casher
@@ -49,7 +49,7 @@ public class Casher extends javax.swing.JFrame {
 
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
-        
+
         casherTable.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
         casherTable.getTableHeader().setAlignmentY(CENTER_ALIGNMENT);
         DefaultTableCellRenderer c = new DefaultTableCellRenderer();
@@ -58,11 +58,9 @@ public class Casher extends javax.swing.JFrame {
         casherTable.setDefaultRenderer(Object.class, c);
         casherTable.setAutoCreateColumnsFromModel(false);
         dtm = (DefaultTableModel) casherTable.getModel();
-        
+
         getAllProductData();
         getLastBillNum();
-        //This statement to make the form in fullsize.
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private WindowListener prepareWindow(WindowListener exitListener) {
@@ -77,7 +75,7 @@ public class Casher extends javax.swing.JFrame {
         };
         return exitListener;
     }
-    
+
     private void getAllProductData() {
         clearTextFields();
         try {
@@ -131,12 +129,12 @@ public class Casher extends javax.swing.JFrame {
 
     private void calculateTotalChange() {
         try {
-            double paid = 0.0;
             if (!paidTxt.getText().equals("")) {
                 paid = Double.parseDouble(paidTxt.getText());
             }
             if (paid >= 0) {
-                totalChangeLabel.setText("الباقي : " + (paid - totalPrice));
+                change = paid - totalPrice;
+                totalChangeLabel.setText("الباقي : " + change);
             } else {
                 JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
             }
@@ -250,6 +248,7 @@ public class Casher extends javax.swing.JFrame {
         jLabel2.setText("المدفوع");
         jLabel2.setPreferredSize(new java.awt.Dimension(69, 17));
 
+        paidTxt.setForeground(new java.awt.Color(255, 0, 0));
         paidTxt.setText("0.0");
         paidTxt.setPreferredSize(new java.awt.Dimension(187, 24));
         paidTxt.addCaretListener(new javax.swing.event.CaretListener() {
@@ -509,14 +508,16 @@ public class Casher extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(totalChangeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalChangeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -661,18 +662,26 @@ public class Casher extends javax.swing.JFrame {
                         IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
 
                         //add order data to be printed 
-                        dd.setProductCount("");
-                        dd.setProductName("");
-                        dd.setProductPrice("");
-                        dd.setProductTotal("");
-                        dd.setBillNum("");
-                        dd.setPriceTotal("");
+                        dd.setProductCount(casherTable.getValueAt(i, 5).toString());
+                        dd.setProductName(casherTable.getValueAt(i, 6).toString());
+                        dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
+                        dd.setProductTotal(casherTable.getValueAt(i, 3).toString());
+                        dd.setBillNum(billNum + "");
+                        dd.setPriceTotal(totalPrice + "");
                         IC.list.add(dd);
 
                         IC.pst.execute();
                     }
+
+                    // Print method
+                    // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
+
+                    paid = 0;
+                    change = 0;
+                    paidTxt.setText("0.0");
+                    totalChangeLabel.setText("الباقي : " + change);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
