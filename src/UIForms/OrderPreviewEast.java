@@ -8,6 +8,9 @@ package UIForms;
 import Classes.ImportantClass;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -29,6 +32,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
     private ArrayList<JTable> tables = new ArrayList<>();
     private ArrayList<Integer> orderNum = new ArrayList<>();
     private ArrayList<Boolean> tabCreated = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> id = new ArrayList<>();
 
     public OrderPreviewEast() {
         // Check Conection to DB
@@ -38,7 +42,68 @@ public class OrderPreviewEast extends javax.swing.JFrame {
 
         initComponents();
 
+        WindowListener exitListener = null;
+        addWindowListener(prepareWindow(exitListener));
+
         getAllUnfinishedOrder();
+    }
+
+    private WindowListener prepareWindow(WindowListener exitListener) {
+        exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Home m = new Home();
+                OrderPreviewEast.this.dispose();
+                m.setVisible(true);
+            }
+        };
+        return exitListener;
+    }
+
+    private void getAllUnfinishedOrder() {
+        try {
+            IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
+                    + "FROM sql12271829.order "
+                    + "where orderDone=0 and orderType='شرقي'");
+            IC.rs = IC.pst.executeQuery();
+
+            while (IC.rs.next()) {
+                int x = IC.rs.getInt("orderNum");
+                if (!orderNum.contains(x)) {
+                    orderNum.add(x);
+                    tabCreated.add(false);
+                }
+            }
+
+            for (int i = 0; i < orderNum.size(); i++) {
+                if (!tabCreated.get(i)) {
+                    createNewTab(orderNum.get(i));
+
+                    // Get all id of the order
+                    IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM sql12271829.order"
+                            + " where orderNum=? and orderType='شرقي'");
+                    IC.pst.setInt(1, orderNum.get(i));
+                    IC.rs = IC.pst.executeQuery();
+                    ArrayList<Integer> orderId = new ArrayList<>();
+                    while (IC.rs.next()) {
+                        orderId.add(IC.rs.getInt("id"));
+                    }
+                    id.add(orderId);
+
+                    // Get all data of the order
+                    IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
+                            + " FROM sql12271829.order"
+                            + " where orderNum=? and orderType='شرقي'");
+                    IC.pst.setInt(1, orderNum.get(i));
+                    IC.rs = IC.pst.executeQuery();
+                    tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
+                    tabCreated.set(i, true);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     // This method for create new tab and it's children
@@ -74,38 +139,6 @@ public class OrderPreviewEast extends javax.swing.JFrame {
         tables.add(table);
     }
 
-    private void getAllUnfinishedOrder() {
-        try {
-            IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
-                    + "FROM sql12271829.order "
-                    + "where orderDone=0 and orderType='شرقي'");
-            IC.rs = IC.pst.executeQuery();
-
-            while (IC.rs.next()) {
-                int x = IC.rs.getInt("orderNum");
-                if (!orderNum.contains(x)) {
-                    orderNum.add(x);
-                    tabCreated.add(false);
-                }
-            }
-
-            for (int i = 0; i < orderNum.size(); i++) {
-                if (!tabCreated.get(i)) {
-                    createNewTab(orderNum.get(i));
-                    IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
-                            + " FROM sql12271829.order"
-                            + " where orderNum=? and orderType='شرقي'");
-                    IC.pst.setInt(1, orderNum.get(i));
-                    IC.rs = IC.pst.executeQuery();
-                    tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
-                    tabCreated.set(i, true);
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,6 +150,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        noOrderLabel = new javax.swing.JLabel();
         Tabs = new javax.swing.JTabbedPane();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
@@ -126,9 +160,16 @@ public class OrderPreviewEast extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         showNewOrderBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("عرض الطلبات الشرقية");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        noOrderLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        noOrderLabel.setForeground(new java.awt.Color(255, 0, 0));
+        noOrderLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        noOrderLabel.setText("لا يوجد طلبات اضغط علي (اظهر طلبات جديده) لاظهار اجدد الطلبات");
 
         Tabs.setBackground(new java.awt.Color(255, 255, 255));
         Tabs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -143,10 +184,20 @@ public class OrderPreviewEast extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Tabs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(noOrderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 882, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(noOrderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -306,7 +357,12 @@ public class OrderPreviewEast extends javax.swing.JFrame {
 
     private void TabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabsStateChanged
         if (Tabs.getTabCount() > 0 && Tabs.getSelectedIndex() != -1) {
+            noOrderLabel.setVisible(false);
+            orderNumLabel.setVisible(true);
             orderNumLabel.setText("رقم الطلب : " + orderNum.get(Tabs.getSelectedIndex()));
+        } else if (Tabs.getTabCount() == 0) {
+            noOrderLabel.setVisible(true);
+            orderNumLabel.setVisible(false);
         }
     }//GEN-LAST:event_TabsStateChanged
 
@@ -317,15 +373,23 @@ public class OrderPreviewEast extends javax.swing.JFrame {
     private void orderDoneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderDoneBtnActionPerformed
         if (Tabs.getTabCount() > 0) {
             try {
-                IC.pst = IC.dbc.conn.prepareStatement("update sql12271829.order"
-                    + " set orderDone=1"
-                    + " where Patient_Information_PatientID=? and CashingDate=?");
-                IC.rs = IC.pst.executeQuery();
+                for (int i = 0; i < id.get(Tabs.getSelectedIndex()).size(); i++) {
+                    IC.pst = IC.dbc.conn.prepareStatement("update sql12271829.order"
+                            + " set orderDone=1"
+                            + " where id=?");
+                    IC.pst.setInt(1, id.get(Tabs.getSelectedIndex()).get(i));
+                    IC.pst.execute();
+                }
+                id.remove(Tabs.getSelectedIndex());
+                orderNum.remove(Tabs.getSelectedIndex());
+                tables.remove(Tabs.getSelectedIndex());
+                tabCreated.remove(Tabs.getSelectedIndex());
+                Tabs.remove(Tabs.getSelectedIndex());
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "لا يوجد طلبات لتنفذها");
+            JOptionPane.showMessageDialog(null, "لا يوجد طلبات لتنفذيها");
         }
     }//GEN-LAST:event_orderDoneBtnActionPerformed
 
@@ -373,6 +437,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel noOrderLabel;
     private javax.swing.JButton orderDoneBtn;
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JButton showNewOrderBtn;

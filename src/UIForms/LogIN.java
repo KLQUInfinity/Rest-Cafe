@@ -1,9 +1,6 @@
 package UIForms;
 
 import Classes.ImportantClass;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**

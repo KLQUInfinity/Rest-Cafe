@@ -22,7 +22,7 @@ import net.proteanit.sql.DbUtils;
  *
  * @author sayed
  */
-public class OrderPreviewWest extends javax.swing.JFrame {
+public class OrderPreview extends javax.swing.JFrame {
 
     private final ImportantClass IC = ImportantClass.getInstance();
 
@@ -34,7 +34,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
     private ArrayList<Boolean> tabCreated = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> id = new ArrayList<>();
 
-    public OrderPreviewWest() {
+    public OrderPreview() {
         // Check Conection to DB
         if (!IC.dbc.check) {
             IC.dbc.ConnectDB();
@@ -54,7 +54,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 Home m = new Home();
-                OrderPreviewWest.this.dispose();
+                OrderPreview.this.dispose();
                 m.setVisible(true);
             }
         };
@@ -65,7 +65,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
         try {
             IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
                     + "FROM sql12271829.order "
-                    + "where orderDone=0 and orderType='غربي'");
+                    + "where orderDone=0");
             IC.rs = IC.pst.executeQuery();
 
             while (IC.rs.next()) {
@@ -82,7 +82,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
 
                     // Get all id of the order
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM sql12271829.order"
-                            + " where orderNum=? and orderType='غربي'");
+                            + " where orderNum=?");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     ArrayList<Integer> orderId = new ArrayList<>();
@@ -94,7 +94,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
                     // Get all data of the order
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
                             + " FROM sql12271829.order"
-                            + " where orderNum=? and orderType='غربي'");
+                            + " where orderNum=?");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
@@ -161,7 +161,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
         showNewOrderBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("عرض الطلبات الغربية");
+        setTitle("عرض الطلبات");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -194,7 +194,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(noOrderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -410,13 +410,13 @@ public class OrderPreviewWest extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrderPreviewWest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -426,7 +426,7 @@ public class OrderPreviewWest extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrderPreviewWest().setVisible(true);
+                new OrderPreview().setVisible(true);
             }
         });
     }

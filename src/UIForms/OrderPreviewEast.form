@@ -2,7 +2,9 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="title" type="java.lang.String" value="&#x639;&#x631;&#x636; &#x627;&#x644;&#x637;&#x644;&#x628;&#x627;&#x62a; &#x627;&#x644;&#x634;&#x631;&#x642;&#x64a;&#x629;"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
@@ -82,15 +84,41 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="Tabs" alignment="1" pref="894" max="32767" attributes="0"/>
+                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="noOrderLabel" pref="882" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="Tabs" alignment="0" pref="426" max="32767" attributes="0"/>
+                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="noOrderLabel" pref="414" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
+            <Component class="javax.swing.JLabel" name="noOrderLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="36" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="&#x644;&#x627; &#x64a;&#x648;&#x62c;&#x62f; &#x637;&#x644;&#x628;&#x627;&#x62a; &#x627;&#x636;&#x63a;&#x637; &#x639;&#x644;&#x64a; (&#x627;&#x638;&#x647;&#x631; &#x637;&#x644;&#x628;&#x627;&#x62a; &#x62c;&#x62f;&#x64a;&#x62f;&#x647;) &#x644;&#x627;&#x638;&#x647;&#x627;&#x631; &#x627;&#x62c;&#x62f;&#x62f; &#x627;&#x644;&#x637;&#x644;&#x628;&#x627;&#x62a;"/>
+              </Properties>
+            </Component>
             <Container class="javax.swing.JTabbedPane" name="Tabs">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

@@ -47,8 +47,9 @@ public class Casher extends javax.swing.JFrame {
 
         initComponents();
 
-//        WindowListener exitListener = null;
-//        addWindowListener(prepareWindow(exitListener));
+        WindowListener exitListener = null;
+        addWindowListener(prepareWindow(exitListener));
+        
         casherTable.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
         casherTable.getTableHeader().setAlignmentY(CENTER_ALIGNMENT);
         DefaultTableCellRenderer c = new DefaultTableCellRenderer();
@@ -57,24 +58,26 @@ public class Casher extends javax.swing.JFrame {
         casherTable.setDefaultRenderer(Object.class, c);
         casherTable.setAutoCreateColumnsFromModel(false);
         dtm = (DefaultTableModel) casherTable.getModel();
+        
         getAllProductData();
         getLastBillNum();
         //This statement to make the form in fullsize.
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-//    private WindowListener prepareWindow(WindowListener exitListener) {
-//        exitListener = new WindowAdapter() {
-//
-//            @Override
-//            public void windowClosing(WindowEvent e) {
-//                Menu m = new Menu();
-//                Casher.this.dispose();
-//                m.setVisible(true);
-//            }
-//        };
-//        return exitListener;
-//    }
+    private WindowListener prepareWindow(WindowListener exitListener) {
+        exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Home m = new Home();
+                Casher.this.dispose();
+                m.setVisible(true);
+            }
+        };
+        return exitListener;
+    }
+    
     private void getAllProductData() {
         clearTextFields();
         try {
@@ -126,6 +129,22 @@ public class Casher extends javax.swing.JFrame {
         clearSelectionBtn.setEnabled(check);
     }
 
+    private void calculateTotalChange() {
+        try {
+            double paid = 0.0;
+            if (!paidTxt.getText().equals("")) {
+                paid = Double.parseDouble(paidTxt.getText());
+            }
+            if (paid >= 0) {
+                totalChangeLabel.setText("الباقي : " + (paid - totalPrice));
+            } else {
+                JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة عدديه");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,6 +166,8 @@ public class Casher extends javax.swing.JFrame {
         notesTA = new javax.swing.JTextArea();
         productTypeLabel = new javax.swing.JLabel();
         productTypeCB = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        paidTxt = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
@@ -161,8 +182,11 @@ public class Casher extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         totalLabel = new javax.swing.JLabel();
         submitBtn = new javax.swing.JButton();
+        totalChangeLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("كاشير");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -170,6 +194,7 @@ public class Casher extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -188,6 +213,7 @@ public class Casher extends javax.swing.JFrame {
         countLabel.setText("العدد");
 
         countTxt.setForeground(new java.awt.Color(255, 0, 0));
+        countTxt.setText("0");
         countTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 countTxtActionPerformed(evt);
@@ -207,6 +233,7 @@ public class Casher extends javax.swing.JFrame {
         productTypeLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         productTypeLabel.setForeground(new java.awt.Color(255, 0, 0));
         productTypeLabel.setText("نوع الصنف");
+        productTypeLabel.setPreferredSize(new java.awt.Dimension(69, 17));
 
         productTypeCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         productTypeCB.setForeground(new java.awt.Color(255, 0, 0));
@@ -215,6 +242,19 @@ public class Casher extends javax.swing.JFrame {
         productTypeCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 productTypeCBItemStateChanged(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel2.setText("المدفوع");
+        jLabel2.setPreferredSize(new java.awt.Dimension(69, 17));
+
+        paidTxt.setText("0.0");
+        paidTxt.setPreferredSize(new java.awt.Dimension(187, 24));
+        paidTxt.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                paidTxtCaretUpdate(evt);
             }
         });
 
@@ -235,14 +275,17 @@ public class Casher extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(productLabel)
                         .addGap(18, 18, 18)
                         .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)))
-                .addGap(6, 6, 6))
+                        .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,14 +303,18 @@ public class Casher extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productLabel)
-                    .addComponent(productTypeLabel)
+                    .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(countLabel)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
+
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
 
         jPanel8.setBackground(new java.awt.Color(187, 187, 187));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -276,6 +323,7 @@ public class Casher extends javax.swing.JFrame {
         orderNumLabel.setForeground(new java.awt.Color(255, 0, 0));
         orderNumLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         orderNumLabel.setText("رقم الطلب : 0");
+        orderNumLabel.setPreferredSize(new java.awt.Dimension(188, 43));
 
         addBtn.setBackground(new java.awt.Color(255, 0, 0));
         addBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
@@ -309,52 +357,24 @@ public class Casher extends javax.swing.JFrame {
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(244, 244, 244)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(260, Short.MAX_VALUE))
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(668, Short.MAX_VALUE)
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(orderNumLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                    .addGap(3, 3, 3)))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 81, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(118, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-        );
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 115, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 180));
 
@@ -432,7 +452,7 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -454,6 +474,7 @@ public class Casher extends javax.swing.JFrame {
         totalLabel.setForeground(new java.awt.Color(255, 0, 0));
         totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalLabel.setText("الاجمالي : 0.0");
+        totalLabel.setPreferredSize(new java.awt.Dimension(266, 28));
 
         submitBtn.setBackground(new java.awt.Color(255, 0, 0));
         submitBtn.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
@@ -465,25 +486,38 @@ public class Casher extends javax.swing.JFrame {
             }
         });
 
+        totalChangeLabel.setBackground(new java.awt.Color(255, 255, 255));
+        totalChangeLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        totalChangeLabel.setForeground(new java.awt.Color(255, 0, 0));
+        totalChangeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalChangeLabel.setText("الباقي : 0.0");
+        totalChangeLabel.setPreferredSize(new java.awt.Dimension(266, 28));
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(submitBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalChangeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalChangeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -502,9 +536,9 @@ public class Casher extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 890, 130));
@@ -533,6 +567,7 @@ public class Casher extends javax.swing.JFrame {
                     totalPrice += price;
                     totalLabel.setText("الاجمالي : " + totalPrice);
                     getAllProductData();
+                    calculateTotalChange();
                 } else {
                     JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
                 }
@@ -579,6 +614,7 @@ public class Casher extends javax.swing.JFrame {
                 totalLabel.setText("الاجمالي : " + totalPrice);
                 clearSelectionBtn.doClick();
                 getAllProductData();
+                calculateTotalChange();
             } else {
                 JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
             }
@@ -594,6 +630,7 @@ public class Casher extends javax.swing.JFrame {
         dtm.removeRow(casherTable.getSelectedRow());
         clearSelectionBtn.doClick();
         getAllProductData();
+        calculateTotalChange();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
@@ -622,7 +659,7 @@ public class Casher extends javax.swing.JFrame {
                         IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
                         IC.pst.setString(8, IC.userName);
                         IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
-                        
+
                         //add order data to be printed 
                         dd.setProductCount("");
                         dd.setProductName("");
@@ -631,7 +668,7 @@ public class Casher extends javax.swing.JFrame {
                         dd.setBillNum("");
                         dd.setPriceTotal("");
                         IC.list.add(dd);
-                        
+
                         IC.pst.execute();
                     }
                     dtm.setRowCount(0);
@@ -652,6 +689,10 @@ public class Casher extends javax.swing.JFrame {
     private void productTypeCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productTypeCBItemStateChanged
         getAllProductData();
     }//GEN-LAST:event_productTypeCBItemStateChanged
+
+    private void paidTxtCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_paidTxtCaretUpdate
+        calculateTotalChange();
+    }//GEN-LAST:event_paidTxtCaretUpdate
 
     /**
      * @param args the command line arguments
@@ -696,6 +737,7 @@ public class Casher extends javax.swing.JFrame {
     private javax.swing.JTextField countTxt;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -708,11 +750,13 @@ public class Casher extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea notesTA;
     private javax.swing.JLabel orderNumLabel;
+    private javax.swing.JTextField paidTxt;
     private javax.swing.JLabel productLabel;
     private javax.swing.JComboBox<String> productNameCB;
     private javax.swing.JComboBox<String> productTypeCB;
     private javax.swing.JLabel productTypeLabel;
     private javax.swing.JButton submitBtn;
+    private javax.swing.JLabel totalChangeLabel;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
