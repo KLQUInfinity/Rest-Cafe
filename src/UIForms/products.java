@@ -60,7 +60,6 @@ public class products extends javax.swing.JFrame {
         name = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        type = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         Search = new javax.swing.JTextField();
@@ -75,6 +74,7 @@ public class products extends javax.swing.JFrame {
         backBtn = new javax.swing.JButton();
         subType = new javax.swing.JTextField();
         price = new javax.swing.JTextField();
+        type = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("إدارة بيانات المنتجات ");
@@ -111,24 +111,6 @@ public class products extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("النوع الفرعي:");
-
-        type.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        type.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        type.setToolTipText("");
-        type.setName("name"); // NOI18N
-        type.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                typeActionPerformed(evt);
-            }
-        });
-        type.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                typeKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                typeKeyTyped(evt);
-            }
-        });
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -291,6 +273,16 @@ public class products extends javax.swing.JFrame {
             }
         });
 
+        type.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        type.setForeground(new java.awt.Color(255, 0, 0));
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "كافيه" }));
+        type.setPreferredSize(new java.awt.Dimension(175, 26));
+        type.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                typeItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -328,14 +320,14 @@ public class products extends javax.swing.JFrame {
                             .addComponent(printBtn)
                             .addComponent(isertBtn)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(subType, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))))
-                .addContainerGap())
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(subType, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)))
+                .addGap(49, 49, 49))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(368, 368, 368)
                 .addComponent(jLabel1)
@@ -411,18 +403,6 @@ public class products extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameKeyTyped
 
-    private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_typeActionPerformed
-
-    private void typeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_typeKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_typeKeyPressed
-
-    private void typeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_typeKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_typeKeyTyped
-
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SearchActionPerformed
@@ -453,12 +433,11 @@ public class products extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.pst.setString(1, name.getText());
             IC.pst.setDouble(2, Double.parseDouble(price.getText()));
-            IC.pst.setString(3, type.getText());
+            IC.pst.setString(3, type.getSelectedItem().toString());
             IC.pst.setString(4, subType.getText());
             IC.pst.executeUpdate();
             name.setText("");
             price.setText("");
-            type.setText("");
             subType.setText("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "ادخل بيانات صحيحه");
@@ -475,7 +454,6 @@ public class products extends javax.swing.JFrame {
                 IC.pst.executeUpdate();
                 name.setText("");
                 price.setText("");
-                type.setText("");
                 subType.setText("");
                 JOptionPane.showMessageDialog(null, " تم الحذف");
             } catch (SQLException | HeadlessException e) {
@@ -490,12 +468,11 @@ public class products extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.pst.setString(1, name.getText());
             IC.pst.setDouble(2, Double.parseDouble(price.getText()));
-            IC.pst.setString(3, type.getText());
+            IC.pst.setString(3, type.getSelectedItem().toString());
             IC.pst.setString(4, subType.getText());
             IC.pst.executeUpdate();
             name.setText("");
             price.setText("");
-            type.setText("");
             subType.setText("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "ادخل بيانات صحيحه");
@@ -550,7 +527,7 @@ public class products extends javax.swing.JFrame {
                 String add2 = IC.rs.getString("productPrice");
                 price.setText(add2);
                 String add3 = IC.rs.getString("productType");
-                type.setText(add3);
+                type.setSelectedItem(add3);
                 String add4 = IC.rs.getString("productSubType");
                 subType.setText(add4);
             }
@@ -558,6 +535,10 @@ public class products extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_productsTableMouseClicked
+
+    private void typeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typeItemStateChanged
+
+    }//GEN-LAST:event_typeItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -613,7 +594,7 @@ public class products extends javax.swing.JFrame {
     private javax.swing.JTable productsTable;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField subType;
-    private javax.swing.JTextField type;
+    private javax.swing.JComboBox<String> type;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
