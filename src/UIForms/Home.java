@@ -29,7 +29,7 @@ public class Home extends javax.swing.JFrame {
         switch (IC.jobTitle) {
             case "admin":
                 break;
-            case "Cacher":
+            case "Cashier":
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);
@@ -222,7 +222,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-            Casher c = new Casher();
+            Cashier c = new Cashier();
             c.setVisible(true);
             dispose();  
     }//GEN-LAST:event_jButton5ActionPerformed

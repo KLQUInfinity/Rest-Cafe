@@ -13,9 +13,11 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -134,6 +136,10 @@ public class OrderPreviewWest extends javax.swing.JFrame {
 
         table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
         table.getTableHeader().setAlignmentY(CENTER_ALIGNMENT);
+        DefaultTableCellRenderer c = new DefaultTableCellRenderer();
+        c.setHorizontalAlignment(JLabel.CENTER);
+        c.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        table.setDefaultRenderer(Object.class, c);
         table.setAutoCreateColumnsFromModel(false);
 
         tables.add(table);
