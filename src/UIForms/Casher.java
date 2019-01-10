@@ -291,20 +291,17 @@ public class Casher extends javax.swing.JFrame {
         table.addCell(ce1);
         //casher name
         table.addCell(c00);
-        table.addCell(c00);
-        PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f1));
+        PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
         c8.setColspan(3);
         c8.setPadding(5f);
         c8.setHorizontalAlignment(Element.ALIGN_CENTER);
-        c8.setBorderWidthLeft(0);
+        c8.setBorder(0);
         table.addCell(c8);
-        PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f1));
+        PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
         c9.setColspan(3);
-        c9.setPadding(5f);
-        c9.setBorderWidthRight(0);
+        c9.setBorder(0);
         table.addCell(c9);
         ///footer
-        table.addCell(c00);
         table.addCell(c00);
         PdfPCell cel0 = new PdfPCell(new Paragraph("شكرا  لزيارتكم", f1));
         cel0.setColspan(6);
