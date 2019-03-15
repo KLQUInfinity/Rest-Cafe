@@ -326,7 +326,7 @@ public class users extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("نوع الموظف:");
 
-        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "Cashier", "Order Viewer" }));
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "Cashier", "Order Viewer", "Metre", "Delivery" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
