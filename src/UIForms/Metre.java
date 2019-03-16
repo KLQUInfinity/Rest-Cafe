@@ -114,7 +114,7 @@ public class Metre extends javax.swing.JFrame {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
                     + ", productPrice "
-                    + " from sql12271829.product"
+                    + " from sql2283641.product"
                     + " where productType=?");
             IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
             IC.rs = IC.pst.executeQuery();
@@ -132,7 +132,7 @@ public class Metre extends javax.swing.JFrame {
     private void getLastBillNum() {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql12271829.order");
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order");
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
@@ -864,7 +864,7 @@ public class Metre extends javax.swing.JFrame {
             if (y == 0) {
                 try {
                     for (int i = 0; i < casherTable.getRowCount(); i++) {
-                        IC.pst = IC.dbc.conn.prepareStatement("insert into sql12271829.order("
+                        IC.pst = IC.dbc.conn.prepareStatement("insert into sql2283641.order("
                                 + "orderNum, orderProduct,"
                                 + "orderCount, orderPrice,"
                                 + "orderTotal, orderDate,"

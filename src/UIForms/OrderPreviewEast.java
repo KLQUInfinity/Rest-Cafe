@@ -66,7 +66,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
     private void getAllUnfinishedOrder() {
         try {
             IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
-                    + "FROM sql12271829.order "
+                    + "FROM sql2283641.order "
                     + "where orderDone=0 and orderType='شرقي'");
             IC.rs = IC.pst.executeQuery();
 
@@ -83,7 +83,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
                     createNewTab(orderNum.get(i));
 
                     // Get all id of the order
-                    IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM sql12271829.order"
+                    IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM sql2283641.order"
                             + " where orderNum=? and orderType='شرقي'");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
@@ -95,7 +95,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
 
                     // Get all data of the order
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
-                            + " FROM sql12271829.order"
+                            + " FROM sql2283641.order"
                             + " where orderNum=? and orderType='شرقي'");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
@@ -380,7 +380,7 @@ public class OrderPreviewEast extends javax.swing.JFrame {
         if (Tabs.getTabCount() > 0) {
             try {
                 for (int i = 0; i < id.get(Tabs.getSelectedIndex()).size(); i++) {
-                    IC.pst = IC.dbc.conn.prepareStatement("update sql12271829.order"
+                    IC.pst = IC.dbc.conn.prepareStatement("update sql2283641.order"
                             + " set orderDone=1"
                             + " where id=?");
                     IC.pst.setInt(1, id.get(Tabs.getSelectedIndex()).get(i));

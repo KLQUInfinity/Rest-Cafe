@@ -36,7 +36,7 @@ public class ProductNameSearch extends javax.swing.JPanel {
     private void getAllTypes() {
         clearTextFields();
         try {
-            IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT productType from sql12271829.product");
+            IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT productType from sql2283641.product");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> types = new ArrayList<>();
             while (IC.rs.next()) {
@@ -59,7 +59,7 @@ public class ProductNameSearch extends javax.swing.JPanel {
                 // Get all Product
                 IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
                         + ", productPrice "
-                        + "from sql12271829.product "
+                        + "from sql2283641.product "
                         + "where productName like ? and productType=?");
                 IC.pst.setString(1, searchTxt.getText());
                 IC.pst.setString(2, productTypeCB.getSelectedItem().toString());

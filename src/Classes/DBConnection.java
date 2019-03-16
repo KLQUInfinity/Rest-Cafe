@@ -22,8 +22,8 @@ public class DBConnection {
         try {
 //            Class.forName("com.mysql.jdbc.Driver");
             //create connection
-            //conn = DriverManager.getConnection("jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8120627?useUnicode=yes&characterEncoding=UTF-8", "sql8120627", "pPUVsMuFy3");
-            conn= DriverManager.getConnection("jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12271829?useUnicode=yes&characterEncoding=UTF-8","sql12271829","mW33iQQxIb");
+            //            conn= DriverManager.getConnection("jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2283641?useUnicode=yes&characterEncoding=UTF-8","sql2283641","bL8!yY6!");
+            conn= DriverManager.getConnection("jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2283641?useUnicode=yes&characterEncoding=UTF-8","sql2283641","bL8!yY6!");
             check = true;
 
         } catch (Exception e) {
