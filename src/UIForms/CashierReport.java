@@ -92,7 +92,6 @@ public class CashierReport extends javax.swing.JFrame {
                 users.add(IC.rs.getString("userName"));
             }
             employeeNameCB.setModel(new DefaultComboBoxModel(users.toArray()));
-            System.out.println("aaa");
             getAllTotals();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -163,7 +162,6 @@ public class CashierReport extends javax.swing.JFrame {
                 allTotals = IC.rs.getDouble("sum(orderTotal)");
                 allTotalsLabel.setText("الاجمالي لكل الموظفين : " + allTotals);
             }
-            System.out.println("aaaaaaa");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
