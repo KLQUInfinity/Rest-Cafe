@@ -84,6 +84,7 @@ public class CashierReport extends javax.swing.JFrame {
                 users.add(IC.rs.getString("userName"));
             }
             employeeNameCB.setModel(new DefaultComboBoxModel(users.toArray()));
+            System.out.println("aaa");
             getAllTotals();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -91,43 +92,45 @@ public class CashierReport extends javax.swing.JFrame {
     }
 
     private void getAllBillNums() {
-        try {
-            // Rest variables
-            ((DefaultTableModel) cashierReportTable.getModel()).setRowCount(0);
-            
-            // Get all bill total
-            getAllBillTotalForOneUser();
+        if (employeeNameCB.getSelectedItem() != null) {
+            try {
+                // Rest variables
+                ((DefaultTableModel) cashierReportTable.getModel()).setRowCount(0);
 
-            // Get all bill numbers
-            IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT orderNum"
-                    + " from sql2283641.order"
-                    + " where userName = ?");
-            IC.pst.setString(1, employeeNameCB.getSelectedItem().toString());
-            IC.rs = IC.pst.executeQuery();
-            orderNums.clear();
-            while (IC.rs.next()) {
-                orderNums.add(IC.rs.getInt("orderNum"));
-            }
+                // Get all bill total
+                getAllBillTotalForOneUser();
 
-            // Get First Bill
-            if (orderNums.size() > 0) {
-                billIndex = 0;
-                selectionBillHandel();
-                getBill(orderNums.get(billIndex));
-            } else {
-                billIndex = -1;
-                selectionBillHandel();
-                billTotal = 0;
-                tableTotalLabel.setText("اجمالي الفاتورة : " + billTotal);
+                // Get all bill numbers
+                IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT orderNum"
+                        + " from sql2283641.order"
+                        + " where userName = ?");
+                IC.pst.setString(1, employeeNameCB.getSelectedItem().toString());
+                IC.rs = IC.pst.executeQuery();
+                orderNums.clear();
+                while (IC.rs.next()) {
+                    orderNums.add(IC.rs.getInt("orderNum"));
+                }
+
+                // Get First Bill
+                if (orderNums.size() > 0) {
+                    billIndex = 0;
+                    selectionBillHandel();
+                    getBill(orderNums.get(billIndex));
+                } else {
+                    billIndex = -1;
+                    selectionBillHandel();
+                    billTotal = 0;
+                    tableTotalLabel.setText("اجمالي الفاتورة : " + billTotal);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 
     private void getAllBillTotalForOneUser() {
         try {
-            allbillTotal=0;
+            allbillTotal = 0;
             IC.pst = IC.dbc.conn.prepareStatement("select sum(orderTotal)"
                     + " from sql2283641.order"
                     + " where userName = ?");
@@ -144,7 +147,7 @@ public class CashierReport extends javax.swing.JFrame {
 
     private void getAllTotals() {
         try {
-            allTotals=0;
+            allTotals = 0;
             IC.pst = IC.dbc.conn.prepareStatement("select sum(orderTotal)"
                     + " from sql2283641.order");
             IC.rs = IC.pst.executeQuery();
@@ -152,6 +155,7 @@ public class CashierReport extends javax.swing.JFrame {
                 allTotals = IC.rs.getDouble("sum(orderTotal)");
                 allTotalsLabel.setText("الاجمالي لكل الموظفين : " + allTotals);
             }
+            System.out.println("aaaaaaa");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
