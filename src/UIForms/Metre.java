@@ -44,7 +44,6 @@ public class Metre extends javax.swing.JFrame {
     private DefaultTableModel dtm;
     private double totalPrice = 0;
     private int billNum = 0;
-    private double paid = 0, change = 0;
 
     /**
      * Creates new form Casher
@@ -54,9 +53,8 @@ public class Metre extends javax.swing.JFrame {
         if (!IC.dbc.check) {
             IC.dbc.ConnectDB();
         }
-
         initComponents();
-
+        
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
 
@@ -141,22 +139,6 @@ public class Metre extends javax.swing.JFrame {
         clearSelectionBtn.setEnabled(check);
     }
 
-    private void calculateTotalChange() {
-        try {
-            if (!paidTxt.getText().equals("")) {
-                paid = Double.parseDouble(paidTxt.getText());
-            }
-            if (paid >= 0) {
-                change = paid - totalPrice;
-                totalChangeLabel.setText("الباقي : " + change);
-            } else {
-                JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة عدديه");
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -178,8 +160,6 @@ public class Metre extends javax.swing.JFrame {
         notesTA = new javax.swing.JTextArea();
         productTypeLabel = new javax.swing.JLabel();
         productTypeCB = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        paidTxt = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
@@ -194,10 +174,9 @@ public class Metre extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         totalLabel = new javax.swing.JLabel();
         submitBtn = new javax.swing.JButton();
-        totalChangeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("كاشير");
+        setTitle("ميتر");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -257,20 +236,6 @@ public class Metre extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel2.setText("المدفوع");
-        jLabel2.setPreferredSize(new java.awt.Dimension(69, 17));
-
-        paidTxt.setForeground(new java.awt.Color(255, 0, 0));
-        paidTxt.setText("0.0");
-        paidTxt.setPreferredSize(new java.awt.Dimension(187, 24));
-        paidTxt.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                paidTxtCaretUpdate(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -285,19 +250,14 @@ public class Metre extends javax.swing.JFrame {
                     .addComponent(productNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(productLabel)
                         .addGap(18, 18, 18)
                         .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -321,9 +281,7 @@ public class Metre extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(countLabel)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -517,13 +475,6 @@ public class Metre extends javax.swing.JFrame {
             }
         });
 
-        totalChangeLabel.setBackground(new java.awt.Color(255, 255, 255));
-        totalChangeLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        totalChangeLabel.setForeground(new java.awt.Color(255, 0, 0));
-        totalChangeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        totalChangeLabel.setText("الباقي : 0.0");
-        totalChangeLabel.setPreferredSize(new java.awt.Dimension(266, 28));
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -532,23 +483,16 @@ public class Metre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(submitBtn)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(totalChangeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalChangeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -599,7 +543,6 @@ public class Metre extends javax.swing.JFrame {
                     totalPrice += price;
                     totalLabel.setText("الاجمالي : " + totalPrice);
                     getAllProductData();
-                    calculateTotalChange();
                 } else {
                     JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
                 }
@@ -647,7 +590,6 @@ public class Metre extends javax.swing.JFrame {
                 totalLabel.setText("الاجمالي : " + totalPrice);
                 clearSelectionBtn.doClick();
                 getAllProductData();
-                calculateTotalChange();
             } else {
                 JOptionPane.showMessageDialog(null, "من فضلك ادخل قيمة اكبر من الصفر");
             }
@@ -664,7 +606,6 @@ public class Metre extends javax.swing.JFrame {
         dtm.removeRow(casherTable.getSelectedRow());
         clearSelectionBtn.doClick();
         getAllProductData();
-        calculateTotalChange();
         getLastBillNum();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -713,11 +654,6 @@ public class Metre extends javax.swing.JFrame {
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
-
-                    paid = 0;
-                    change = 0;
-                    paidTxt.setText("0.0");
-                    totalChangeLabel.setText("الباقي : " + change);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (DocumentException ex) {
@@ -738,10 +674,6 @@ public class Metre extends javax.swing.JFrame {
     private void productTypeCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productTypeCBItemStateChanged
         getAllProductData();
     }//GEN-LAST:event_productTypeCBItemStateChanged
-
-    private void paidTxtCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_paidTxtCaretUpdate
-        calculateTotalChange();
-    }//GEN-LAST:event_paidTxtCaretUpdate
 
     /**
      * @param args the command line arguments
@@ -774,7 +706,7 @@ public class Metre extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cashier().setVisible(true);
+                new Metre().setVisible(true);
             }
         });
     }
@@ -787,7 +719,6 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JTextField countTxt;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -800,13 +731,11 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea notesTA;
     private javax.swing.JLabel orderNumLabel;
-    private javax.swing.JTextField paidTxt;
     private javax.swing.JLabel productLabel;
     private javax.swing.JComboBox<String> productNameCB;
     private javax.swing.JComboBox<String> productTypeCB;
     private javax.swing.JLabel productTypeLabel;
     private javax.swing.JButton submitBtn;
-    private javax.swing.JLabel totalChangeLabel;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables

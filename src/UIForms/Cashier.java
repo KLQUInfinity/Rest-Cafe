@@ -180,6 +180,9 @@ public class Cashier extends javax.swing.JFrame {
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
         clearSelectionBtn = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        ordertKindCB = new javax.swing.JComboBox<>();
+        productKindLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         casherTable = new javax.swing.JTable();
@@ -355,6 +358,44 @@ public class Cashier extends javax.swing.JFrame {
             }
         });
 
+        jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        ordertKindCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        ordertKindCB.setForeground(new java.awt.Color(255, 0, 0));
+        ordertKindCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "تيك اواي", "سفرة", "دليفيري" }));
+        ordertKindCB.setPreferredSize(new java.awt.Dimension(103, 26));
+        ordertKindCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ordertKindCBItemStateChanged(evt);
+            }
+        });
+
+        productKindLabel.setBackground(new java.awt.Color(204, 204, 204));
+        productKindLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        productKindLabel.setForeground(new java.awt.Color(255, 0, 0));
+        productKindLabel.setText("حالة الطلب");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ordertKindCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(productKindLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ordertKindCB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(productKindLabel))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -362,9 +403,11 @@ public class Cashier extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(244, 244, 244)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
                 .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -372,12 +415,15 @@ public class Cashier extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -400,7 +446,8 @@ public class Cashier extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 180));
@@ -667,67 +714,74 @@ public class Cashier extends javax.swing.JFrame {
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         getLastBillNum();
-        if (casherTable.getRowCount() > 0) {
-            int y = JOptionPane.showConfirmDialog(null,
-                    "هل تريد تاكيد الفاتوره؟\nمن فضلك تاكد من العميل بان هذا كل شئ",
-                    "رسالة تاكيد",
-                    JOptionPane.YES_NO_OPTION);
-            if (y == 0) {
-                try {
-                    for (int i = 0; i < casherTable.getRowCount(); i++) {
-                        IC.pst = IC.dbc.conn.prepareStatement("insert into sql2283641.order("
-                                + "orderNum, orderProduct,"
-                                + "orderCount, orderPrice,"
-                                + "orderTotal, orderDate,"
-                                + "orderNotes, userName,"
-                                + "orderType)"
-                                + "values(?,?,?,?,?,?,?,?,?)");
+        if (change >= 0) {
+            if (casherTable.getRowCount() > 0) {
+                int y = JOptionPane.showConfirmDialog(null,
+                        "هل تريد تاكيد الفاتوره؟\nمن فضلك تاكد من العميل بان هذا كل شئ",
+                        "رسالة تاكيد",
+                        JOptionPane.YES_NO_OPTION);
+                if (y == 0) {
+                    try {
+                        for (int i = 0; i < casherTable.getRowCount(); i++) {
+                            IC.pst = IC.dbc.conn.prepareStatement("insert into sql2283641.order("
+                                    + "orderNum, orderProduct,"
+                                    + "orderCount, orderPrice,"
+                                    + "orderTotal, orderDate,"
+                                    + "orderNotes, userName,"
+                                    + "orderType, orderKind,"
+                                    + "orderCashed )"
+                                    + "values(?,?,?,?,?,?,?,?,?,?,?)");
 
-                        IC.pst.setInt(1, billNum);
-                        IC.pst.setString(2, casherTable.getValueAt(i, 6).toString());
-                        IC.pst.setInt(3, Integer.parseInt(casherTable.getValueAt(i, 5).toString()));
-                        IC.pst.setDouble(4, Double.parseDouble(casherTable.getValueAt(i, 4).toString()));
-                        IC.pst.setDouble(5, Double.parseDouble(casherTable.getValueAt(i, 3).toString()));
-                        IC.pst.setString(6, casherTable.getValueAt(i, 2).toString());
-                        IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
-                        IC.pst.setString(8, IC.userName);
-                        IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
+                            IC.pst.setInt(1, billNum);
+                            IC.pst.setString(2, casherTable.getValueAt(i, 6).toString());
+                            IC.pst.setInt(3, Integer.parseInt(casherTable.getValueAt(i, 5).toString()));
+                            IC.pst.setDouble(4, Double.parseDouble(casherTable.getValueAt(i, 4).toString()));
+                            IC.pst.setDouble(5, Double.parseDouble(casherTable.getValueAt(i, 3).toString()));
+                            IC.pst.setString(6, casherTable.getValueAt(i, 2).toString());
+                            IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
+                            IC.pst.setString(8, IC.userName);
+                            IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
+                            IC.pst.setString(10, ordertKindCB.getSelectedItem().toString());
+                            IC.pst.setInt(11, 1);
 
-                        //add order data to be printed 
-                        dd.setProductCount(casherTable.getValueAt(i, 5).toString());
-                        dd.setProductName(casherTable.getValueAt(i, 6).toString());
-                        dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
-                        dd.setProductTotal(casherTable.getValueAt(i, 3).toString());
-                        dd.setBillNum(billNum + "");
-                        IC.list.add(dd);
+                            //add order data to be printed 
+                            dd.setProductCount(casherTable.getValueAt(i, 5).toString());
+                            dd.setProductName(casherTable.getValueAt(i, 6).toString());
+                            dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
+                            dd.setProductTotal(casherTable.getValueAt(i, 3).toString());
+                            dd.setBillNum(billNum + "");
+                            IC.list.add(dd);
 
-                        IC.pst.execute();
+                            IC.pst.execute();
+                        }
+
+                        // Print method
+                        BPR.printBillKitchen(billNum);
+                        BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText());
+                        BPR.pdfPrint();
+                        // Rest all varibles
+                        dtm.setRowCount(0);
+                        getLastBillNum();
+
+                        paid = 0;
+                        change = 0;
+                        paidTxt.setText("0.0");
+                        totalChangeLabel.setText("الباقي : " + change);
+                        totalPrice = 0;
+                        totalLabel.setText("الاجمالي : " + totalPrice);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (DocumentException ex) {
+                        Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                    // Print method
-                    BPR.printBillKitchen(billNum);
-                    BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText());
-                    BPR.pdfPrint();
-                    // Rest all varibles
-                    dtm.setRowCount(0);
-                    getLastBillNum();
- 
-                    paid = 0;
-                    change = 0;
-                    paidTxt.setText("0.0");
-                    totalChangeLabel.setText("الباقي : " + change);
-                    totalPrice = 0;
-                    totalLabel.setText("الاجمالي : " + totalPrice);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (DocumentException ex) {
-                    Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "لايوجد اي بيانات مضافة في الجدول");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "لايوجد اي بيانات مضافة في الجدول");
+        }else{
+            JOptionPane.showMessageDialog(null, "من فضلك ادخل المبلغ المدفوع لحساب الباقي");
         }
     }//GEN-LAST:event_submitBtnActionPerformed
 
@@ -742,6 +796,10 @@ public class Cashier extends javax.swing.JFrame {
     private void paidTxtCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_paidTxtCaretUpdate
         calculateTotalChange();
     }//GEN-LAST:event_paidTxtCaretUpdate
+
+    private void ordertKindCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ordertKindCBItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ordertKindCBItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -796,11 +854,14 @@ public class Cashier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea notesTA;
     private javax.swing.JLabel orderNumLabel;
+    private javax.swing.JComboBox<String> ordertKindCB;
     private javax.swing.JTextField paidTxt;
+    private javax.swing.JLabel productKindLabel;
     private javax.swing.JLabel productLabel;
     private javax.swing.JComboBox<String> productNameCB;
     private javax.swing.JComboBox<String> productTypeCB;
