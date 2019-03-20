@@ -18,7 +18,7 @@ public class ExcelReport {
 
     private final ImportantClass IC = ImportantClass.getInstance();
     ///write data to excel sheet
-    public void writeData(String path) throws IOException, WriteException, SQLException {
+    public void writeData(String path,String emp) throws IOException, WriteException, SQLException {
         ///////////
         WritableWorkbook workbook = Workbook.createWorkbook(new File(path + ".xls"));
         WritableSheet s = workbook.createSheet("1", 0);
@@ -49,7 +49,7 @@ public class ExcelReport {
         ///////////
         int rw = 1;
         ///////////
-        String query = "SELECT * FROM sql2283641.`order`;";
+        String query = "SELECT * FROM sql2283641.`order` WHERE userName ='"+emp+"';";
         IC.pst = IC.dbc.conn.prepareStatement(query);
         IC.rs = IC.pst .executeQuery();
         ///////////
