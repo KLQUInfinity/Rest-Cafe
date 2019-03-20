@@ -38,7 +38,7 @@ public class Cashier extends javax.swing.JFrame {
     private final ImportantClass IC = ImportantClass.getInstance();
     BillingData dd = new BillingData();
     public ArrayList<Double> productPrice = new ArrayList<>();
-    Bills_Printing_Reports BPR= new Bills_Printing_Reports();
+    Bills_Printing_Reports BPR = new Bills_Printing_Reports();
     //This variable modify in table.
     private DefaultTableModel dtm;
     private double totalPrice = 0;
@@ -119,9 +119,6 @@ public class Cashier extends javax.swing.JFrame {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
                 orderNumLabel.setText("رقم الطلب : " + billNum);
             }
-
-            totalPrice = 0;
-            totalLabel.setText("الاجمالي : " + totalPrice);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -139,7 +136,7 @@ public class Cashier extends javax.swing.JFrame {
         addBtn.setEnabled(!check);
         clearSelectionBtn.setEnabled(check);
     }
-    
+
     private void calculateTotalChange() {
         try {
             if (!paidTxt.getText().equals("")) {
@@ -596,7 +593,9 @@ public class Cashier extends javax.swing.JFrame {
                         productNameCB.getSelectedItem().toString()};
                     dtm.addRow(rowData);
                     totalPrice += price;
+
                     totalLabel.setText("الاجمالي : " + totalPrice);
+                    System.out.println(totalLabel.getText());
                     getAllProductData();
                     calculateTotalChange();
                 } else {
@@ -708,16 +707,18 @@ public class Cashier extends javax.swing.JFrame {
 
                     // Print method
                     BPR.printBillKitchen(billNum);
-                    BPR.printBill(billNum,totalPrice,paidTxt.getText(),totalChangeLabel.getText());
+                    BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText());
                     BPR.pdfPrint();
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
-
+ 
                     paid = 0;
                     change = 0;
                     paidTxt.setText("0.0");
                     totalChangeLabel.setText("الباقي : " + change);
+                    totalPrice = 0;
+                    totalLabel.setText("الاجمالي : " + totalPrice);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (DocumentException ex) {
