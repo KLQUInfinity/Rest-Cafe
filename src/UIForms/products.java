@@ -275,11 +275,16 @@ public class products extends javax.swing.JFrame {
 
         type.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         type.setForeground(new java.awt.Color(255, 0, 0));
-        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "كافيه" }));
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "الشاورما", "البيتزا", "المشويات", "الشرقي" }));
         type.setPreferredSize(new java.awt.Dimension(175, 26));
         type.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 typeItemStateChanged(evt);
+            }
+        });
+        type.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeActionPerformed(evt);
             }
         });
 
@@ -540,6 +545,10 @@ public class products extends javax.swing.JFrame {
 
     }//GEN-LAST:event_typeItemStateChanged
 
+    private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -551,7 +560,7 @@ public class products extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

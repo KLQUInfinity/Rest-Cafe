@@ -46,6 +46,8 @@ public class ImportantClass {
     public String userName = "admin";
     // This variable store the order content from the casher
    public ArrayList<BillingData> list=new ArrayList<>();
+   //This variable store the order type if it can take away ,delivery ,or Hall
+   public String OrderType ="";
     // </editor-fold>
 
     public String getDate() {
