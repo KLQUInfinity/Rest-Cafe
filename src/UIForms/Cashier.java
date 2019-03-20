@@ -717,7 +717,7 @@ public class Cashier extends javax.swing.JFrame {
 
                     // Print method
                     BPR.printBillKitchen(billNum);
-                    //BPR.printBill(billNum,totalPrice,paidTxt.getText(),totalChangeLabel.getText());
+                    BPR.printBill(billNum,totalPrice,paidTxt.getText(),totalChangeLabel.getText());
                     BPR.pdfPrint();
                     // Rest all varibles
                     dtm.setRowCount(0);
