@@ -595,7 +595,6 @@ public class Cashier extends javax.swing.JFrame {
                     totalPrice += price;
 
                     totalLabel.setText("الاجمالي : " + totalPrice);
-                    System.out.println(totalLabel.getText());
                     getAllProductData();
                     calculateTotalChange();
                 } else {
