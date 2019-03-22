@@ -31,15 +31,14 @@ import javax.print.attribute.PrintRequestAttributeSet;
 public class Bills_Printing_Reports {
 
     private final ImportantClass IC = ImportantClass.getInstance();
-    Document document = new Document(PageSize.A7);
     com.itextpdf.text.Font f = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 10f);
     com.itextpdf.text.Font f1 = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 13f);
 
     //print pdf Auto print the bill file
-    public void pdfPrint() {
+    public void pdfPrint(String Path) {
         FileInputStream psStream = null;
         try {
-            psStream = new FileInputStream("client.pdf");
+            psStream = new FileInputStream(Path);
         } catch (FileNotFoundException ffne) {
             ffne.printStackTrace();
         }
@@ -61,6 +60,7 @@ public class Bills_Printing_Reports {
 
     //take away Bill
     public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel) throws DocumentException, FileNotFoundException {
+        Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("client.pdf"));
         document.setMargins(8, 8, 10, 10);
         document.open();
@@ -202,6 +202,7 @@ public class Bills_Printing_Reports {
 
     //take away Bill
     public void printBillKitchen(int billNum) throws DocumentException, FileNotFoundException {
+        Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen.pdf"));
         document.setMargins(8, 8, 10, 10);
         document.open();

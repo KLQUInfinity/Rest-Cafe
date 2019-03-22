@@ -54,7 +54,7 @@ public class Metre extends javax.swing.JFrame {
             IC.dbc.ConnectDB();
         }
         initComponents();
-        
+
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
 
@@ -650,7 +650,9 @@ public class Metre extends javax.swing.JFrame {
 
                     // Print method
                     BPR.printBillKitchen(billNum);
-                    BPR.pdfPrint();
+                    BPR.printBill(billNum, totalPrice, "", "");
+                    BPR.pdfPrint("client.pdf");
+                    BPR.pdfPrint("kitchen.pdf");
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
