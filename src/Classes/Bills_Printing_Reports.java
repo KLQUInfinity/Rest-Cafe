@@ -171,17 +171,19 @@ public class Bills_Printing_Reports {
         table.addCell(cl);
         table.addCell(c00);
         table.addCell(c00);
-        //الباقي 
-        PdfPCell ce = new PdfPCell(new Paragraph("المدفوع:" + paidTxt, f));
-        ce.setColspan(3);
-        ce.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(ce);
-        PdfPCell ce1 = new PdfPCell(new Paragraph(totalChangeLabel, f));
-        ce1.setColspan(3);
-        ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(ce1);
-        //casher name
-        table.addCell(c00);
+        if (type.equals("تيك اواي")) {
+            //الباقي 
+            PdfPCell ce = new PdfPCell(new Paragraph("المدفوع:" + paidTxt, f));
+            ce.setColspan(3);
+            ce.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(ce);
+            PdfPCell ce1 = new PdfPCell(new Paragraph(totalChangeLabel, f));
+            ce1.setColspan(3);
+            ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(ce1);
+            table.addCell(c00);
+        }
+        //cachir
         PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
         c8.setColspan(3);
         c8.setPadding(5f);
