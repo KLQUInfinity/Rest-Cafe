@@ -534,7 +534,7 @@ public class Metre extends javax.swing.JFrame {
 
                     Object[] rowData = {productTypeCB.getSelectedItem().toString(),
                         notesTA.getText(),
-                        IC.getDate(),
+                        IC.getAllDate(),
                         price,
                         productPrice.get(productNameCB.getSelectedIndex()),
                         Integer.parseInt(countTxt.getText()),
@@ -582,7 +582,7 @@ public class Metre extends javax.swing.JFrame {
                 casherTable.setValueAt(countTxt.getText(), casherTable.getSelectedRow(), 5);
                 casherTable.setValueAt(productPrice.get(productNameCB.getSelectedIndex()), casherTable.getSelectedRow(), 4);
                 casherTable.setValueAt(price, casherTable.getSelectedRow(), 3);
-                casherTable.setValueAt(IC.getDate(), casherTable.getSelectedRow(), 2);
+                casherTable.setValueAt(IC.getAllDate(), casherTable.getSelectedRow(), 2);
                 casherTable.setValueAt(notesTA.getText(), casherTable.getSelectedRow(), 1);
                 casherTable.setValueAt(productTypeCB.getSelectedItem().toString(), casherTable.getSelectedRow(), 0);
 

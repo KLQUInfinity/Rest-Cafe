@@ -100,7 +100,7 @@ public class Bills_Printing_Reports {
         c2.setBorder(0);
         c2.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c2);
-        PdfPCell c3 = new PdfPCell(new Paragraph(IC.getDate(), f));
+        PdfPCell c3 = new PdfPCell(new Paragraph(IC.getAllDate(), f));
         c3.setColspan(4);
         c3.setBorder(0);
         c3.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -238,7 +238,7 @@ public class Bills_Printing_Reports {
         c2.setBorder(0);
         c2.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c2);
-        PdfPCell c3 = new PdfPCell(new Paragraph(IC.getDate(), f));
+        PdfPCell c3 = new PdfPCell(new Paragraph(IC.getAllDate(), f));
         c3.setBorder(0);
         c3.setColspan(2);
         c3.setHorizontalAlignment(Element.ALIGN_CENTER);

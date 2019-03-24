@@ -50,9 +50,21 @@ public class ImportantClass {
    public String OrderType ="";
     // </editor-fold>
 
-    public String getDate() {
+    public String getAllDate() {
         Date date = new Date();
         final DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
+        return dateformat.format(date);
+    }
+    
+    public String getDateOnly(){
+        Date date = new Date();
+        final DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateformat.format(date);
+    }
+    
+    public String getTimeOnly(){
+        Date date = new Date();
+        final DateFormat dateformat = new SimpleDateFormat("HH:mm:ss");
         return dateformat.format(date);
     }
 }
