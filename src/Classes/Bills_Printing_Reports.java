@@ -59,7 +59,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel) throws DocumentException, FileNotFoundException {
+    public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel, String type) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("client.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -70,7 +70,7 @@ public class Bills_Printing_Reports {
         table.setWidthPercentage(98);
         table.getDefaultCell().setArabicOptions(1);
         ///head
-        PdfPCell cell0 = new PdfPCell(new Paragraph("مطعم وكافيه ", f1));
+        PdfPCell cell0 = new PdfPCell(new Paragraph("مطعم وكافيه زايد ", f1));
         cell0.setColspan(6);
         cell0.setPaddingBottom(4f);
         cell0.setBorderColorTop(BaseColor.BLACK);
@@ -93,6 +93,18 @@ public class Bills_Printing_Reports {
         PdfPCell c0 = new PdfPCell(new Paragraph("", f));
         c0.setColspan(2);
         c0.setBorder(0);
+        table.addCell(c0);
+        ///type of order
+        PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
+        cc.setColspan(2);
+        cc.setBorder(0);
+        cc.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc);
+        PdfPCell cc1 = new PdfPCell(new Paragraph(type, f));
+        cc1.setColspan(2);
+        cc1.setBorder(0);
+        cc1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc1);
         table.addCell(c0);
         //date 
         PdfPCell c2 = new PdfPCell(new Paragraph("التاريخ:", f));
@@ -201,7 +213,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen(int billNum) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen(int billNum, String type) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -212,7 +224,7 @@ public class Bills_Printing_Reports {
         table.setWidthPercentage(98);
         table.getDefaultCell().setArabicOptions(1);
         ///head
-        PdfPCell cell0 = new PdfPCell(new Paragraph("مطعم وكافيه ", f1));
+        PdfPCell cell0 = new PdfPCell(new Paragraph("مطعم وكافيه زايد ", f1));
         cell0.setColspan(3);
         cell0.setPaddingBottom(4f);
         cell0.setBorderColorTop(BaseColor.BLACK);
@@ -233,6 +245,16 @@ public class Bills_Printing_Reports {
         PdfPCell c00 = new PdfPCell(new Paragraph("", f));
         c00.setBorder(0);
         table.addCell(c00);
+        ///type of order
+        PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
+        cc.setBorder(0);
+        cc.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc);
+        PdfPCell cc1 = new PdfPCell(new Paragraph(type, f));
+        cc1.setColspan(2);
+        cc1.setBorder(0);
+        cc1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc1);
         //date 
         PdfPCell c2 = new PdfPCell(new Paragraph("التاريخ:", f));
         c2.setBorder(0);

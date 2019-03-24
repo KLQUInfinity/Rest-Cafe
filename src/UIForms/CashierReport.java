@@ -9,22 +9,17 @@ import Classes.Bills_Printing_Reports;
 import Classes.CacherReport;
 import Classes.ExcelReport;
 import Classes.ImportantClass;
-import com.itextpdf.text.DocumentException;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
@@ -292,6 +287,11 @@ public class CashierReport extends javax.swing.JFrame {
         employeeNameCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 employeeNameCBItemStateChanged(evt);
+            }
+        });
+        employeeNameCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeNameCBActionPerformed(evt);
             }
         });
 
@@ -686,11 +686,15 @@ public class CashierReport extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            cr.totalReport(dateField.getText(),employeeNameCB.getSelectedItem().toString());
+            cr.totalReport(dateField.getText(), employeeNameCB.getSelectedItem().toString());
             BPR.pdfPrint("Cachier.pdf");
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void employeeNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeNameCBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_employeeNameCBActionPerformed
 
     /**
      * @param args the command line arguments

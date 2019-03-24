@@ -10,9 +10,18 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 
 public class CacherReport {
 
@@ -59,7 +68,19 @@ public class CacherReport {
         IC.rs = IC.pst.executeQuery();
         if (IC.rs.next()) {
             ///orderNum
-            table.addCell(new Paragraph("اجمالي المتحصلات", f1));
+            table.addCell(new Paragraph("اجمالي متحصلات الموظف", f1));
+            ///ProductName
+            table.addCell(new Paragraph(IC.rs.getString("Sum(o.orderTotal)"), f1));
+        }
+        document.add(table);
+        document.add(new Paragraph(" ", f));
+        document.add(new Paragraph(" ", f));
+        table.flushContent();
+        IC.pst = IC.dbc.conn.prepareStatement("SELECT Sum(o.orderTotal) FROM `order` o ");
+        IC.rs = IC.pst.executeQuery();
+        if (IC.rs.next()) {
+            ///orderNum
+            table.addCell(new Paragraph("اجمالي المتحصلات ", f1));
             ///ProductName
             table.addCell(new Paragraph(IC.rs.getString("Sum(o.orderTotal)"), f1));
         }
@@ -153,9 +174,33 @@ public class CacherReport {
         
         document.close();
     }
+//print pdf Auto print the bill file
+    public void pdfPrint(String Path) {
+        FileInputStream psStream = null;
+        try {
+            psStream = new FileInputStream(Path);
+        } catch (FileNotFoundException ffne) {
+            ffne.printStackTrace();
+        }
+        if (psStream == null) {
+            return;
+        }
+        DocFlavor psInFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc myDoc = new SimpleDoc(psStream, psInFormat, null);
+        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+        PrintService services = PrintServiceLookup.lookupDefaultPrintService();
+
+        DocPrintJob job = services.createPrintJob();
+        try {
+            job.print(myDoc, aset);
+        } catch (Exception pe) {
+            pe.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws DocumentException, FileNotFoundException, SQLException {
         CacherReport c = new CacherReport();
         c.totalReport("","");
+        c.pdfPrint("Cachier.pdf");
     }
 }

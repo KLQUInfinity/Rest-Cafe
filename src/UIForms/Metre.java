@@ -624,8 +624,8 @@ public class Metre extends javax.swing.JFrame {
                                 + "orderCount, orderPrice,"
                                 + "orderTotal, orderDate,"
                                 + "orderNotes, userName,"
-                                + "orderType)"
-                                + "values(?,?,?,?,?,?,?,?,?)");
+                                + "orderType,orderKind)"
+                                + "values(?,?,?,?,?,?,?,?,?,?)");
 
                         IC.pst.setInt(1, billNum);
                         IC.pst.setString(2, casherTable.getValueAt(i, 6).toString());
@@ -636,7 +636,7 @@ public class Metre extends javax.swing.JFrame {
                         IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
                         IC.pst.setString(8, IC.userName);
                         IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
-
+                        IC.pst.setString(10, "emp prop");
                         //add order data to be printed 
                         dd.setProductCount(casherTable.getValueAt(i, 5).toString());
                         dd.setProductName(casherTable.getValueAt(i, 6).toString());
@@ -649,8 +649,8 @@ public class Metre extends javax.swing.JFrame {
                     }
 
                     // Print method
-                    BPR.printBillKitchen(billNum);
-                    BPR.printBill(billNum, totalPrice, "", "");
+                    BPR.printBillKitchen(billNum,"emp prop");
+                    BPR.printBill(billNum, totalPrice, "", "","emp propirty");
                     BPR.pdfPrint("client.pdf");
                     BPR.pdfPrint("kitchen.pdf");
                     // Rest all varibles
