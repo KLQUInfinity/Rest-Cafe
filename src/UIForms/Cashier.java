@@ -42,7 +42,6 @@ public class Cashier extends javax.swing.JFrame {
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd    HH:mm:ss");
     Date date = new Date();
     private final ImportantClass IC = ImportantClass.getInstance();
-    BillingData dd = new BillingData();
     public ArrayList<Double> productPrice = new ArrayList<>();
     Bills_Printing_Reports BPR = new Bills_Printing_Reports();
     //This variable modify in table.
@@ -772,6 +771,7 @@ public class Cashier extends javax.swing.JFrame {
                             IC.pst.setInt(11, 1);
 
                             //add order data to be printed 
+                            BillingData dd = new BillingData();
                             dd.setProductCount(casherTable.getValueAt(i, 5).toString());
                             dd.setProductName(casherTable.getValueAt(i, 6).toString());
                             dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
