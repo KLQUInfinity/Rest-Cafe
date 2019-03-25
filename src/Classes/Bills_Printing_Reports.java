@@ -184,11 +184,11 @@ public class Bills_Printing_Reports {
             table.addCell(c00);
         }else if (type.equals("دليفري")) {
             //الباقي 
-            PdfPCell ce = new PdfPCell(new Paragraph("5جنيه خدمه توصيل", f));
+            PdfPCell ce = new PdfPCell(new Paragraph("3جنيه خدمه توصيل", f));
             ce.setColspan(3);
             ce.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(ce);
-            PdfPCell ce1 = new PdfPCell(new Paragraph("المجموع الكلي:"+String.valueOf(totalPrice+5), f));
+            PdfPCell ce1 = new PdfPCell(new Paragraph("المجموع الكلي:"+String.valueOf(totalPrice+3), f));
             ce1.setColspan(3);
             ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(ce1);
@@ -217,10 +217,6 @@ public class Bills_Printing_Reports {
         cel0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cel0);
         ///////////////
-        document.add(table);
-        document.newPage();
-        document.add(table);
-        document.newPage();
         document.add(table);
         document.close();
     }

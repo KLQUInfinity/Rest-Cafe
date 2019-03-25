@@ -116,7 +116,7 @@ public class Metre extends javax.swing.JFrame {
         clearTextFields();
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productSubType) as productName"
+            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from sql2283641.product"
                     + " where productType=?");
@@ -333,12 +333,13 @@ public class Metre extends javax.swing.JFrame {
                     .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(countLabel)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(productLabel1)))
+                        .addComponent(productLabel1))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(countLabel)
+                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -610,6 +611,7 @@ public class Metre extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "من فضلك املا خانة العدد");
         }
         getLastBillNum();
+
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void casherTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_casherTableMouseClicked
@@ -718,9 +720,13 @@ public class Metre extends javax.swing.JFrame {
 
                         if (casherTable.getValueAt(i, 0).toString().equals("فرعي")) {
                             kitchin1 = true;
-                        } else if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
+                        }
+
+                        if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
                             kitchin2 = true;
-                        } else if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
+                        }
+
+                        if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
                             kitchin3 = true;
                         }
                     }
@@ -728,24 +734,33 @@ public class Metre extends javax.swing.JFrame {
                     // Print method
                     if (kitchin1 == true) {
                         BPR.printBillKitchen1(billNum, titl);
-                    } else if (kitchin2 == true) {
+                    }
+                    if (kitchin2 == true) {
                         BPR.printBillKitchen2(billNum, titl);
-                    } else if (kitchin3 == true) {
+                    }
+                    if (kitchin3 == true) {
                         BPR.printBillKitchen3(billNum, titl);
                     }
 
                     BPR.printBill(billNum, totalPrice, "", "", titl);
+                    //client
+                    BPR.pdfPrint("client.pdf");
+                    //backup
                     BPR.pdfPrint("client.pdf");
                     if (kitchin1 == true) {
                         BPR.pdfPrint("kitchen1.pdf");
-                    } else if (kitchin2 == true) {
+                    }
+                    if (kitchin2 == true) {
                         BPR.pdfPrint("kitchen2.pdf");
-                    } else if (kitchin3 == true) {
+                    }
+                    if (kitchin3 == true) {
                         BPR.pdfPrint("kitchen3.pdf");
                     }
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
+                    totalPrice = 0;
+                    totalLabel.setText("الاجمالي : " + totalPrice);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (DocumentException ex) {
@@ -757,6 +772,10 @@ public class Metre extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "لايوجد اي بيانات مضافة في الجدول");
         }
+        kitchin1 = false;
+        kitchin2 = false;
+        kitchin3 = false;
+        IC.list.clear();
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void countTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countTxtActionPerformed

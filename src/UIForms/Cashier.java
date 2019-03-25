@@ -117,7 +117,7 @@ public class Cashier extends javax.swing.JFrame {
         clearTextFields();
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productSubType) as productName"
+            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from sql2283641.product"
                     + " where productType=?");
@@ -780,9 +780,11 @@ public class Cashier extends javax.swing.JFrame {
 
                             if (casherTable.getValueAt(i, 0).toString().equals("فرعي")) {
                                 kitchin1 = true;
-                            } else if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
+                            } 
+                            if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
                                 kitchin2 = true;
-                            } else if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
+                            } 
+                            if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
                                 kitchin3 = true;
                             }
                         }
@@ -790,18 +792,23 @@ public class Cashier extends javax.swing.JFrame {
                         // Print method
                         if (kitchin1 == true) {
                             BPR.printBillKitchen1(billNum, ordertKindCB.getSelectedItem().toString());
-                        } else if (kitchin2 == true) {
+                        } 
+                        if (kitchin2 == true) {
                             BPR.printBillKitchen2(billNum, ordertKindCB.getSelectedItem().toString());
-                        } else if (kitchin3 == true) {
+                        } 
+                        if (kitchin3 == true) {
                             BPR.printBillKitchen3(billNum, ordertKindCB.getSelectedItem().toString());
                         }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), ordertKindCB.getSelectedItem().toString());
                         BPR.pdfPrint("client.pdf");
+                        BPR.pdfPrint("client.pdf");
                         if (kitchin1 == true) {
                             BPR.pdfPrint("kitchen1.pdf");
-                        } else if (kitchin2 == true) {
+                        }
+                        if (kitchin2 == true) {
                             BPR.pdfPrint("kitchen2.pdf");
-                        } else if (kitchin3 == true) {
+                        }
+                        if (kitchin3 == true) {
                             BPR.pdfPrint("kitchen3.pdf");
                         }
                         // Rest all varibles
@@ -828,6 +835,10 @@ public class Cashier extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "من فضلك ادخل المبلغ المدفوع لحساب الباقي");
         }
+        kitchin1=false;
+        kitchin2=false;
+        kitchin3=false;
+        IC.list.clear();
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void countTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countTxtActionPerformed

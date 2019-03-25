@@ -326,7 +326,7 @@ public class users extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("نوع الموظف:");
 
-        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "Cashier", "Order Viewer", "Metre", "Delivery" }));
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "Cashier", "Metre", "Delivery" }));
         type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 typeActionPerformed(evt);
