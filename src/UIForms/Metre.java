@@ -11,6 +11,8 @@ import Classes.ImportantClass;
 import com.itextpdf.text.DocumentException;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -18,12 +20,14 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -43,7 +47,7 @@ public class Metre extends javax.swing.JFrame {
     private DefaultTableModel dtm;
     private double totalPrice = 0;
     private int billNum = 0;
-    private String titl="دليفري";
+    private String titl = "دليفري";
 
     /**
      * Creates new form Casher
@@ -54,9 +58,13 @@ public class Metre extends javax.swing.JFrame {
             IC.dbc.ConnectDB();
         }
         initComponents();
-
+        if (!IC.jobTitle.equals("Delivery")) {
+            productLabel1.setVisible(false);
+            delverNameCB.setVisible(false);
+        }
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
+        CheckDate();
 
         casherTable.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
         casherTable.getTableHeader().setAlignmentY(CENTER_ALIGNMENT);
@@ -109,18 +117,31 @@ public class Metre extends javax.swing.JFrame {
         }
     }
 
+    public void CheckDate() {
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (IC.dayOfYear != Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                    IC.dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+                    JOptionPane.showMessageDialog(null, "يوم جديد");
+                    getLastBillNum();
+                }
+            }
+        });
+        timer.start();
+    }
+
     private void getLastBillNum() {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order");
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order "
+                    + "where orderDate=?");
+            IC.pst.setString(1, IC.getDateOnly());
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
                 orderNumLabel.setText("رقم الطلب : " + billNum);
             }
-
-            totalPrice = 0;
-            totalLabel.setText("الاجمالي : " + totalPrice);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -160,6 +181,8 @@ public class Metre extends javax.swing.JFrame {
         notesTA = new javax.swing.JTextArea();
         productTypeLabel = new javax.swing.JLabel();
         productTypeCB = new javax.swing.JComboBox<>();
+        productLabel1 = new javax.swing.JLabel();
+        delverNameCB = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
@@ -236,6 +259,15 @@ public class Metre extends javax.swing.JFrame {
             }
         });
 
+        productLabel1.setBackground(new java.awt.Color(204, 204, 204));
+        productLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        productLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        productLabel1.setText("اسم الطيار");
+
+        delverNameCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        delverNameCB.setForeground(new java.awt.Color(255, 0, 0));
+        delverNameCB.setPreferredSize(new java.awt.Dimension(175, 26));
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -251,14 +283,20 @@ public class Metre extends javax.swing.JFrame {
                     .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(productLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(productLabel1)
+                        .addGap(14, 14, 14))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,10 +316,13 @@ public class Metre extends javax.swing.JFrame {
                     .addComponent(productLabel)
                     .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(countLabel)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(productLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -634,15 +675,19 @@ public class Metre extends javax.swing.JFrame {
                         IC.pst.setDouble(5, Double.parseDouble(casherTable.getValueAt(i, 3).toString()));
                         IC.pst.setString(6, casherTable.getValueAt(i, 2).toString());
                         IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
-                        IC.pst.setString(8, IC.userName);
+                        if (!IC.jobTitle.equals("Delivery")) {
+                            IC.pst.setString(8, IC.userName);
+                        } else {
+                            IC.pst.setString(8, delverNameCB.getSelectedItem().toString());
+                        }
                         IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
                         if (IC.jobTitle.equals("Delivery")) {
-                            titl="دليفري";
+                            titl = "دليفري";
                         } else if (IC.jobTitle.equals("Metre")) {
-                            titl="سفرة";
+                            titl = "سفرة";
                         }
-                        IC.pst.setString(10,titl); 
-                        
+                        IC.pst.setString(10, titl);
+
                         //add order data to be printed 
                         BillingData dd = new BillingData();
                         dd.setProductCount(casherTable.getValueAt(i, 5).toString());
@@ -727,6 +772,7 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JLabel countLabel;
     private javax.swing.JTextField countTxt;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JComboBox<String> delverNameCB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -741,6 +787,7 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JTextArea notesTA;
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JLabel productLabel;
+    private javax.swing.JLabel productLabel1;
     private javax.swing.JComboBox<String> productNameCB;
     private javax.swing.JComboBox<String> productTypeCB;
     private javax.swing.JLabel productTypeLabel;
