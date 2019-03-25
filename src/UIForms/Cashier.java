@@ -135,9 +135,8 @@ public class Cashier extends javax.swing.JFrame {
         try {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order "
-                    + "where orderDate=? and userName=?");
+                    + "where orderDate=?");
             IC.pst.setString(1, IC.getDateOnly());
-            IC.pst.setString(2, IC.userName);
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
