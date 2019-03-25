@@ -67,7 +67,7 @@ public class OrderPreview extends javax.swing.JFrame {
         try {
             IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
                     + "FROM sql2283641.order "
-                    + "where orderDone=0");
+                    + "where orderCashed=0");
             IC.rs = IC.pst.executeQuery();
 
             while (IC.rs.next()) {
@@ -381,7 +381,7 @@ public class OrderPreview extends javax.swing.JFrame {
             try {
                 for (int i = 0; i < id.get(Tabs.getSelectedIndex()).size(); i++) {
                     IC.pst = IC.dbc.conn.prepareStatement("update sql2283641.order"
-                            + " set orderDone=1"
+                            + " set orderCashed=1"
                             + " where id=?");
                     IC.pst.setInt(1, id.get(Tabs.getSelectedIndex()).get(i));
                     IC.pst.execute();

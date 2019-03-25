@@ -19,7 +19,7 @@ import java.util.Date;
 public class ImportantClass {
 
     public ImportantClass() {
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="Singlton">
@@ -48,6 +48,8 @@ public class ImportantClass {
    public ArrayList<BillingData> list=new ArrayList<>();
    //This variable store the order type if it can take away ,delivery ,or Hall
    public String OrderType ="";
+   
+   public int dayOfYear;
     // </editor-fold>
 
     public String getAllDate() {
