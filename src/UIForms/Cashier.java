@@ -49,6 +49,9 @@ public class Cashier extends javax.swing.JFrame {
     private double totalPrice = 0;
     private int billNum = 0;
     private double paid = 0, change = 0;
+    private boolean kitchin1;
+    private boolean kitchin2;
+    private boolean kitchin3;
 
     /**
      * Creates new form Casher
@@ -271,7 +274,7 @@ public class Cashier extends javax.swing.JFrame {
 
         productTypeCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         productTypeCB.setForeground(new java.awt.Color(255, 0, 0));
-        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "الشاورما", "البيتزا", "المشويات", "الشرقي" }));
+        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "فرعي", "الاضافات", "الكافيه" }));
         productTypeCB.setPreferredSize(new java.awt.Dimension(175, 26));
         productTypeCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -409,7 +412,7 @@ public class Cashier extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ordertKindCB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(ordertKindCB, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(productKindLabel))
                 .addContainerGap())
         );
@@ -769,17 +772,38 @@ public class Cashier extends javax.swing.JFrame {
                             dd.setProductName(casherTable.getValueAt(i, 6).toString());
                             dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
                             dd.setProductTotal(casherTable.getValueAt(i, 3).toString());
+                            dd.setProductKitchen(casherTable.getValueAt(i, 0).toString());
                             dd.setBillNum(billNum + "");
                             IC.list.add(dd);
 
                             IC.pst.execute();
+
+                            if (casherTable.getValueAt(i, 0).toString().equals("فرعي")) {
+                                kitchin1 = true;
+                            } else if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
+                                kitchin2 = true;
+                            } else if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
+                                kitchin3 = true;
+                            }
                         }
 
                         // Print method
-                        BPR.printBillKitchen(billNum, ordertKindCB.getSelectedItem().toString());
+                        if (kitchin1 == true) {
+                            BPR.printBillKitchen1(billNum, ordertKindCB.getSelectedItem().toString());
+                        } else if (kitchin2 == true) {
+                            BPR.printBillKitchen2(billNum, ordertKindCB.getSelectedItem().toString());
+                        } else if (kitchin3 == true) {
+                            BPR.printBillKitchen3(billNum, ordertKindCB.getSelectedItem().toString());
+                        }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), ordertKindCB.getSelectedItem().toString());
                         BPR.pdfPrint("client.pdf");
-                        BPR.pdfPrint("kitchen.pdf");
+                        if (kitchin1 == true) {
+                            BPR.pdfPrint("kitchen1.pdf");
+                        } else if (kitchin2 == true) {
+                            BPR.pdfPrint("kitchen2.pdf");
+                        } else if (kitchin3 == true) {
+                            BPR.pdfPrint("kitchen3.pdf");
+                        }
                         // Rest all varibles
                         dtm.setRowCount(0);
                         getLastBillNum();

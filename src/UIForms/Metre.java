@@ -48,6 +48,9 @@ public class Metre extends javax.swing.JFrame {
     private double totalPrice = 0;
     private int billNum = 0;
     private String titl = "دليفري";
+    private boolean kitchin1 = false;
+    private boolean kitchin2 = false;
+    private boolean kitchin3 = false;
 
     /**
      * Creates new form Casher
@@ -64,6 +67,7 @@ public class Metre extends javax.swing.JFrame {
         }
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
+        IC.dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
         CheckDate();
 
         casherTable.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -77,6 +81,18 @@ public class Metre extends javax.swing.JFrame {
 
         getAllProductData();
         getLastBillNum();
+        SelectDelvery();
+    }
+
+    public void SelectDelvery() {
+        try {
+            IC.pst = IC.dbc.conn.prepareStatement("SELECT userName FROM sql2283641.user where userType ='Delivery'");
+            IC.rs = IC.pst.executeQuery();
+            while (IC.rs.next()) {
+                delverNameCB.addItem(IC.rs.getString("userName"));
+            }
+        } catch (SQLException e) {
+        }
     }
 
     private WindowListener prepareWindow(WindowListener exitListener) {
@@ -100,7 +116,7 @@ public class Metre extends javax.swing.JFrame {
         clearTextFields();
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productType,' ',productSubType) as productName"
+            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productName,' ',productSubType) as productName"
                     + ", productPrice "
                     + " from sql2283641.product"
                     + " where productType=?");
@@ -251,7 +267,7 @@ public class Metre extends javax.swing.JFrame {
 
         productTypeCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         productTypeCB.setForeground(new java.awt.Color(255, 0, 0));
-        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "الشاورما", "البيتزا", "المشويات", "الشرقي" }));
+        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "فرعي", "الاضافات", "الكافيه" }));
         productTypeCB.setPreferredSize(new java.awt.Dimension(175, 26));
         productTypeCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -694,17 +710,39 @@ public class Metre extends javax.swing.JFrame {
                         dd.setProductName(casherTable.getValueAt(i, 6).toString());
                         dd.setProductPrice(casherTable.getValueAt(i, 4).toString());
                         dd.setProductTotal(casherTable.getValueAt(i, 3).toString());
+                        dd.setProductKitchen(casherTable.getValueAt(i, 0).toString());
                         dd.setBillNum(billNum + "");
                         IC.list.add(dd);
 
                         IC.pst.execute();
+
+                        if (casherTable.getValueAt(i, 0).toString().equals("فرعي")) {
+                            kitchin1 = true;
+                        } else if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
+                            kitchin2 = true;
+                        } else if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
+                            kitchin3 = true;
+                        }
                     }
 
                     // Print method
-                    BPR.printBillKitchen(billNum, titl);
+                    if (kitchin1 == true) {
+                        BPR.printBillKitchen1(billNum, titl);
+                    } else if (kitchin2 == true) {
+                        BPR.printBillKitchen2(billNum, titl);
+                    } else if (kitchin3 == true) {
+                        BPR.printBillKitchen3(billNum, titl);
+                    }
+
                     BPR.printBill(billNum, totalPrice, "", "", titl);
                     BPR.pdfPrint("client.pdf");
-                    BPR.pdfPrint("kitchen.pdf");
+                    if (kitchin1 == true) {
+                        BPR.pdfPrint("kitchen1.pdf");
+                    } else if (kitchin2 == true) {
+                        BPR.pdfPrint("kitchen2.pdf");
+                    } else if (kitchin3 == true) {
+                        BPR.pdfPrint("kitchen3.pdf");
+                    }
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();

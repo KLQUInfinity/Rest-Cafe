@@ -226,9 +226,9 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen(int billNum, String type) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen1(int billNum, String type) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
-        PdfWriter.getInstance(document, new FileOutputStream("kitchen.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("kitchen1.pdf"));
         document.setMargins(8, 8, 10, 10);
         document.open();
         PdfPTable table = new PdfPTable(3);
@@ -292,12 +292,202 @@ public class Bills_Printing_Reports {
         BillingData bd = new BillingData();
         for (int q = 0; q < IC.list.size(); q++) {
             bd = IC.list.get(q);
-            PdfPCell c40 = new PdfPCell(new Paragraph(bd.getProductName(), f));
-            c40.setColspan(2);
-            table.addCell(c40);
-            PdfPCell c50 = new PdfPCell(new Paragraph(bd.getProductCount(), f));
-            c50.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(c50);
+            if (bd.getProductKitchen().equals("فرعي")) {
+                PdfPCell c40 = new PdfPCell(new Paragraph(bd.getProductName(), f));
+                c40.setColspan(2);
+                table.addCell(c40);
+                PdfPCell c50 = new PdfPCell(new Paragraph(bd.getProductCount(), f));
+                c50.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c50);
+            }
+        }
+        table.addCell(c00);
+        table.addCell(c00);
+        //casher name
+        table.addCell(c00);
+        PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
+        c8.setPadding(5f);
+        c8.setColspan(2);
+        c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+        c8.setBorder(0);
+        table.addCell(c8);
+        PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
+        c9.setBorder(0);
+        table.addCell(c9);
+        ///footer
+        table.addCell(c00);
+        document.add(table);
+        document.close();
+    }
+    //take away Bill
+    public void printBillKitchen2(int billNum, String type) throws DocumentException, FileNotFoundException {
+        Document document = new Document(PageSize.A7);
+        PdfWriter.getInstance(document, new FileOutputStream("kitchen2.pdf"));
+        document.setMargins(8, 8, 10, 10);
+        document.open();
+        PdfPTable table = new PdfPTable(3);
+        table.getDefaultCell().setMinimumHeight(12);
+        table.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+        table.setWidthPercentage(98);
+        table.getDefaultCell().setArabicOptions(1);
+        ///head
+        PdfPCell cell0 = new PdfPCell(new Paragraph("مطعم وكافيه زايد ", f1));
+        cell0.setColspan(3);
+        cell0.setPaddingBottom(4f);
+        cell0.setBorderColorTop(BaseColor.BLACK);
+        cell0.setBorderColorBottom(BaseColor.BLACK);
+        cell0.setBorderWidthLeft(0);
+        cell0.setBorderWidthRight(0);
+        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell0);
+        ///bill Num
+        PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
+        c.setBorder(0);
+        c.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c);
+        PdfPCell c1 = new PdfPCell(new Paragraph(String.valueOf(billNum), f));
+        c1.setBorder(0);
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        PdfPCell c00 = new PdfPCell(new Paragraph("", f));
+        c00.setBorder(0);
+        table.addCell(c00);
+        ///type of order
+        PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
+        cc.setBorder(0);
+        cc.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc);
+        PdfPCell cc1 = new PdfPCell(new Paragraph(type, f));
+        cc1.setColspan(2);
+        cc1.setBorder(0);
+        cc1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc1);
+        //date 
+        PdfPCell c2 = new PdfPCell(new Paragraph("التاريخ:", f));
+        c2.setBorder(0);
+        c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c2);
+        PdfPCell c3 = new PdfPCell(new Paragraph(IC.getAllDate(), f));
+        c3.setBorder(0);
+        c3.setColspan(2);
+        c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c3);
+        ///bill body
+        table.addCell(c00);
+        table.addCell(c00);
+        table.addCell(c00);
+        PdfPCell c4 = new PdfPCell(new Paragraph("الصنف", f));
+        c4.setHorizontalAlignment(Element.ALIGN_CENTER);
+        c4.setColspan(2);
+        table.addCell(c4);
+        PdfPCell c5 = new PdfPCell(new Paragraph("العدد", f));
+        c5.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c5);
+        BillingData bd = new BillingData();
+        for (int q = 0; q < IC.list.size(); q++) {
+            bd = IC.list.get(q);
+            if (bd.getProductKitchen().equals("شرقي")) {
+                PdfPCell c40 = new PdfPCell(new Paragraph(bd.getProductName(), f));
+                c40.setColspan(2);
+                table.addCell(c40);
+                PdfPCell c50 = new PdfPCell(new Paragraph(bd.getProductCount(), f));
+                c50.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c50);
+            }
+        }
+        table.addCell(c00);
+        table.addCell(c00);
+        //casher name
+        table.addCell(c00);
+        PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
+        c8.setPadding(5f);
+        c8.setColspan(2);
+        c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+        c8.setBorder(0);
+        table.addCell(c8);
+        PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
+        c9.setBorder(0);
+        table.addCell(c9);
+        ///footer
+        table.addCell(c00);
+        document.add(table);
+        document.close();
+    }
+    //take away Bill
+    public void printBillKitchen3(int billNum, String type) throws DocumentException, FileNotFoundException {
+        Document document = new Document(PageSize.A7);
+        PdfWriter.getInstance(document, new FileOutputStream("kitchen3.pdf"));
+        document.setMargins(8, 8, 10, 10);
+        document.open();
+        PdfPTable table = new PdfPTable(3);
+        table.getDefaultCell().setMinimumHeight(12);
+        table.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+        table.setWidthPercentage(98);
+        table.getDefaultCell().setArabicOptions(1);
+        ///head
+        PdfPCell cell0 = new PdfPCell(new Paragraph("مطعم وكافيه زايد ", f1));
+        cell0.setColspan(3);
+        cell0.setPaddingBottom(4f);
+        cell0.setBorderColorTop(BaseColor.BLACK);
+        cell0.setBorderColorBottom(BaseColor.BLACK);
+        cell0.setBorderWidthLeft(0);
+        cell0.setBorderWidthRight(0);
+        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell0);
+        ///bill Num
+        PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
+        c.setBorder(0);
+        c.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c);
+        PdfPCell c1 = new PdfPCell(new Paragraph(String.valueOf(billNum), f));
+        c1.setBorder(0);
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        PdfPCell c00 = new PdfPCell(new Paragraph("", f));
+        c00.setBorder(0);
+        table.addCell(c00);
+        ///type of order
+        PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
+        cc.setBorder(0);
+        cc.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc);
+        PdfPCell cc1 = new PdfPCell(new Paragraph(type, f));
+        cc1.setColspan(2);
+        cc1.setBorder(0);
+        cc1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cc1);
+        //date 
+        PdfPCell c2 = new PdfPCell(new Paragraph("التاريخ:", f));
+        c2.setBorder(0);
+        c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c2);
+        PdfPCell c3 = new PdfPCell(new Paragraph(IC.getAllDate(), f));
+        c3.setBorder(0);
+        c3.setColspan(2);
+        c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c3);
+        ///bill body
+        table.addCell(c00);
+        table.addCell(c00);
+        table.addCell(c00);
+        PdfPCell c4 = new PdfPCell(new Paragraph("الصنف", f));
+        c4.setHorizontalAlignment(Element.ALIGN_CENTER);
+        c4.setColspan(2);
+        table.addCell(c4);
+        PdfPCell c5 = new PdfPCell(new Paragraph("العدد", f));
+        c5.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c5);
+        BillingData bd = new BillingData();
+        for (int q = 0; q < IC.list.size(); q++) {
+            bd = IC.list.get(q);
+            if (bd.getProductKitchen().equals("غربي")) {
+                PdfPCell c40 = new PdfPCell(new Paragraph(bd.getProductName(), f));
+                c40.setColspan(2);
+                table.addCell(c40);
+                PdfPCell c50 = new PdfPCell(new Paragraph(bd.getProductCount(), f));
+                c50.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c50);
+            }
         }
         table.addCell(c00);
         table.addCell(c00);

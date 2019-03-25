@@ -12,10 +12,19 @@ public class BillingData {
     private String productPrice;
     private String BillNum;
     private String productTotal;
+    private String ProductKitchen;
 
     public BillingData() {
     }
+    
+    public void setProductKitchen(String ProductKitchen) {
+        this.ProductKitchen = ProductKitchen;
+    }
 
+    public String getProductKitchen() {
+        return ProductKitchen;
+    }
+    
     public void setProductName(String productName) {
         this.productName = productName;
     }
