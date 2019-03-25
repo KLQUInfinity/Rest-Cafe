@@ -388,11 +388,6 @@ public class Cashier extends javax.swing.JFrame {
         ordertKindCB.setForeground(new java.awt.Color(255, 0, 0));
         ordertKindCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "تيك اواي", "سفرة", "دليفري" }));
         ordertKindCB.setPreferredSize(new java.awt.Dimension(103, 26));
-        ordertKindCB.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ordertKindCBItemStateChanged(evt);
-            }
-        });
 
         productKindLabel.setBackground(new java.awt.Color(204, 204, 204));
         productKindLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -823,10 +818,6 @@ public class Cashier extends javax.swing.JFrame {
     private void paidTxtCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_paidTxtCaretUpdate
         calculateTotalChange();
     }//GEN-LAST:event_paidTxtCaretUpdate
-
-    private void ordertKindCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ordertKindCBItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ordertKindCBItemStateChanged
 
     /**
      * @param args the command line arguments
