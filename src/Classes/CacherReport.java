@@ -85,6 +85,18 @@ public class CacherReport {
             table.addCell(new Paragraph(IC.rs.getString("Sum(o.orderTotal)"), f1));
         }
         document.add(table);
+        document.add(new Paragraph(" ", f));
+        document.add(new Paragraph(" ", f));
+        table.flushContent();
+        IC.pst = IC.dbc.conn.prepareStatement("SELECT COUNT(DISTINCT orderNum) FROM `order`  where orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%'");
+        IC.rs = IC.pst.executeQuery();
+        if (IC.rs.next()) {
+            ///orderNum
+            table.addCell(new Paragraph("عدد الطلبات", f1));
+            ///ProductName
+            table.addCell(new Paragraph(IC.rs.getString("COUNT(DISTINCT orderNum)"), f1));
+        }
+        document.add(table);
     }
 
     //take away Bill
