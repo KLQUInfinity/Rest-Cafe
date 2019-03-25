@@ -16,6 +16,7 @@ public class cachirHome extends javax.swing.JFrame {
      */
     public cachirHome() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

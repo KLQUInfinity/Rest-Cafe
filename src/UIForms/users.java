@@ -327,6 +327,11 @@ public class users extends javax.swing.JFrame {
         jLabel7.setText("نوع الموظف:");
 
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "Cashier", "Order Viewer", "Metre", "Delivery" }));
+        type.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -626,6 +631,10 @@ public class users extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_usersTableMouseClicked
+
+    private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeActionPerformed
 
     /**
      * @param args the command line arguments
