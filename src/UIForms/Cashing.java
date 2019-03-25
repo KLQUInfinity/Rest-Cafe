@@ -24,7 +24,7 @@ import net.proteanit.sql.DbUtils;
  *
  * @author sayed
  */
-public class OrderPreview extends javax.swing.JFrame {
+public class Cashing extends javax.swing.JFrame {
 
     private final ImportantClass IC = ImportantClass.getInstance();
 
@@ -36,7 +36,7 @@ public class OrderPreview extends javax.swing.JFrame {
     private ArrayList<Boolean> tabCreated = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> id = new ArrayList<>();
 
-    public OrderPreview() {
+    public Cashing() {
         // Check Conection to DB
         if (!IC.dbc.check) {
             IC.dbc.ConnectDB();
@@ -56,7 +56,7 @@ public class OrderPreview extends javax.swing.JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 Home m = new Home();
-                OrderPreview.this.dispose();
+                Cashing.this.dispose();
                 m.setVisible(true);
             }
         };
@@ -198,7 +198,7 @@ public class OrderPreview extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+            .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -416,14 +416,18 @@ public class OrderPreview extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cashing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cashing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cashing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrderPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cashing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -432,7 +436,7 @@ public class OrderPreview extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrderPreview().setVisible(true);
+                new Cashing().setVisible(true);
             }
         });
     }
