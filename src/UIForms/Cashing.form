@@ -262,7 +262,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="&#x62a;&#x645; &#x62a;&#x62c;&#x647;&#x64a;&#x632; &#x627;&#x644;&#x637;&#x644;&#x628;"/>
+                    <Property name="text" type="java.lang.String" value="&#x62a;&#x645; &#x627;&#x644;&#x62f;&#x641;&#x639;"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[150, 45]"/>
                     </Property>

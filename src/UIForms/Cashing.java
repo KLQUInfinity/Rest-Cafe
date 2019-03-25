@@ -221,7 +221,7 @@ public class Cashing extends javax.swing.JFrame {
         orderDoneBtn.setBackground(new java.awt.Color(255, 0, 0));
         orderDoneBtn.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         orderDoneBtn.setForeground(new java.awt.Color(255, 255, 255));
-        orderDoneBtn.setText("تم تجهيز الطلب");
+        orderDoneBtn.setText("تم الدفع");
         orderDoneBtn.setPreferredSize(new java.awt.Dimension(150, 45));
         orderDoneBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
