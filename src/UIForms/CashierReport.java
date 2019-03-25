@@ -675,7 +675,7 @@ public class CashierReport extends javax.swing.JFrame {
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
             file = path;
-            e.writeData(file, IC.userName);
+            e.writeData(file , employeeNameCB.getSelectedItem().toString());
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton1ActionPerformed

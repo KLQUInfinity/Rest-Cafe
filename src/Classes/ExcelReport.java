@@ -41,10 +41,13 @@ public class ExcelReport {
         L1 = new Label(5, 0, "التاريخ");
         s.addCell(L1);
         ///////////
-        L1 = new Label(6, 0, "نوع الطلب");
+        L1 = new Label(6, 0, "نوع الصنف");
         s.addCell(L1);
         ///////////
         L1 = new Label(7, 0, "الموظف");
+        s.addCell(L1);
+        ///////////
+        L1 = new Label(8, 0, "نوع الطلب");
         s.addCell(L1);
         ///////////
         int rw = 1;
@@ -69,6 +72,8 @@ public class ExcelReport {
             L1 = new Label(6, rw, IC.rs.getString(9));
             s.addCell(L1);
             L1 = new Label(7, rw, IC.rs.getString(10));
+            s.addCell(L1);
+            L1 = new Label(8, rw, IC.rs.getString(12));
             s.addCell(L1);
             rw++;
         }

@@ -44,6 +44,7 @@ public class Metre extends javax.swing.JFrame {
     private DefaultTableModel dtm;
     private double totalPrice = 0;
     private int billNum = 0;
+    private String titl="دليفري";
 
     /**
      * Creates new form Casher
@@ -636,7 +637,12 @@ public class Metre extends javax.swing.JFrame {
                         IC.pst.setString(7, casherTable.getValueAt(i, 1).toString());
                         IC.pst.setString(8, IC.userName);
                         IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
-                        IC.pst.setString(10, "emp prop");
+                        if (IC.jobTitle.equals("Delivery")) {
+                            titl="دليفري";
+                        } else if (IC.jobTitle.equals("Metre")) {
+                            titl="سفرة";
+                        }
+                        IC.pst.setString(10,titl);
                         //add order data to be printed 
                         dd.setProductCount(casherTable.getValueAt(i, 5).toString());
                         dd.setProductName(casherTable.getValueAt(i, 6).toString());
@@ -649,8 +655,8 @@ public class Metre extends javax.swing.JFrame {
                     }
 
                     // Print method
-                    BPR.printBillKitchen(billNum,"emp prop");
-                    BPR.printBill(billNum, totalPrice, "", "","emp propirty");
+                    BPR.printBillKitchen(billNum, titl);
+                    BPR.printBill(billNum, totalPrice, "", "", titl);
                     BPR.pdfPrint("client.pdf");
                     BPR.pdfPrint("kitchen.pdf");
                     // Rest all varibles
