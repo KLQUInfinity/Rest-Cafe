@@ -22,8 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -52,6 +50,8 @@ public class Cashier extends javax.swing.JFrame {
     private boolean kitchin1;
     private boolean kitchin2;
     private boolean kitchin3;
+    private boolean checkDelavery = false;
+    private final float delaveryValue = 3;
 
     /**
      * Creates new form Casher
@@ -390,6 +390,11 @@ public class Cashier extends javax.swing.JFrame {
         ordertKindCB.setForeground(new java.awt.Color(255, 0, 0));
         ordertKindCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "تيك اواي", "سفرة", "دليفري" }));
         ordertKindCB.setPreferredSize(new java.awt.Dimension(103, 26));
+        ordertKindCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ordertKindCBItemStateChanged(evt);
+            }
+        });
 
         productKindLabel.setBackground(new java.awt.Color(204, 204, 204));
         productKindLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -412,7 +417,7 @@ public class Cashier extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ordertKindCB, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(ordertKindCB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(productKindLabel))
                 .addContainerGap())
         );
@@ -780,10 +785,10 @@ public class Cashier extends javax.swing.JFrame {
 
                             if (casherTable.getValueAt(i, 0).toString().equals("فرعي")) {
                                 kitchin1 = true;
-                            } 
+                            }
                             if (casherTable.getValueAt(i, 0).toString().equals("شرقي")) {
                                 kitchin2 = true;
-                            } 
+                            }
                             if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
                                 kitchin3 = true;
                             }
@@ -792,10 +797,10 @@ public class Cashier extends javax.swing.JFrame {
                         // Print method
                         if (kitchin1 == true) {
                             BPR.printBillKitchen1(billNum, ordertKindCB.getSelectedItem().toString());
-                        } 
+                        }
                         if (kitchin2 == true) {
                             BPR.printBillKitchen2(billNum, ordertKindCB.getSelectedItem().toString());
-                        } 
+                        }
                         if (kitchin3 == true) {
                             BPR.printBillKitchen3(billNum, ordertKindCB.getSelectedItem().toString());
                         }
@@ -835,9 +840,9 @@ public class Cashier extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "من فضلك ادخل المبلغ المدفوع لحساب الباقي");
         }
-        kitchin1=false;
-        kitchin2=false;
-        kitchin3=false;
+        kitchin1 = false;
+        kitchin2 = false;
+        kitchin3 = false;
         IC.list.clear();
     }//GEN-LAST:event_submitBtnActionPerformed
 
@@ -852,6 +857,18 @@ public class Cashier extends javax.swing.JFrame {
     private void paidTxtCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_paidTxtCaretUpdate
         calculateTotalChange();
     }//GEN-LAST:event_paidTxtCaretUpdate
+
+    private void ordertKindCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ordertKindCBItemStateChanged
+        if (ordertKindCB.getSelectedItem().toString().equals("دليفري") && !checkDelavery) {
+            checkDelavery = true;
+            totalPrice += delaveryValue;
+            totalLabel.setText("الاجمالي : " + totalPrice);
+        } else if (!ordertKindCB.getSelectedItem().toString().equals("دليفري") && checkDelavery) {
+            checkDelavery = false;
+            totalPrice -= delaveryValue;
+            totalLabel.setText("الاجمالي : " + totalPrice);
+        }
+    }//GEN-LAST:event_ordertKindCBItemStateChanged
 
     /**
      * @param args the command line arguments

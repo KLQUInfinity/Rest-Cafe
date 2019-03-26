@@ -51,6 +51,7 @@ public class Metre extends javax.swing.JFrame {
     private boolean kitchin1 = false;
     private boolean kitchin2 = false;
     private boolean kitchin3 = false;
+    private final float delaveryValue = 3;
 
     /**
      * Creates new form Casher
@@ -64,6 +65,9 @@ public class Metre extends javax.swing.JFrame {
         if (!IC.jobTitle.equals("Delivery")) {
             productLabel1.setVisible(false);
             delverNameCB.setVisible(false);
+        } else {
+            totalPrice = delaveryValue;
+            totalLabel.setText("الاجمالي : " + totalPrice);
         }
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
@@ -759,7 +763,7 @@ public class Metre extends javax.swing.JFrame {
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
-                    totalPrice = 0;
+                    totalPrice = delaveryValue;
                     totalLabel.setText("الاجمالي : " + totalPrice);
                 } catch (SQLException e) {
                     e.printStackTrace();
