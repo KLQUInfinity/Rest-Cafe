@@ -266,7 +266,7 @@ public class CashierReport extends javax.swing.JFrame {
         allTotalsLabel = new javax.swing.JLabel();
         refreshBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("تقارير الطلبات");
         setResizable(false);
 
