@@ -35,7 +35,7 @@ public class Cashing extends javax.swing.JFrame {
     private ArrayList<Integer> orderNum = new ArrayList<>();
     private ArrayList<Boolean> tabCreated = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> id = new ArrayList<>();
-    private double totalPrice = 0;
+    private ArrayList<Double> totals = new ArrayList<>();
 
     public Cashing() {
         // Check Conection to DB
@@ -75,6 +75,7 @@ public class Cashing extends javax.swing.JFrame {
                 int x = IC.rs.getInt("orderNum");
                 if (!orderNum.contains(x)) {
                     orderNum.add(x);
+                    totals.add(0.0);
                     tabCreated.add(false);
                 }
             }
@@ -102,22 +103,26 @@ public class Cashing extends javax.swing.JFrame {
                     IC.rs = IC.pst.executeQuery();
                     tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
                     tabCreated.set(i, true);
-//                    IC.pst = IC.dbc.conn.prepareStatement("SELECT SUM(orderTotal),orderKind "
-//                            + " FROM sql2283641.order"
-//                            + " where orderNum=?");
-//                    IC.pst.setInt(1, orderNum.get(i));
-//                    IC.rs = IC.pst.executeQuery();
-//                    if (IC.rs.next()) {
-//                        if (IC.rs.getString("orderKind").equals("دليفري")) {
-//                            String tot = IC.rs.getString("SUM(orderTotal)");
-//                            double d = Double.parseDouble(tot);
-//                            d = d + 3;
-//                            totalLabel.setText("الاجمالي :" + "" + d);
-//                        } else {
-//                            totalLabel.setText("الاجمالي :" + "" + IC.rs.getString("SUM(orderTotal)"));
-//                        }
-//                    }
+
+                    IC.pst = IC.dbc.conn.prepareStatement("SELECT SUM(orderTotal),orderKind "
+                            + " FROM sql2283641.order"
+                            + " where orderNum=?");
+                    IC.pst.setInt(1, orderNum.get(i));
+                    IC.rs = IC.pst.executeQuery();
+                    if (IC.rs.next()) {
+                        double d = IC.rs.getDouble("SUM(orderTotal)");
+                        if (IC.rs.getString("orderKind").equals("دليفري")) {
+                            d = d + 3;
+                            totals.set(i, d);
+
+                        } else {
+                            totals.set(i, d);
+                        }
+                    }
                 }
+            }
+            if (totals.size() > 0) {
+                totalPriceLabel.setText("الاجمالي :" + "" + totals.get(Tabs.getSelectedIndex()));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -179,6 +184,7 @@ public class Cashing extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         orderDoneBtn = new javax.swing.JButton();
+        totalPriceLabel = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         showNewOrderBtn = new javax.swing.JButton();
 
@@ -245,30 +251,45 @@ public class Cashing extends javax.swing.JFrame {
             }
         });
 
+        totalPriceLabel.setBackground(new java.awt.Color(255, 255, 255));
+        totalPriceLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        totalPriceLabel.setForeground(new java.awt.Color(255, 0, 0));
+        totalPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        totalPriceLabel.setText("المجموع الكلي : 0");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(orderNumLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalPriceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(orderDoneBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(241, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(orderNumLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(totalPriceLabel)
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(21, 21, 21)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(orderDoneBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(orderDoneBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(24, Short.MAX_VALUE)))
         );
+
+        orderNumLabel.setVisible(false);
+        totalPriceLabel.setVisible(false);
 
         jPanel5.setBackground(new java.awt.Color(187, 187, 187));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -377,10 +398,15 @@ public class Cashing extends javax.swing.JFrame {
         if (Tabs.getTabCount() > 0 && Tabs.getSelectedIndex() != -1) {
             noOrderLabel.setVisible(false);
             orderNumLabel.setVisible(true);
+            totalPriceLabel.setVisible(true);
             orderNumLabel.setText("رقم الطلب : " + orderNum.get(Tabs.getSelectedIndex()));
+            if (totals.size() > 0) {
+                totalPriceLabel.setText("الاجمالي :" + "" + totals.get(Tabs.getSelectedIndex()));
+            }
         } else if (Tabs.getTabCount() == 0) {
             noOrderLabel.setVisible(true);
             orderNumLabel.setVisible(false);
+            totalPriceLabel.setVisible(false);
         }
     }//GEN-LAST:event_TabsStateChanged
 
@@ -400,6 +426,7 @@ public class Cashing extends javax.swing.JFrame {
                 }
                 id.remove(Tabs.getSelectedIndex());
                 orderNum.remove(Tabs.getSelectedIndex());
+                totals.remove(Tabs.getSelectedIndex());
                 tables.remove(Tabs.getSelectedIndex());
                 tabCreated.remove(Tabs.getSelectedIndex());
                 Tabs.remove(Tabs.getSelectedIndex());
@@ -465,5 +492,6 @@ public class Cashing extends javax.swing.JFrame {
     private javax.swing.JButton orderDoneBtn;
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JButton showNewOrderBtn;
+    private javax.swing.JLabel totalPriceLabel;
     // End of variables declaration//GEN-END:variables
 }
