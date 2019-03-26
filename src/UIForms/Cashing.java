@@ -35,6 +35,7 @@ public class Cashing extends javax.swing.JFrame {
     private ArrayList<Integer> orderNum = new ArrayList<>();
     private ArrayList<Boolean> tabCreated = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> id = new ArrayList<>();
+    private double totalPrice = 0;
 
     public Cashing() {
         // Check Conection to DB
@@ -101,6 +102,21 @@ public class Cashing extends javax.swing.JFrame {
                     IC.rs = IC.pst.executeQuery();
                     tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
                     tabCreated.set(i, true);
+//                    IC.pst = IC.dbc.conn.prepareStatement("SELECT SUM(orderTotal),orderKind "
+//                            + " FROM sql2283641.order"
+//                            + " where orderNum=?");
+//                    IC.pst.setInt(1, orderNum.get(i));
+//                    IC.rs = IC.pst.executeQuery();
+//                    if (IC.rs.next()) {
+//                        if (IC.rs.getString("orderKind").equals("دليفري")) {
+//                            String tot = IC.rs.getString("SUM(orderTotal)");
+//                            double d = Double.parseDouble(tot);
+//                            d = d + 3;
+//                            totalLabel.setText("الاجمالي :" + "" + d);
+//                        } else {
+//                            totalLabel.setText("الاجمالي :" + "" + IC.rs.getString("SUM(orderTotal)"));
+//                        }
+//                    }
                 }
             }
         } catch (SQLException ex) {
@@ -189,7 +205,7 @@ public class Cashing extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Tabs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+            .addComponent(Tabs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -272,21 +288,17 @@ public class Cashing extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 462, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                    .addContainerGap(156, Short.MAX_VALUE)
-                    .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(156, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(187, Short.MAX_VALUE)
+                .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                    .addContainerGap(20, Short.MAX_VALUE)
-                    .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(29, Short.MAX_VALUE)))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(showNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
