@@ -409,7 +409,7 @@ public class CashierReport extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 0, 51));
         jButton2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("طباعه تقرير الموظف");
+        jButton2.setText("التقارير");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -427,7 +427,7 @@ public class CashierReport extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(employeeNameCB, 0, 205, Short.MAX_VALUE)
                     .addComponent(dateField))
@@ -683,11 +683,8 @@ public class CashierReport extends javax.swing.JFrame {
     }//GEN-LAST:event_dateFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            cr.totalReport(dateField.getText(), employeeNameCB.getSelectedItem().toString());
-            BPR.pdfPrint("Cachier.pdf");
-        } catch (Exception ex) {
-        }
+        reports r=new reports(dateField.getText(),employeeNameCB.getSelectedItem().toString());
+        r.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void employeeNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeNameCBActionPerformed

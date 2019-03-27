@@ -16,7 +16,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.print.PrinterException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.PrintException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -722,16 +725,16 @@ public class Cashier extends javax.swing.JFrame {
                             BPR.printBillKitchen3(billNum, "تيك اواي",notesTA.getText(),"");
                         }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي","","","","");
-                        BPR.pdfPrint("client.pdf");
-                        BPR.pdfPrint("client.pdf");
+                        BPR.pdfPrint("client.pdf","prenter Name");
+                        BPR.pdfPrint("client.pdf","prenter Name");
                         if (kitchin1 == true) {
-                            BPR.pdfPrint("kitchen1.pdf");
+                            BPR.pdfPrint("kitchen1.pdf","prenter Name");
                         }
                         if (kitchin2 == true) {
-                            BPR.pdfPrint("kitchen2.pdf");
+                            BPR.pdfPrint("kitchen2.pdf","prenter Name");
                         }
                         if (kitchin3 == true) {
-                            BPR.pdfPrint("kitchen3.pdf");
+                            BPR.pdfPrint("kitchen3.pdf","prenter Name");
                         }
                         // Rest all varibles
                         dtm.setRowCount(0);
@@ -748,6 +751,12 @@ public class Cashier extends javax.swing.JFrame {
                     } catch (DocumentException ex) {
                         Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (PrinterException ex) {
+                        Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (PrintException ex) {
                         Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }

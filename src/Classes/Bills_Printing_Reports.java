@@ -16,17 +16,17 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileInputStream;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
+import java.io.IOException;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 
 public class Bills_Printing_Reports {
 
@@ -35,27 +35,26 @@ public class Bills_Printing_Reports {
     com.itextpdf.text.Font f1 = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 13f);
 
     //print pdf Auto print the bill file
-    public void pdfPrint(String Path) {
-        FileInputStream psStream = null;
-        try {
-            psStream = new FileInputStream(Path);
-        } catch (FileNotFoundException ffne) {
-            ffne.printStackTrace();
-        }
-        if (psStream == null) {
-            return;
-        }
-        DocFlavor psInFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        Doc myDoc = new SimpleDoc(psStream, psInFormat, null);
-        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
-        PrintService services = PrintServiceLookup.lookupDefaultPrintService();
+    public void pdfPrint(String Path,String printer) throws PrinterException, IOException, PrintException {
+        PDDocument document = PDDocument.load(new File(Path));
 
-        DocPrintJob job = services.createPrintJob();
-        try {
-            job.print(myDoc, aset);
-        } catch (Exception pe) {
-            pe.printStackTrace();
+        PrintService myPrintService = findPrintService(printer);
+
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPageable(new PDFPageable(document));
+        job.setPrintService(myPrintService);
+        job.print();
+        document.close();
+    }       
+
+    private static PrintService findPrintService(String printerName) {
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
+        for (PrintService printService : printServices) {
+            if (printService.getName().trim().equals(printerName)) {
+                return printService;
+            }
         }
+        return null;
     }
 
     //take away Bill
@@ -236,8 +235,8 @@ public class Bills_Printing_Reports {
             address1.setPadding(5f);
             address1.setBorder(0);
             table.addCell(address1);
-        }else{
-        PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
+        } else {
+            PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
             c8.setColspan(3);
             c8.setPadding(5f);
             c8.setHorizontalAlignment(Element.ALIGN_CENTER);

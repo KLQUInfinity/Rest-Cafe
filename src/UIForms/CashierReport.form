@@ -95,7 +95,7 @@
                           <Component id="jButton2" max="32767" attributes="0"/>
                           <Component id="jButton1" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="employeeNameCB" pref="205" max="32767" attributes="0"/>
                           <Component id="dateField" max="32767" attributes="0"/>
@@ -373,7 +373,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x637;&#x628;&#x627;&#x639;&#x647; &#x62a;&#x642;&#x631;&#x64a;&#x631; &#x627;&#x644;&#x645;&#x648;&#x638;&#x641;"/>
+                <Property name="text" type="java.lang.String" value="&#x627;&#x644;&#x62a;&#x642;&#x627;&#x631;&#x64a;&#x631;"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
