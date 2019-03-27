@@ -641,7 +641,8 @@ public class Metre extends javax.swing.JFrame {
                         } else if (IC.jobTitle.equals("Metre")) {
                             titl="سفرة";
                         }
-                        IC.pst.setString(10,titl);
+                        IC.pst.setString(10,titl); 
+                        
                         //add order data to be printed 
                         BillingData dd = new BillingData();
                         dd.setProductCount(casherTable.getValueAt(i, 5).toString());
