@@ -61,8 +61,8 @@ public class Cashier extends javax.swing.JFrame {
 
         initComponents();
 
-        IC.dayOfYear=Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
-        
+        IC.dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
         CheckDate();
@@ -83,14 +83,10 @@ public class Cashier extends javax.swing.JFrame {
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Calendar c = Calendar.getInstance();
-                int hours = c.get(Calendar.HOUR_OF_DAY);
-                int minutes = c.get(Calendar.MINUTE);
-                int seconds = c.get(Calendar.SECOND);
-                System.out.println(c.get(Calendar.DAY_OF_YEAR));
-                if (hours * 3600 + minutes * 60 + seconds < 64800) {
-                    // Day changed since last task
-                    
+                if (IC.dayOfYear != Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                    IC.dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+                    JOptionPane.showMessageDialog(null, "يوم جديد");
+                    getLastBillNum();
                 }
             }
         });
@@ -138,7 +134,10 @@ public class Cashier extends javax.swing.JFrame {
     private void getLastBillNum() {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order");
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order "
+                    + "where orderDate=? and userName=?");
+            IC.pst.setString(1, IC.getDateOnly());
+            IC.pst.setString(2, IC.userName);
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
