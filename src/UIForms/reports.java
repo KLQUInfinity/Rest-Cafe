@@ -187,8 +187,7 @@ public class reports extends javax.swing.JFrame {
             jfc.showOpenDialog(null);
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
-            file = path;
-            c.totalReport(date, name);
+            c.totalReport(date, name,path);
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -199,8 +198,7 @@ public class reports extends javax.swing.JFrame {
             jfc.showOpenDialog(null);
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
-            file = path;
-            cr.totalReport(date, name);
+            cr.totalReport(date, name,path);
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -211,8 +209,7 @@ public class reports extends javax.swing.JFrame {
             jfc.showOpenDialog(null);
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
-            file = path;
-            DR.totalReport(date, name);
+            DR.totalReport(date, name,path);
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -223,8 +220,7 @@ public class reports extends javax.swing.JFrame {
             jfc.showOpenDialog(null);
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
-            file = path;
-            MR.totalReport(date, name);
+            MR.totalReport(date, name,path);
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -235,8 +231,7 @@ public class reports extends javax.swing.JFrame {
             jfc.showOpenDialog(null);
             File f = jfc.getSelectedFile();
             String path = f.getAbsolutePath();
-            file = path;
-            CCR.totalReport(date, name);
+            CCR.totalReport(date, name,path);
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton6ActionPerformed

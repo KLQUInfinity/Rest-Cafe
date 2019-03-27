@@ -176,8 +176,8 @@ public class CacherReport {
         
     }
 
-    public void totalReport(String date,String empName) throws DocumentException, FileNotFoundException, SQLException {
-        PdfWriter.getInstance(document, new FileOutputStream("Cachier.pdf"));
+    public void totalReport(String date,String empName,String Path) throws DocumentException, FileNotFoundException, SQLException {
+        PdfWriter.getInstance(document, new FileOutputStream(Path+".pdf"));
         document.setMargins(8, 8, 10, 10);
         document.open();
         printEmpReport(date, empName);
@@ -211,7 +211,5 @@ public class CacherReport {
     }
 
     public static void main(String[] args) throws DocumentException, FileNotFoundException, SQLException {
-        CacherReport c = new CacherReport();
-        c.totalReport("","");
     }
 }
