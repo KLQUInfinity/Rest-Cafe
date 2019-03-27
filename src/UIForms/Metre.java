@@ -737,13 +737,13 @@ public class Metre extends javax.swing.JFrame {
 
                     // Print method
                     if (kitchin1 == true) {
-                        BPR.printBillKitchen1(billNum, titl);
+                        BPR.printBillKitchen1(billNum, titl,notesTA.getText());
                     }
                     if (kitchin2 == true) {
-                        BPR.printBillKitchen2(billNum, titl);
+                        BPR.printBillKitchen2(billNum, titl,notesTA.getText());
                     }
                     if (kitchin3 == true) {
-                        BPR.printBillKitchen3(billNum, titl);
+                        BPR.printBillKitchen3(billNum, titl,notesTA.getText());
                     }
 
                     BPR.printBill(billNum, totalPrice, "", "", titl);

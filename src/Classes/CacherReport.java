@@ -51,7 +51,7 @@ public class CacherReport {
         PdfPCell ProductName = new PdfPCell(new Paragraph("اجمالي العدد", f1));
         ProductName.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(ProductName);
-        String query = "SELECT Sum(o.orderCount) , o.orderProduct FROM `order` o  where o.orderProduct = o.orderProduct And orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%'";
+        String query = "SELECT Sum(o.orderCount) , o.orderProduct FROM `order` o  where o.orderProduct = o.orderProduct And orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%' group by o.orderProduct";
         IC.pst = IC.dbc.conn.prepareStatement(query);
         IC.rs = IC.pst.executeQuery();
         while (IC.rs.next()) {

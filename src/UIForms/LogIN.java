@@ -44,12 +44,14 @@ public class LogIN extends javax.swing.JFrame {
 
     public void data() {
         if (name.getText().equals("admin") && pass.getText().equals("9999")) {
+            IC.userName=name.getText();
             Home h = new Home();
             h.setVisible(true);
             this.dispose();
         } else {
             search(name.getText(), pass.getText());
             if (status == true) {
+                IC.userName=name.getText();
                 Home h = new Home();
                 h.setVisible(true);
                 this.dispose();

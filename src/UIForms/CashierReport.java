@@ -84,8 +84,7 @@ public class CashierReport extends javax.swing.JFrame {
         try {
             // Get all users
             IC.pst = IC.dbc.conn.prepareStatement("select userName"
-                    + " from sql2283641.user"
-                    + " where userType = 'Cashier' or userType = 'admin'");
+                    + " from sql2283641.user");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> users = new ArrayList<>();
             while (IC.rs.next()) {
@@ -191,8 +190,9 @@ public class CashierReport extends javax.swing.JFrame {
                     + " orderTotal, orderPrice,"
                     + " orderCount, orderProduct"
                     + " from sql2283641.order"
-                    + " where orderNum = ?");
+                    + " where orderNum = ? AND userName =?");
             IC.pst.setInt(1, billNum);
+            IC.pst.setString(2,employeeNameCB.getSelectedItem().toString() );
             IC.rs = IC.pst.executeQuery();
             cashierReportTable.setModel(DbUtils.resultSetToTableModel(IC.rs));
 
