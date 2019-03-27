@@ -99,7 +99,7 @@ public class Metre extends javax.swing.JFrame {
 
     public void SelectDelvery() {
         try {
-            IC.pst = IC.dbc.conn.prepareStatement("SELECT userName FROM sql2283641.user where userType ='Delivery'");
+            IC.pst = IC.dbc.conn.prepareStatement("SELECT userName FROM sql2283641.user where userType ='Deliver'");
             IC.rs = IC.pst.executeQuery();
             while (IC.rs.next()) {
                 delverNameCB.addItem(IC.rs.getString("userName"));
@@ -845,17 +845,17 @@ public class Metre extends javax.swing.JFrame {
                         //client
                         BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
                         //backup
-                        BPR.pdfPrint("client.pdf", "\\Pc2'\'POS-80(بيك اب)");
+                        BPR.pdfPrint("client.pdf", "\\Pc2\\POS-80(بيك اب)");
                     }
 
                     if (kitchin1 == true) {
-                        BPR.pdfPrint("kitchen1.pdf", "\\Pc1'\'POS-80(بيتزا)");
+                        BPR.pdfPrint("kitchen1.pdf", "\\Pc1\\POS-80(بيتزا)");
                     }
                     if (kitchin2 == true) {
-                        BPR.pdfPrint("kitchen2.pdf", "\\Pc3'\'POS-80(شعبيي)");
+                        BPR.pdfPrint("kitchen2.pdf", "\\Pc3\\POS-80(شعبيي)");
                     }
                     if (kitchin3 == true) {
-                        BPR.pdfPrint("kitchen3.pdf", "\\Pc1'\'POS-80(مطبخ غربي)");
+                        BPR.pdfPrint("kitchen3.pdf", "\\Pc1\\POS-80(مطبخ غربي)");
                     }
                     // Rest all varibles
                     dtm.setRowCount(0);

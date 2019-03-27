@@ -43,7 +43,7 @@ public class users extends javax.swing.JFrame {
     public void tabel1() {
 
         try {
-            String query = "SELECT   id, userNational_ID,userAddress, userPhoneNum, userPass,userName     FROM user WHERE userName = '" + Search.getText() + "'";
+            String query = "SELECT   id,userType, userNational_ID,userAddress, userPhoneNum, userPass,userName     FROM user WHERE userName = '" + Search.getText() + "'";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.rs = IC.pst.executeQuery();
             if (IC.rs == null) {
