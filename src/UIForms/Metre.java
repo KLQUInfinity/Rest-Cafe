@@ -669,7 +669,7 @@ public class Metre extends javax.swing.JFrame {
 
                     Object[] rowData = {productTypeCB.getSelectedItem().toString(),
                         notesTA.getText(),
-                        IC.getAllDate(),
+                        IC.getDateOnly(),
                         price,
                         productPrice.get(productNameCB.getSelectedIndex()),
                         Integer.parseInt(countTxt.getText()),
