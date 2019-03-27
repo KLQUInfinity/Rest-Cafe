@@ -808,16 +808,31 @@ public class Metre extends javax.swing.JFrame {
 
                     // Print method
                     if (kitchin1 == true) {
-                        BPR.printBillKitchen1(billNum, titl, notesTA.getText());
+                        if (titl.equals("دليفري")) {
+                            BPR.printBillKitchen1(billNum, titl, notesTA.getText(), delverNameCB.getSelectedItem().toString());
+                        } else {
+                            BPR.printBillKitchen1(billNum, titl, notesTA.getText(), "");
+                        }
                     }
                     if (kitchin2 == true) {
-                        BPR.printBillKitchen2(billNum, titl, notesTA.getText());
+                        if (titl.equals("دليفري")) {
+                            BPR.printBillKitchen2(billNum, titl, notesTA.getText(), delverNameCB.getSelectedItem().toString());
+                        } else {
+                            BPR.printBillKitchen2(billNum, titl, notesTA.getText(), "");
+                        }
                     }
                     if (kitchin3 == true) {
-                        BPR.printBillKitchen3(billNum, titl, notesTA.getText());
+                        if (titl.equals("دليفري")) {
+                            BPR.printBillKitchen3(billNum, titl, notesTA.getText(), delverNameCB.getSelectedItem().toString());
+                        } else {
+                            BPR.printBillKitchen3(billNum, titl, notesTA.getText(), "");
+                        }
                     }
-
-                    BPR.printBill(billNum, totalPrice, "", "", titl);
+                    if (titl.equals("دليفري")) {
+                        BPR.printBill(billNum, totalPrice, "", "", titl, delverNameCB.getSelectedItem().toString(), clientName.getText(), phone.getText(), address.getText());
+                    } else {
+                        BPR.printBill(billNum, totalPrice, "", "", titl, "", "", "", "");
+                    }
                     //client
                     BPR.pdfPrint("client.pdf");
                     //backup
@@ -851,6 +866,9 @@ public class Metre extends javax.swing.JFrame {
         kitchin2 = false;
         kitchin3 = false;
         IC.list.clear();
+        clientName.setText("");
+        phone.setText("");
+        address.setText("");
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void countTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countTxtActionPerformed

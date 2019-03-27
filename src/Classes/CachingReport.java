@@ -23,14 +23,14 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 
-public class CacherReport {
+public class CachingReport {
 
     Document document = new Document(PageSize.A4.rotate());
     private final ImportantClass IC = ImportantClass.getInstance();
     com.itextpdf.text.Font f = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 10f);
     com.itextpdf.text.Font f1 = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 13f);
 
-    public CacherReport() {
+    public CachingReport() {
         if (!IC.dbc.check) {
             IC.dbc.ConnectDB();
         }
@@ -51,7 +51,7 @@ public class CacherReport {
         PdfPCell ProductName = new PdfPCell(new Paragraph("اجمالي العدد", f1));
         ProductName.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(ProductName);
-        String query = "SELECT Sum(o.orderCount) , o.orderProduct FROM `order` o  where o.orderProduct = o.orderProduct And orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%' And orderKind='تيك اواي' group by o.orderProduct";
+        String query = "SELECT Sum(o.orderCount) , o.orderProduct FROM `order` o  where o.orderProduct = o.orderProduct And orderDate LIKE '%" + datee + "%' AND Cachier Like'%" + UsName + "%' group by o.orderProduct";
         IC.pst = IC.dbc.conn.prepareStatement(query);
         IC.rs = IC.pst.executeQuery();
         while (IC.rs.next()) {
@@ -64,7 +64,7 @@ public class CacherReport {
         document.add(new Paragraph(" ", f));
         document.add(new Paragraph(" ", f));
         table.flushContent();
-        IC.pst = IC.dbc.conn.prepareStatement("SELECT Sum(o.orderTotal) FROM `order` o  where orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%' And orderKind='تيك اواي'");
+        IC.pst = IC.dbc.conn.prepareStatement("SELECT Sum(o.orderTotal) FROM `order` o  where orderDate LIKE '%" + datee + "%' AND Cachier Like'%" + UsName + "%'");
         IC.rs = IC.pst.executeQuery();
         if (IC.rs.next()) {
             ///orderNum
@@ -88,7 +88,7 @@ public class CacherReport {
         document.add(new Paragraph(" ", f));
         document.add(new Paragraph(" ", f));
         table.flushContent();
-        IC.pst = IC.dbc.conn.prepareStatement("SELECT COUNT(DISTINCT orderNum) FROM `order`  where orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%' And orderKind='تيك اواي'");
+        IC.pst = IC.dbc.conn.prepareStatement("SELECT COUNT(DISTINCT orderNum) FROM `order`  where orderDate LIKE '%" + datee + "%' AND Cachier Like'%" + UsName + "%'");
         IC.rs = IC.pst.executeQuery();
         if (IC.rs.next()) {
             ///orderNum
@@ -145,7 +145,7 @@ public class CacherReport {
         PdfPCell orderType = new PdfPCell(new Paragraph("نوع الطلب ", f1));
         orderType.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(orderType);
-        String query = "SELECT * FROM `order` WHERE orderDate LIKE '%" + datee + "%' AND userName Like'%" + UsName + "%' And orderKind='تيك اواي'";
+        String query = "SELECT * FROM `order` WHERE orderDate LIKE '%" + datee + "%' AND Cachier Like'%" + UsName + "%'";
         IC.pst = IC.dbc.conn.prepareStatement(query);
         IC.rs = IC.pst.executeQuery();
         while (IC.rs.next()) {
@@ -177,7 +177,7 @@ public class CacherReport {
     }
 
     public void totalReport(String date,String empName) throws DocumentException, FileNotFoundException, SQLException {
-        PdfWriter.getInstance(document, new FileOutputStream("Cachier.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("Caching.pdf"));
         document.setMargins(8, 8, 10, 10);
         document.open();
         printEmpReport(date, empName);
@@ -211,7 +211,7 @@ public class CacherReport {
     }
 
     public static void main(String[] args) throws DocumentException, FileNotFoundException, SQLException {
-        CacherReport c = new CacherReport();
+        CachingReport c = new CachingReport();
         c.totalReport("","");
     }
 }

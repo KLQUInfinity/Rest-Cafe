@@ -59,7 +59,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel, String type) throws DocumentException, FileNotFoundException {
+    public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel, String type, String delver, String clientName, String phon, String addres) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("client.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -191,16 +191,63 @@ public class Bills_Printing_Reports {
             table.addCell(c00);
         }
         //cachir
+        if (type.equals("دليفري")) {
+            PdfPCell c8 = new PdfPCell(new Paragraph("الطيار:", f));
+            c8.setColspan(2);
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(delver, f));
+            c9.setColspan(4);
+            c9.setBorder(0);
+            c9.setPadding(5f);
+            table.addCell(c9);
+            PdfPCell client = new PdfPCell(new Paragraph("اسم العميل:", f));
+            client.setColspan(2);
+            client.setPadding(5f);
+            client.setHorizontalAlignment(Element.ALIGN_CENTER);
+            client.setBorder(0);
+            table.addCell(client);
+            PdfPCell client1 = new PdfPCell(new Paragraph(clientName, f));
+            client1.setColspan(4);
+            client1.setPadding(5f);
+            client1.setBorder(0);
+            table.addCell(client1);
+            PdfPCell phone = new PdfPCell(new Paragraph("رقم التليفون:", f));
+            phone.setColspan(2);
+            phone.setPadding(5f);
+            phone.setHorizontalAlignment(Element.ALIGN_CENTER);
+            phone.setBorder(0);
+            table.addCell(phone);
+            PdfPCell phone1 = new PdfPCell(new Paragraph(phon, f));
+            phone1.setColspan(4);
+            phone1.setPadding(5f);
+            phone1.setBorder(0);
+            table.addCell(phone1);
+            PdfPCell address = new PdfPCell(new Paragraph("العنوان:", f));
+            address.setColspan(2);
+            address.setPadding(5f);
+            address.setHorizontalAlignment(Element.ALIGN_CENTER);
+            address.setBorder(0);
+            table.addCell(address);
+            PdfPCell address1 = new PdfPCell(new Paragraph(addres, f));
+            address1.setColspan(4);
+            address1.setPadding(5f);
+            address1.setBorder(0);
+            table.addCell(address1);
+        }else{
         PdfPCell c8 = new PdfPCell(new Paragraph("موظف الكاشير:", f));
-        c8.setColspan(3);
-        c8.setPadding(5f);
-        c8.setHorizontalAlignment(Element.ALIGN_CENTER);
-        c8.setBorder(0);
-        table.addCell(c8);
-        PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
-        c9.setColspan(3);
-        c9.setBorder(0);
-        table.addCell(c9);
+            c8.setColspan(3);
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
+            c9.setColspan(3);
+            c9.setBorder(0);
+            table.addCell(c9);
+        }
         ///footer
         table.addCell(c00);
         PdfPCell cel0 = new PdfPCell(new Paragraph("شكرا  لزيارتكم", f1));
@@ -218,7 +265,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen1(int billNum, String type, String Note) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen1(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen1.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -312,7 +359,7 @@ public class Bills_Printing_Reports {
             c8.setHorizontalAlignment(Element.ALIGN_CENTER);
             c8.setBorder(0);
             table.addCell(c8);
-            PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
+            PdfPCell c9 = new PdfPCell(new Paragraph(delver, f));
             c9.setBorder(0);
             c9.setColspan(2);
             c9.setPadding(5f);
@@ -336,7 +383,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen2(int billNum, String type, String Note) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen2(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen2.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -430,7 +477,7 @@ public class Bills_Printing_Reports {
             c8.setHorizontalAlignment(Element.ALIGN_CENTER);
             c8.setBorder(0);
             table.addCell(c8);
-            PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
+            PdfPCell c9 = new PdfPCell(new Paragraph(delver, f));
             c9.setBorder(0);
             c9.setColspan(2);
             c9.setPadding(5f);
@@ -454,7 +501,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen3(int billNum, String type, String Note) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen3(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen3.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -548,7 +595,7 @@ public class Bills_Printing_Reports {
             c8.setHorizontalAlignment(Element.ALIGN_CENTER);
             c8.setBorder(0);
             table.addCell(c8);
-            PdfPCell c9 = new PdfPCell(new Paragraph(IC.userName, f));
+            PdfPCell c9 = new PdfPCell(new Paragraph(delver, f));
             c9.setBorder(0);
             c9.setColspan(2);
             c9.setPadding(5f);
