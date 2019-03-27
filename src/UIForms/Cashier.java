@@ -672,8 +672,8 @@ public class Cashier extends javax.swing.JFrame {
                                     + "orderTotal, orderDate,"
                                     + "orderNotes, userName,"
                                     + "orderType, orderKind,"
-                                    + "orderCashed )"
-                                    + "values(?,?,?,?,?,?,?,?,?,?,?)");
+                                    + "orderCashed,Cachier )"
+                                    + "values(?,?,?,?,?,?,?,?,?,?,?,?)");
 
                             IC.pst.setInt(1, billNum);
                             IC.pst.setString(2, casherTable.getValueAt(i, 6).toString());
@@ -686,6 +686,7 @@ public class Cashier extends javax.swing.JFrame {
                             IC.pst.setString(9, casherTable.getValueAt(i, 0).toString());
                             IC.pst.setString(10, "تيك اواي");
                             IC.pst.setInt(11, 1);
+                            IC.pst.setString(12, IC.userName);
 
                             //add order data to be printed 
                             BillingData dd = new BillingData();

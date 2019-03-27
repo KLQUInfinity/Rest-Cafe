@@ -86,7 +86,7 @@ public class Cashing extends javax.swing.JFrame {
 
                     // Get all id of the order
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM sql2283641.order"
-                            + " where orderNum=?");
+                            + " where orderNum=? and orderCashed=0");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     ArrayList<Integer> orderId = new ArrayList<>();
@@ -98,7 +98,7 @@ public class Cashing extends javax.swing.JFrame {
                     // Get all data of the order
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
                             + " FROM sql2283641.order"
-                            + " where orderNum=?");
+                            + " where orderNum=?  and orderCashed=0");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     tables.get(i).setModel(DbUtils.resultSetToTableModel(IC.rs));
@@ -106,7 +106,7 @@ public class Cashing extends javax.swing.JFrame {
 
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT SUM(orderTotal),orderKind "
                             + " FROM sql2283641.order"
-                            + " where orderNum=?");
+                            + " where orderNum=?  and orderCashed=0");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     if (IC.rs.next()) {
@@ -419,7 +419,7 @@ public class Cashing extends javax.swing.JFrame {
             try {
                 for (int i = 0; i < id.get(Tabs.getSelectedIndex()).size(); i++) {
                     IC.pst = IC.dbc.conn.prepareStatement("update sql2283641.order"
-                            + " set orderCashed=1"
+                            + " set orderCashed=1 , Cachier='"+IC.userName+"'"
                             + " where id=?");
                     IC.pst.setInt(1, id.get(Tabs.getSelectedIndex()).get(i));
                     IC.pst.execute();
