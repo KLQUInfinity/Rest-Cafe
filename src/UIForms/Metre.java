@@ -838,24 +838,24 @@ public class Metre extends javax.swing.JFrame {
                     }
                     if (titl.equals("دليفري")) {
                         //client
-                        BPR.pdfPrint("client.pdf", "POS-80(دلفري)");
+                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
                         //backup
-                        BPR.pdfPrint("client.pdf", "POS-80(بيك اب)");
+                        BPR.pdfPrint("client.pdf", "POS-80dv on PC2");
                     } else {
                         //client
                         BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
                         //backup
-                        BPR.pdfPrint("client.pdf", "\\Pc2\\POS-80(بيك اب)");
+                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
                     }
 
                     if (kitchin1 == true) {
-                        BPR.pdfPrint("kitchen1.pdf", "\\Pc1\\POS-80(بيتزا)");
+                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz on Pc1");
                     }
                     if (kitchin2 == true) {
-                        BPR.pdfPrint("kitchen2.pdf", "\\Pc3\\POS-80(شعبيي)");
+                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss on PC3");
                     }
                     if (kitchin3 == true) {
-                        BPR.pdfPrint("kitchen3.pdf", "\\Pc1\\POS-80(مطبخ غربي)");
+                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh on PC1");
                     }
                     // Rest all varibles
                     dtm.setRowCount(0);

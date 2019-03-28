@@ -725,16 +725,16 @@ public class Cashier extends javax.swing.JFrame {
                             BPR.printBillKitchen3(billNum, "تيك اواي",notesTA.getText(),"");
                         }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي","","","","");
-                        BPR.pdfPrint("client.pdf","POS-80(كاشير)");
-                        BPR.pdfPrint("client.pdf","\\Pc2\\POS-80(بيك اب)");
+                        BPR.pdfPrint("client.pdf","POS-80ch");
+                        BPR.pdfPrint("client.pdf","POS-80bu on PC2");
                         if (kitchin1 == true) {
-                            BPR.pdfPrint("kitchen1.pdf","\\Pc1\\POS-80(بيتزا)");
+                            BPR.pdfPrint("kitchen1.pdf","POS-80pz on Pc1");
                         }
                         if (kitchin2 == true) {
-                            BPR.pdfPrint("kitchen2.pdf","POS-80(شعبيي)");
+                            BPR.pdfPrint("kitchen2.pdf","POS-80ss");
                         }
                         if (kitchin3 == true) {
-                            BPR.pdfPrint("kitchen3.pdf","\\Pc1\\POS-80(مطبخ غربي)");
+                            BPR.pdfPrint("kitchen3.pdf","POS-80gh on PC1");
                         }
                         // Rest all varibles
                         dtm.setRowCount(0);
