@@ -92,6 +92,7 @@ public class Metre extends javax.swing.JFrame {
         casherTable.setAutoCreateColumnsFromModel(false);
         dtm = (DefaultTableModel) casherTable.getModel();
 
+        category();
         getAllProductData();
         getLastBillNum();
         SelectDelvery();
@@ -132,8 +133,7 @@ public class Metre extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from rest_cafe.product"
-                    + " where productType=?");
-            IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
+                    + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -142,6 +142,25 @@ public class Metre extends javax.swing.JFrame {
             }
             productNameCB.setModel(new DefaultComboBoxModel(products.toArray()));
         } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void category() {
+        try {
+            categoryCB.removeAllItems();
+            // Get all Product
+            IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT productSubType from rest_cafe.product "
+                    + "WHERE productType =?");
+            IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
+            IC.rs = IC.pst.executeQuery();
+            ArrayList<String> productCategory = new ArrayList<>();
+            while (IC.rs.next()) {
+                String s = IC.rs.getString(1);
+                productCategory.add(s);
+            }
+            categoryCB.setModel(new DefaultComboBoxModel(productCategory.toArray()));
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -218,6 +237,8 @@ public class Metre extends javax.swing.JFrame {
         address = new javax.swing.JTextField();
         phone = new javax.swing.JTextField();
         countLabel3 = new javax.swing.JLabel();
+        categoryCB = new javax.swing.JComboBox<>();
+        productLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         casherTable = new javax.swing.JTable();
@@ -255,6 +276,11 @@ public class Metre extends javax.swing.JFrame {
         productNameCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         productNameCB.setForeground(new java.awt.Color(255, 0, 0));
         productNameCB.setPreferredSize(new java.awt.Dimension(175, 26));
+        productNameCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                productNameCBItemStateChanged(evt);
+            }
+        });
 
         countLabel.setBackground(new java.awt.Color(204, 204, 204));
         countLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -339,6 +365,20 @@ public class Metre extends javax.swing.JFrame {
         countLabel3.setForeground(new java.awt.Color(255, 0, 0));
         countLabel3.setText("رقم الموبيل");
 
+        categoryCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        categoryCB.setForeground(new java.awt.Color(255, 0, 0));
+        categoryCB.setPreferredSize(new java.awt.Dimension(175, 26));
+        categoryCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                categoryCBItemStateChanged(evt);
+            }
+        });
+
+        productLabel2.setBackground(new java.awt.Color(204, 204, 204));
+        productLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        productLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        productLabel2.setText("اسم الصنف");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -349,39 +389,49 @@ public class Metre extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(40, 40, 40)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(productNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(productLabel)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(productNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(countLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(clientName, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(countLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
-                                .addComponent(countLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addComponent(countLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(productLabel1))
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addGap(71, 71, 71)
+                                        .addComponent(clientName, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(countLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(categoryCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                                        .addComponent(productLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(productLabel1)))
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addComponent(productLabel2)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)))))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(countLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -396,24 +446,27 @@ public class Metre extends javax.swing.JFrame {
                             .addComponent(productLabel)
                             .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(countLabel)
+                            .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(productLabel1))
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(countLabel)
-                                .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(categoryCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(productLabel2)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(countLabel1)
-                            .addComponent(clientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(countLabel3)
-                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(productLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(countLabel2)
-                            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(countLabel1)
+                                .addComponent(clientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel1)
@@ -505,9 +558,9 @@ public class Metre extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(244, 244, 244)
+                .addGap(18, 18, 18)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
                 .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -516,11 +569,10 @@ public class Metre extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
                     .addComponent(orderNumLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearSelectionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(clearSelectionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                        .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -836,27 +888,27 @@ public class Metre extends javax.swing.JFrame {
                     } else {
                         BPR.printBill(billNum, totalPrice, "", "", titl, "", "", "", "");
                     }
-                    if (titl.equals("دليفري")) {
-                        //client
-                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
-                        //backup
-                        BPR.pdfPrint("client.pdf", "POS-80dv on PC2");
-                    } else {
+//                    if (titl.equals("دليفري")) {
+//                        //client
+//                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
+//                        //backup
+//                        BPR.pdfPrint("client.pdf", "POS-80dv on PC2");
+//                    } else {
                         //client
                         BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
                         //backup
-                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
-                    }
+//                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
+//                    }
 
-                    if (kitchin1 == true) {
-                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz on Pc1");
-                    }
-                    if (kitchin2 == true) {
-                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss on PC3");
-                    }
-                    if (kitchin3 == true) {
-                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh on PC1");
-                    }
+//                    if (kitchin1 == true) {
+//                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz on Pc1");
+//                    }
+//                    if (kitchin2 == true) {
+//                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss on PC3");
+//                    }
+//                    if (kitchin3 == true) {
+//                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh on PC1");
+//                    }
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
@@ -893,7 +945,7 @@ public class Metre extends javax.swing.JFrame {
     }//GEN-LAST:event_countTxtActionPerformed
 
     private void productTypeCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productTypeCBItemStateChanged
-        getAllProductData();
+        category();
     }//GEN-LAST:event_productTypeCBItemStateChanged
 
     private void clientNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientNameActionPerformed
@@ -917,6 +969,16 @@ public class Metre extends javax.swing.JFrame {
             notesTA.setText(casherTable.getValueAt(casherTable.getSelectedRow(), 1).toString());
         }
     }//GEN-LAST:event_casherTableMouseClicked
+
+    private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
+       if (categoryCB.getItemCount() > 0) {
+            getAllProductData();
+        }
+    }//GEN-LAST:event_categoryCBItemStateChanged
+
+    private void productNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productNameCBItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameCBItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -958,6 +1020,7 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JButton addBtn;
     private javax.swing.JTextField address;
     private javax.swing.JTable casherTable;
+    private javax.swing.JComboBox<String> categoryCB;
     private javax.swing.JButton clearSelectionBtn;
     private javax.swing.JTextField clientName;
     private javax.swing.JLabel countLabel;
@@ -983,6 +1046,7 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JTextField phone;
     private javax.swing.JLabel productLabel;
     private javax.swing.JLabel productLabel1;
+    private javax.swing.JLabel productLabel2;
     private javax.swing.JComboBox<String> productNameCB;
     private javax.swing.JComboBox<String> productTypeCB;
     private javax.swing.JLabel productTypeLabel;

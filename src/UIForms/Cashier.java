@@ -68,7 +68,7 @@ public class Cashier extends javax.swing.JFrame {
         initComponents();
 
         IC.dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
-
+        
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
         CheckDate();
@@ -81,6 +81,7 @@ public class Cashier extends javax.swing.JFrame {
         casherTable.setAutoCreateColumnsFromModel(false);
         dtm = (DefaultTableModel) casherTable.getModel();
 
+        category();
         getAllProductData();
         getLastBillNum();
     }
@@ -123,8 +124,7 @@ public class Cashier extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from rest_cafe.product"
-                    + " where productType=?");
-            IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
+                    + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -148,6 +148,25 @@ public class Cashier extends javax.swing.JFrame {
                 billNum = IC.rs.getInt("max(orderNum)") + 1;
                 orderNumLabel.setText("رقم الطلب : " + billNum);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void category() {
+        try {
+            categoryCB.removeAllItems();
+            // Get all Product
+            IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT productSubType from rest_cafe.product "
+                    + "WHERE productType =?");
+            IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
+            IC.rs = IC.pst.executeQuery();
+            ArrayList<String> productCategory = new ArrayList<>();
+            while (IC.rs.next()) {
+                String s = IC.rs.getString(1);
+                productCategory.add(s);
+            }
+            categoryCB.setModel(new DefaultComboBoxModel(productCategory.toArray()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -203,12 +222,14 @@ public class Cashier extends javax.swing.JFrame {
         notesTA = new javax.swing.JTextArea();
         productTypeLabel = new javax.swing.JLabel();
         productTypeCB = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        paidTxt = new javax.swing.JTextField();
+        categoryCB = new javax.swing.JComboBox<>();
+        productLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         orderNumLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
         clearSelectionBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        paidTxt = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         casherTable = new javax.swing.JTable();
@@ -282,19 +303,19 @@ public class Cashier extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel2.setText("المدفوع");
-        jLabel2.setPreferredSize(new java.awt.Dimension(69, 17));
-
-        paidTxt.setForeground(new java.awt.Color(255, 0, 0));
-        paidTxt.setText("0.0");
-        paidTxt.setPreferredSize(new java.awt.Dimension(187, 24));
-        paidTxt.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                paidTxtCaretUpdate(evt);
+        categoryCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        categoryCB.setForeground(new java.awt.Color(255, 0, 0));
+        categoryCB.setPreferredSize(new java.awt.Dimension(175, 26));
+        categoryCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                categoryCBItemStateChanged(evt);
             }
         });
+
+        productLabel1.setBackground(new java.awt.Color(204, 204, 204));
+        productLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        productLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        productLabel1.setText("التصنيف");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -312,17 +333,19 @@ public class Cashier extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(productLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(categoryCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                    .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+                    .addComponent(productTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(productLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -343,13 +366,15 @@ public class Cashier extends javax.swing.JFrame {
                     .addComponent(productLabel)
                     .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(countLabel)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(categoryCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(productLabel1))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(countLabel)
+                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(187, 187, 187));
@@ -384,16 +409,34 @@ public class Cashier extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel2.setText("المدفوع");
+        jLabel2.setPreferredSize(new java.awt.Dimension(69, 17));
+
+        paidTxt.setForeground(new java.awt.Color(255, 0, 0));
+        paidTxt.setText("0.0");
+        paidTxt.setPreferredSize(new java.awt.Dimension(187, 24));
+        paidTxt.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                paidTxtCaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
                 .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(271, 271, 271)
+                .addGap(44, 44, 44)
+                .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -406,7 +449,10 @@ public class Cashier extends javax.swing.JFrame {
                     .addComponent(clearSelectionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paidTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -415,12 +461,13 @@ public class Cashier extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -716,25 +763,24 @@ public class Cashier extends javax.swing.JFrame {
 
                         // Print method
                         if (kitchin1 == true) {
-                            BPR.printBillKitchen1(billNum, "تيك اواي",notesTA.getText(),"");
+                            BPR.printBillKitchen1(billNum, "تيك اواي", notesTA.getText(), "");
                         }
                         if (kitchin2 == true) {
-                            BPR.printBillKitchen2(billNum, "تيك اواي",notesTA.getText(),"");
+                            BPR.printBillKitchen2(billNum, "تيك اواي", notesTA.getText(), "");
                         }
                         if (kitchin3 == true) {
-                            BPR.printBillKitchen3(billNum, "تيك اواي",notesTA.getText(),"");
+                            BPR.printBillKitchen3(billNum, "تيك اواي", notesTA.getText(), "");
                         }
-                        BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي","","","","");
-                        BPR.pdfPrint("client.pdf","POS-80ch");
-                        BPR.pdfPrint("client.pdf","POS-80ch");
-                        BPR.pdfPrint("client.pdf","POS-80ch");
+                        BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي", "", "", "", "");
+                        BPR.pdfPrint("client.pdf", "POS-80ch");
+                        BPR.pdfPrint("client.pdf", "POS-80ch");
 //                        BPR.pdfPrint("client.pdf","\\\\PC2\\POS-80bu");
 //                        if (kitchin1 == true) {
 //                            BPR.pdfPrint("kitchen1.pdf","POS-80pz");
 //                        }
-//                        if (kitchin2 == true) {
-//                            BPR.pdfPrint("kitchen2.pdf","POS-80ss");
-//                        }
+                        if (kitchin2 == true) {
+                            BPR.pdfPrint("kitchen2.pdf", "POS-80ss");
+                        }
 //                        if (kitchin3 == true) {
 //                            BPR.pdfPrint("kitchen3.pdf","POS-80gh");
 //                        }
@@ -779,7 +825,8 @@ public class Cashier extends javax.swing.JFrame {
     }//GEN-LAST:event_countTxtActionPerformed
 
     private void productTypeCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productTypeCBItemStateChanged
-        getAllProductData();
+        category();
+
     }//GEN-LAST:event_productTypeCBItemStateChanged
 
     private void paidTxtCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_paidTxtCaretUpdate
@@ -824,6 +871,12 @@ public class Cashier extends javax.swing.JFrame {
         getLastBillNum();
     }//GEN-LAST:event_addBtnActionPerformed
 
+    private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
+        if (categoryCB.getItemCount() > 0) {
+            getAllProductData();
+        }
+    }//GEN-LAST:event_categoryCBItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -863,6 +916,7 @@ public class Cashier extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JTable casherTable;
+    private javax.swing.JComboBox<String> categoryCB;
     private javax.swing.JButton clearSelectionBtn;
     private javax.swing.JLabel countLabel;
     private javax.swing.JTextField countTxt;
@@ -883,6 +937,7 @@ public class Cashier extends javax.swing.JFrame {
     private javax.swing.JLabel orderNumLabel;
     private javax.swing.JTextField paidTxt;
     private javax.swing.JLabel productLabel;
+    private javax.swing.JLabel productLabel1;
     private javax.swing.JComboBox<String> productNameCB;
     private javax.swing.JComboBox<String> productTypeCB;
     private javax.swing.JLabel productTypeLabel;
