@@ -67,7 +67,7 @@ public class Cashing extends javax.swing.JFrame {
     private void getAllUnfinishedOrder() {
         try {
             IC.pst = IC.dbc.conn.prepareStatement("SELECT DISTINCT orderNum "
-                    + "FROM sql2283641.order "
+                    + "FROM rest_cafe.order "
                     + "where orderCashed=0");
             IC.rs = IC.pst.executeQuery();
 
@@ -85,7 +85,7 @@ public class Cashing extends javax.swing.JFrame {
                     createNewTab(orderNum.get(i));
 
                     // Get all id of the order
-                    IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM sql2283641.order"
+                    IC.pst = IC.dbc.conn.prepareStatement("SELECT id FROM rest_cafe.order"
                             + " where orderNum=? and orderCashed=0");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
@@ -97,7 +97,7 @@ public class Cashing extends javax.swing.JFrame {
 
                     // Get all data of the order
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT orderNotes,orderCount,orderProduct "
-                            + " FROM sql2283641.order"
+                            + " FROM rest_cafe.order"
                             + " where orderNum=?  and orderCashed=0");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
@@ -105,7 +105,7 @@ public class Cashing extends javax.swing.JFrame {
                     tabCreated.set(i, true);
 
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT SUM(orderTotal),orderKind "
-                            + " FROM sql2283641.order"
+                            + " FROM rest_cafe.order"
                             + " where orderNum=?  and orderCashed=0");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
@@ -418,7 +418,7 @@ public class Cashing extends javax.swing.JFrame {
         if (Tabs.getTabCount() > 0) {
             try {
                 for (int i = 0; i < id.get(Tabs.getSelectedIndex()).size(); i++) {
-                    IC.pst = IC.dbc.conn.prepareStatement("update sql2283641.order"
+                    IC.pst = IC.dbc.conn.prepareStatement("update rest_cafe.order"
                             + " set orderCashed=1 , Cachier='"+IC.userName+"'"
                             + " where id=?");
                     IC.pst.setInt(1, id.get(Tabs.getSelectedIndex()).get(i));

@@ -52,7 +52,7 @@ public class ExcelReport {
         ///////////
         int rw = 1;
         ///////////
-        String query = "SELECT * FROM sql2283641.`order` WHERE userName ='"+emp+"';";
+        String query = "SELECT * FROM rest_cafe.`order` WHERE userName ='"+emp+"';";
         IC.pst = IC.dbc.conn.prepareStatement(query);
         IC.rs = IC.pst .executeQuery();
         ///////////

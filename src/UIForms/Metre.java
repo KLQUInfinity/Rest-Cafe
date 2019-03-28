@@ -99,7 +99,7 @@ public class Metre extends javax.swing.JFrame {
 
     public void SelectDelvery() {
         try {
-            IC.pst = IC.dbc.conn.prepareStatement("SELECT userName FROM sql2283641.user where userType ='Deliver'");
+            IC.pst = IC.dbc.conn.prepareStatement("SELECT userName FROM rest_cafe.user where userType ='Deliver'");
             IC.rs = IC.pst.executeQuery();
             while (IC.rs.next()) {
                 delverNameCB.addItem(IC.rs.getString("userName"));
@@ -131,7 +131,7 @@ public class Metre extends javax.swing.JFrame {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
-                    + " from sql2283641.product"
+                    + " from rest_cafe.product"
                     + " where productType=?");
             IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
             IC.rs = IC.pst.executeQuery();
@@ -163,7 +163,7 @@ public class Metre extends javax.swing.JFrame {
     private void getLastBillNum() {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order "
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from rest_cafe.order "
                     + "where orderDate=?");
             IC.pst.setString(1, IC.getDateOnly());
             IC.rs = IC.pst.executeQuery();
@@ -748,7 +748,7 @@ public class Metre extends javax.swing.JFrame {
             if (y == 0) {
                 try {
                     for (int i = 0; i < casherTable.getRowCount(); i++) {
-                        IC.pst = IC.dbc.conn.prepareStatement("insert into sql2283641.order("
+                        IC.pst = IC.dbc.conn.prepareStatement("insert into rest_cafe.order("
                                 + "orderNum, orderProduct,"
                                 + "orderCount, orderPrice,"
                                 + "orderTotal, orderDate,"

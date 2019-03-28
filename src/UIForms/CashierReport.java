@@ -84,7 +84,7 @@ public class CashierReport extends javax.swing.JFrame {
         try {
             // Get all users
             IC.pst = IC.dbc.conn.prepareStatement("select userName"
-                    + " from sql2283641.user");
+                    + " from rest_cafe.user");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> users = new ArrayList<>();
             while (IC.rs.next()) {
@@ -108,7 +108,7 @@ public class CashierReport extends javax.swing.JFrame {
 
                 // Get all bill numbers
                 IC.pst = IC.dbc.conn.prepareStatement("select DISTINCT orderNum"
-                        + " from sql2283641.order"
+                        + " from rest_cafe.order"
                         + " where userName = ?");
                 IC.pst.setString(1, employeeNameCB.getSelectedItem().toString());
                 IC.rs = IC.pst.executeQuery();
@@ -138,7 +138,7 @@ public class CashierReport extends javax.swing.JFrame {
         try {
             allbillTotal = 0;
             IC.pst = IC.dbc.conn.prepareStatement("select sum(orderTotal)"
-                    + " from sql2283641.order"
+                    + " from rest_cafe.order"
                     + " where userName = ?");
             IC.pst.setString(1, employeeNameCB.getSelectedItem().toString());
             IC.rs = IC.pst.executeQuery();
@@ -155,7 +155,7 @@ public class CashierReport extends javax.swing.JFrame {
         try {
             allTotals = 0;
             IC.pst = IC.dbc.conn.prepareStatement("select sum(orderTotal)"
-                    + " from sql2283641.order");
+                    + " from rest_cafe.order");
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {
                 allTotals = IC.rs.getDouble("sum(orderTotal)");
@@ -170,7 +170,7 @@ public class CashierReport extends javax.swing.JFrame {
         try {
             billTotal = 0;
             IC.pst = IC.dbc.conn.prepareStatement("select sum(orderTotal)"
-                    + " from sql2283641.order"
+                    + " from rest_cafe.order"
                     + " where orderNum = ?");
             IC.pst.setInt(1, orderNums.get(billIndex));
             IC.rs = IC.pst.executeQuery();
@@ -189,7 +189,7 @@ public class CashierReport extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement("select orderNotes, orderDate,"
                     + " orderTotal, orderPrice,"
                     + " orderCount, orderProduct"
-                    + " from sql2283641.order"
+                    + " from rest_cafe.order"
                     + " where orderNum = ? AND userName =?");
             IC.pst.setInt(1, billNum);
             IC.pst.setString(2,employeeNameCB.getSelectedItem().toString() );

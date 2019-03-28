@@ -23,7 +23,7 @@ public class DBConnection {
 //            Class.forName("com.mysql.jdbc.Driver");
             //create connection
             //            conn= DriverManager.getConnection("jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2283641?useUnicode=yes&characterEncoding=UTF-8","sql2283641","bL8!yY6!");
-            conn= DriverManager.getConnection("jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2283641?useUnicode=yes&characterEncoding=UTF-8","sql2283641","bL8!yY6!");
+            conn= DriverManager.getConnection("jdbc:mysql://aws-us-east-1-portal.4.dblayer.com:32967/rest_cafe?useUnicode=yes&characterEncoding=UTF-8","admin","HMWRRFFRFGTGWYWR");
             check = true;
 
         } catch (Exception e) {

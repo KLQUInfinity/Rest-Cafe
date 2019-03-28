@@ -122,7 +122,7 @@ public class Cashier extends javax.swing.JFrame {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
-                    + " from sql2283641.product"
+                    + " from rest_cafe.product"
                     + " where productType=?");
             IC.pst.setString(1, productTypeCB.getSelectedItem().toString());
             IC.rs = IC.pst.executeQuery();
@@ -140,7 +140,7 @@ public class Cashier extends javax.swing.JFrame {
     private void getLastBillNum() {
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from sql2283641.order "
+            IC.pst = IC.dbc.conn.prepareStatement("select max(orderNum) from rest_cafe.order "
                     + "where orderDate=?");
             IC.pst.setString(1, IC.getDateOnly());
             IC.rs = IC.pst.executeQuery();
@@ -669,7 +669,7 @@ public class Cashier extends javax.swing.JFrame {
                 if (y == 0) {
                     try {
                         for (int i = 0; i < casherTable.getRowCount(); i++) {
-                            IC.pst = IC.dbc.conn.prepareStatement("insert into sql2283641.order("
+                            IC.pst = IC.dbc.conn.prepareStatement("insert into rest_cafe.order("
                                     + "orderNum, orderProduct,"
                                     + "orderCount, orderPrice,"
                                     + "orderTotal, orderDate,"
@@ -725,17 +725,19 @@ public class Cashier extends javax.swing.JFrame {
                             BPR.printBillKitchen3(billNum, "تيك اواي",notesTA.getText(),"");
                         }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي","","","","");
-                        BPR.pdfPrint("client.pdf","\\\\PC3\\POS-80ch");
-                        BPR.pdfPrint("client.pdf","\\\\PC2\\POS-80bu");
-                        if (kitchin1 == true) {
-                            BPR.pdfPrint("kitchen1.pdf","POS-80pz");
-                        }
-                        if (kitchin2 == true) {
-                            BPR.pdfPrint("kitchen2.pdf","POS-80ss");
-                        }
-                        if (kitchin3 == true) {
-                            BPR.pdfPrint("kitchen3.pdf","POS-80gh");
-                        }
+                        BPR.pdfPrint("client.pdf","POS-80ch");
+                        BPR.pdfPrint("client.pdf","POS-80ch");
+                        BPR.pdfPrint("client.pdf","POS-80ch");
+//                        BPR.pdfPrint("client.pdf","\\\\PC2\\POS-80bu");
+//                        if (kitchin1 == true) {
+//                            BPR.pdfPrint("kitchen1.pdf","POS-80pz");
+//                        }
+//                        if (kitchin2 == true) {
+//                            BPR.pdfPrint("kitchen2.pdf","POS-80ss");
+//                        }
+//                        if (kitchin3 == true) {
+//                            BPR.pdfPrint("kitchen3.pdf","POS-80gh");
+//                        }
                         // Rest all varibles
                         dtm.setRowCount(0);
                         getLastBillNum();
