@@ -50,7 +50,7 @@ public class Bills_Printing_Reports {
     private static PrintService findPrintService(String printerName) {
         PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
         for (PrintService printService : printServices) {
-            if (printService.getName().trim().equals(printerName)) {
+            if (printService.getName().equals(printerName)) {
                 return printService;
             }
         }
