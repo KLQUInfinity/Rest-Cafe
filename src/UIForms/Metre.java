@@ -377,7 +377,7 @@ public class Metre extends javax.swing.JFrame {
         productLabel2.setBackground(new java.awt.Color(204, 204, 204));
         productLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         productLabel2.setForeground(new java.awt.Color(255, 0, 0));
-        productLabel2.setText("اسم الصنف");
+        productLabel2.setText("التصنيف");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
