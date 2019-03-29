@@ -903,29 +903,29 @@ public class Metre extends javax.swing.JFrame {
                             BPR.printBillCafe(billNum, titl, notesTA.getText(), "");
                         }
                     }
-//                    if (titl.equals("دليفري")) {
-//                        //client
-//                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
-//                        //backup
-//                        BPR.pdfPrint("client.pdf", "POS-80dv on PC2");
-//                    } else {
-                    //client
-                    BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
-                    //backup
-//                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
-//                    }
+                    if (titl.equals("دليفري")) {
+                        //client
+                        BPR.pdfPrint("client.pdf", "POS-80bu");
+                        //backup
+                        BPR.pdfPrint("client.pdf", "POS-80dv");
+                    } else {
+//                    client
+                        BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
+                        //backup
+                        BPR.pdfPrint("client.pdf", "POS-80bu");
+                    }
 
                     if (kitchin1 == true) {
 //                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz on Pc1");
-                        BPR.pdfPrint("kitchen1.pdf", "Xprinter XP-370B");
+                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz");
                     }
                     if (kitchin2 == true) {
 //                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss on PC3");
-                        BPR.pdfPrint("kitchen2.pdf", "Xprinter XP-370B");
+                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss");
                     }
                     if (kitchin3 == true) {
 //                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh on PC1");
-                        BPR.pdfPrint("kitchen3.pdf", "Xprinter XP-370B");
+                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh");
                     }
                     if (Cafe == true) {
                         BPR.pdfPrint("Cafe.pdf", "Xprinter XP-370B");

@@ -25,6 +25,7 @@ import java.io.IOException;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.swing.JOptionPane;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
 
@@ -35,22 +36,25 @@ public class Bills_Printing_Reports {
     com.itextpdf.text.Font f1 = FontFactory.getFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, 13f);
 
     //print pdf Auto print the bill file
-    public void pdfPrint(String Path,String printer) throws PrinterException, IOException, PrintException {
+    public void pdfPrint(String Path, String printer) throws PrinterException, IOException, PrintException {
         PDDocument document = PDDocument.load(new File(Path));
 
         PrintService myPrintService = findPrintService(printer);
-
-        PrinterJob job = PrinterJob.getPrinterJob();
-        job.setPageable(new PDFPageable(document));
-        job.setPrintService(myPrintService);
-        job.print();
+        if (myPrintService != null) {
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setPageable(new PDFPageable(document));
+            job.setPrintService(myPrintService);
+            job.print();
+        } else {
+            JOptionPane.showMessageDialog(null, "هذه الطابعة (" + printer + ") غير موجوده");
+        }
         document.close();
-    }       
+    }
 
     private static PrintService findPrintService(String printerName) {
         PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
         for (PrintService printService : printServices) {
-            if (printService.getName().equals(printerName)) {
+            if (printService.getName().contains(printerName)) {
                 return printService;
             }
         }
@@ -409,7 +413,7 @@ public class Bills_Printing_Reports {
         cell0.setBorderWidthRight(0);
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
-         ///////
+        ///////
         PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ شرقي", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
@@ -534,7 +538,7 @@ public class Bills_Printing_Reports {
         cell0.setBorderWidthRight(0);
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
-         ///////
+        ///////
         PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ غربي", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
@@ -637,7 +641,8 @@ public class Bills_Printing_Reports {
         document.add(table);
         document.close();
     }
-        //take away Bill
+    //take away Bill
+
     public void printBillCafe(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("Cafe.pdf"));
@@ -658,7 +663,7 @@ public class Bills_Printing_Reports {
         cell0.setBorderWidthRight(0);
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
-         ///////
+        ///////
         PdfPCell ce00 = new PdfPCell(new Paragraph("كافيه", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
