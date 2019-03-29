@@ -134,7 +134,7 @@ public class Metre extends javax.swing.JFrame {
                     + ", productPrice "
                     + " from rest_cafe.product"
                     + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'"
-                    + "AND productType ='"+ productTypeCB.getSelectedItem().toString()+"'");
+                    + "AND productType ='" + productTypeCB.getSelectedItem().toString() + "'");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -146,7 +146,7 @@ public class Metre extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+
     private void category() {
         try {
             categoryCB.removeAllItems();
@@ -448,26 +448,29 @@ public class Metre extends javax.swing.JFrame {
                             .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(9, 9, 9)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(countLabel)
-                            .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(categoryCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(productLabel2)))
+                                .addComponent(productLabel2))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(countLabel)
+                                .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(countLabel3)
-                            .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(delverNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(productLabel1)))
+                                .addComponent(productLabel1))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(countLabel3)
+                                .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(countLabel2)
-                            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(countLabel1)
-                                .addComponent(clientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(clientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(countLabel2)
+                                .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel1)
@@ -895,21 +898,24 @@ public class Metre extends javax.swing.JFrame {
 //                        //backup
 //                        BPR.pdfPrint("client.pdf", "POS-80dv on PC2");
 //                    } else {
-                        //client
-                        BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
-                        //backup
+                    //client
+                    BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
+                    //backup
 //                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
 //                    }
 
-//                    if (kitchin1 == true) {
+                    if (kitchin1 == true) {
 //                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz on Pc1");
-//                    }
-//                    if (kitchin2 == true) {
+                        BPR.pdfPrint("kitchen1.pdf", "Xprinter XP-370B");
+                    }
+                    if (kitchin2 == true) {
 //                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss on PC3");
-//                    }
-//                    if (kitchin3 == true) {
+                        BPR.pdfPrint("kitchen2.pdf", "Xprinter XP-370B");
+                    }
+                    if (kitchin3 == true) {
 //                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh on PC1");
-//                    }
+                        BPR.pdfPrint("kitchen3.pdf", "Xprinter XP-370B");
+                    }
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
@@ -972,7 +978,7 @@ public class Metre extends javax.swing.JFrame {
     }//GEN-LAST:event_casherTableMouseClicked
 
     private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
-       if (categoryCB.getItemCount() > 0) {
+        if (categoryCB.getItemCount() > 0) {
             getAllProductData();
         }
     }//GEN-LAST:event_categoryCBItemStateChanged

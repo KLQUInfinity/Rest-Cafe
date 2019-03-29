@@ -284,6 +284,13 @@ public class Bills_Printing_Reports {
         cell0.setBorderWidthRight(0);
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
+        ///////
+        PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ فرعي", f1));
+        ce00.setColspan(3);
+        ce00.setPaddingBottom(4f);
+        cell0.setBorderWidth(0);
+        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell0);
         ///bill Num
         PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
         c.setBorder(0);
@@ -402,6 +409,13 @@ public class Bills_Printing_Reports {
         cell0.setBorderWidthRight(0);
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
+         ///////
+        PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ شرقي", f1));
+        ce00.setColspan(3);
+        ce00.setPaddingBottom(4f);
+        cell0.setBorderWidth(0);
+        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell0);
         ///bill Num
         PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
         c.setBorder(0);
@@ -518,6 +532,13 @@ public class Bills_Printing_Reports {
         cell0.setBorderColorBottom(BaseColor.BLACK);
         cell0.setBorderWidthLeft(0);
         cell0.setBorderWidthRight(0);
+        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell0);
+         ///////
+        PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ غربي", f1));
+        ce00.setColspan(3);
+        ce00.setPaddingBottom(4f);
+        cell0.setBorderWidth(0);
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
         ///bill Num

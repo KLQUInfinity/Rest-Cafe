@@ -179,30 +179,36 @@
                                       <Component id="productTypeCB" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="countLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="countTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                           <Component id="categoryCB" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="productLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="countLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="countTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="countLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="phone" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                           <Component id="delverNameCB" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="productLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="countLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="phone" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="countLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="address" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                           <Component id="countLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="clientName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="countLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="address" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>

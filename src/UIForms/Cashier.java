@@ -68,7 +68,7 @@ public class Cashier extends javax.swing.JFrame {
         initComponents();
 
         IC.dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
-        
+
         WindowListener exitListener = null;
         addWindowListener(prepareWindow(exitListener));
         CheckDate();
@@ -124,8 +124,8 @@ public class Cashier extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from rest_cafe.product"
-                     + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'"
-                    + "AND productType ='"+ productTypeCB.getSelectedItem().toString()+"'");
+                    + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'"
+                    + "AND productType ='" + productTypeCB.getSelectedItem().toString() + "'");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -774,17 +774,16 @@ public class Cashier extends javax.swing.JFrame {
                         }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي", "", "", "", "");
                         BPR.pdfPrint("client.pdf", "POS-80ch");
-                        BPR.pdfPrint("client.pdf", "POS-80ch");
 //                        BPR.pdfPrint("client.pdf","\\\\PC2\\POS-80bu");
-//                        if (kitchin1 == true) {
-//                            BPR.pdfPrint("kitchen1.pdf","POS-80pz");
-//                        }
-                        if (kitchin2 == true) {
-                            BPR.pdfPrint("kitchen2.pdf", "POS-80ss");
+                        if (kitchin1 == true) {
+                            BPR.pdfPrint("kitchen1.pdf", "POS-80ch");
                         }
-//                        if (kitchin3 == true) {
-//                            BPR.pdfPrint("kitchen3.pdf","POS-80gh");
-//                        }
+                        if (kitchin2 == true) {
+                            BPR.pdfPrint("kitchen2.pdf", "POS-80ch");
+                        }
+                        if (kitchin3 == true) {
+                            BPR.pdfPrint("kitchen3.pdf", "POS-80ch");
+                        }
                         // Rest all varibles
                         dtm.setRowCount(0);
                         getLastBillNum();
