@@ -826,6 +826,7 @@ public class Cashier extends javax.swing.JFrame {
         }
         kitchin1 = false;
         kitchin2 = false;
+        Cafe = false;
         kitchin3 = false;
         IC.list.clear();
     }//GEN-LAST:event_submitBtnActionPerformed

@@ -106,7 +106,7 @@ public class Cashing extends javax.swing.JFrame {
 
                     IC.pst = IC.dbc.conn.prepareStatement("SELECT SUM(orderTotal),orderKind "
                             + " FROM rest_cafe.order"
-                            + " where orderNum=?  and orderCashed=0");
+                            + " where orderNum=?  and orderCashed=0 GROUP BY orderKind");
                     IC.pst.setInt(1, orderNum.get(i));
                     IC.rs = IC.pst.executeQuery();
                     if (IC.rs.next()) {

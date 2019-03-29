@@ -959,6 +959,7 @@ public class Metre extends javax.swing.JFrame {
         kitchin1 = false;
         kitchin2 = false;
         kitchin3 = false;
+        Cafe = false;
         IC.list.clear();
         clientName.setText("");
         phone.setText("");
