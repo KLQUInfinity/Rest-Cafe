@@ -288,9 +288,9 @@ public class Bills_Printing_Reports {
         PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ فرعي", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
-        cell0.setBorderWidth(0);
-        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell0);
+        ce00.setBorderWidth(0);
+        ce00.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(ce00);
         ///bill Num
         PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
         c.setBorder(0);
@@ -413,9 +413,9 @@ public class Bills_Printing_Reports {
         PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ شرقي", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
-        cell0.setBorderWidth(0);
-        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell0);
+        ce00.setBorderWidth(0);
+        ce00.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(ce00);
         ///bill Num
         PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
         c.setBorder(0);
@@ -538,9 +538,9 @@ public class Bills_Printing_Reports {
         PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ غربي", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
-        cell0.setBorderWidth(0);
-        cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell0);
+        ce00.setBorderWidth(0);
+        ce00.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(ce00);
         ///bill Num
         PdfPCell c = new PdfPCell(new Paragraph("رقم الطلب :", f));
         c.setBorder(0);
