@@ -928,6 +928,10 @@ public class Metre extends javax.swing.JFrame {
                         BPR.pdfPrint("kitchen3.pdf", "POS-80gh");
                     }
                     if (Cafe == true) {
+                        if (titl.equals("دليفري")) {
+                            BPR.pdfPrint("Cafe.pdf", "POS-80dv");
+                        } else {
+                        }
                         BPR.pdfPrint("Cafe.pdf", "Xprinter XP-370B");
                     }
                     // Rest all varibles
