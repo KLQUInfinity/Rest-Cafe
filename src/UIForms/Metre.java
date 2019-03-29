@@ -133,7 +133,8 @@ public class Metre extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from rest_cafe.product"
-                    + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'");
+                    + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'"
+                    + "AND productType ='"+ productTypeCB.getSelectedItem().toString()+"'");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
