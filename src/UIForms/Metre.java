@@ -55,6 +55,7 @@ public class Metre extends javax.swing.JFrame {
     private boolean kitchin2 = false;
     private boolean kitchin3 = false;
     private final float delaveryValue = 3;
+    private boolean Cafe;
 
     /**
      * Creates new form Casher
@@ -863,6 +864,9 @@ public class Metre extends javax.swing.JFrame {
                         if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
                             kitchin3 = true;
                         }
+                        if (casherTable.getValueAt(i, 0).toString().equals("الكافيه")) {
+                            Cafe = true;
+                        }
                     }
 
                     // Print method
@@ -892,6 +896,13 @@ public class Metre extends javax.swing.JFrame {
                     } else {
                         BPR.printBill(billNum, totalPrice, "", "", titl, "", "", "", "");
                     }
+                    if (Cafe == true) {
+                        if (titl.equals("دليفري")) {
+                            BPR.printBillCafe(billNum, titl, notesTA.getText(), delverNameCB.getSelectedItem().toString());
+                        } else {
+                            BPR.printBillCafe(billNum, titl, notesTA.getText(), "");
+                        }
+                    }
 //                    if (titl.equals("دليفري")) {
 //                        //client
 //                        BPR.pdfPrint("client.pdf", "POS-80bu on PC2");
@@ -915,6 +926,9 @@ public class Metre extends javax.swing.JFrame {
                     if (kitchin3 == true) {
 //                        BPR.pdfPrint("kitchen3.pdf", "POS-80gh on PC1");
                         BPR.pdfPrint("kitchen3.pdf", "Xprinter XP-370B");
+                    }
+                    if (Cafe == true) {
+                        BPR.pdfPrint("Cafe.pdf", "Xprinter XP-370B");
                     }
                     // Rest all varibles
                     dtm.setRowCount(0);

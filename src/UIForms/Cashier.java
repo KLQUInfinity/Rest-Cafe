@@ -55,6 +55,7 @@ public class Cashier extends javax.swing.JFrame {
     private boolean kitchin3;
     private boolean checkDelavery = false;
     private final float delaveryValue = 3;
+    private boolean Cafe;
 
     /**
      * Creates new form Casher
@@ -760,6 +761,9 @@ public class Cashier extends javax.swing.JFrame {
                             if (casherTable.getValueAt(i, 0).toString().equals("غربي")) {
                                 kitchin3 = true;
                             }
+                            if (casherTable.getValueAt(i, 0).toString().equals("الكافيه")) {
+                                Cafe = true;
+                            }
                         }
 
                         // Print method
@@ -772,6 +776,9 @@ public class Cashier extends javax.swing.JFrame {
                         if (kitchin3 == true) {
                             BPR.printBillKitchen3(billNum, "تيك اواي", notesTA.getText(), "");
                         }
+                        if (Cafe == true) {
+                            BPR.printBillCafe(billNum, "تيك اواي", notesTA.getText(), "");
+                        }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي", "", "", "", "");
                         BPR.pdfPrint("client.pdf", "POS-80ch");
 //                        BPR.pdfPrint("client.pdf","\\\\PC2\\POS-80bu");
@@ -783,6 +790,9 @@ public class Cashier extends javax.swing.JFrame {
                         }
                         if (kitchin3 == true) {
                             BPR.pdfPrint("kitchen3.pdf", "POS-80ch");
+                        }
+                        if (Cafe == true) {
+                            BPR.pdfPrint("Cafe.pdf", "POS-80ch");
                         }
                         // Rest all varibles
                         dtm.setRowCount(0);
