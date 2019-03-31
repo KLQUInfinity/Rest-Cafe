@@ -62,7 +62,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel, String type, String delver, String clientName, String phon, String addres) throws DocumentException, FileNotFoundException {
+    public void printBill(int billNum, double totalPrice, String paidTxt, String totalChangeLabel, String type, String delver, String clientName, String phon, String addres, String tabNum) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("client.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -97,6 +97,18 @@ public class Bills_Printing_Reports {
         c0.setColspan(2);
         c0.setBorder(0);
         table.addCell(c0);
+        if (type.equals("سفرة")) {
+            PdfPCell c8 = new PdfPCell(new Paragraph("رقم التربيزة:", f));
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(tabNum, f));
+            c9.setBorder(0);
+            c9.setColspan(2);
+            c9.setPadding(5f);
+            table.addCell(c9);
+        }
         ///type of order
         PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
         cc.setColspan(2);
@@ -268,7 +280,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen1(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen1(int billNum, String type, String Note, String delver, String tabNum) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen1.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -289,7 +301,7 @@ public class Bills_Printing_Reports {
         cell0.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell0);
         ///////
-        PdfPCell ce00 = new PdfPCell(new Paragraph("مطبخ فرعي", f1));
+        PdfPCell ce00 = new PdfPCell(new Paragraph("كريب و بيتزا", f1));
         ce00.setColspan(3);
         ce00.setPaddingBottom(4f);
         ce00.setBorderWidth(0);
@@ -307,6 +319,18 @@ public class Bills_Printing_Reports {
         PdfPCell c00 = new PdfPCell(new Paragraph("", f));
         c00.setBorder(0);
         table.addCell(c00);
+        if (type.equals("سفرة")) {
+            PdfPCell c8 = new PdfPCell(new Paragraph("رقم التربيزة:", f));
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(tabNum, f));
+            c9.setBorder(0);
+            c9.setColspan(2);
+            c9.setPadding(5f);
+            table.addCell(c9);
+        }
         ///type of order
         PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
         cc.setBorder(0);
@@ -393,7 +417,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen2(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen2(int billNum, String type, String Note, String delver, String tabNum) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen2.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -432,6 +456,18 @@ public class Bills_Printing_Reports {
         PdfPCell c00 = new PdfPCell(new Paragraph("", f));
         c00.setBorder(0);
         table.addCell(c00);
+        if (type.equals("سفرة")) {
+            PdfPCell c8 = new PdfPCell(new Paragraph("رقم التربيزة:", f));
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(tabNum, f));
+            c9.setBorder(0);
+            c9.setColspan(2);
+            c9.setPadding(5f);
+            table.addCell(c9);
+        }
         ///type of order
         PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
         cc.setBorder(0);
@@ -518,7 +554,7 @@ public class Bills_Printing_Reports {
     }
 
     //take away Bill
-    public void printBillKitchen3(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
+    public void printBillKitchen3(int billNum, String type, String Note, String delver, String tabNum) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("kitchen3.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -557,6 +593,18 @@ public class Bills_Printing_Reports {
         PdfPCell c00 = new PdfPCell(new Paragraph("", f));
         c00.setBorder(0);
         table.addCell(c00);
+        if (type.equals("سفرة")) {
+            PdfPCell c8 = new PdfPCell(new Paragraph("رقم التربيزة:", f));
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(tabNum, f));
+            c9.setBorder(0);
+            c9.setColspan(2);
+            c9.setPadding(5f);
+            table.addCell(c9);
+        }
         ///type of order
         PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
         cc.setBorder(0);
@@ -643,7 +691,7 @@ public class Bills_Printing_Reports {
     }
     //take away Bill
 
-    public void printBillCafe(int billNum, String type, String Note, String delver) throws DocumentException, FileNotFoundException {
+    public void printBillCafe(int billNum, String type, String Note, String delver, String tabNum) throws DocumentException, FileNotFoundException {
         Document document = new Document(PageSize.A7);
         PdfWriter.getInstance(document, new FileOutputStream("Cafe.pdf"));
         document.setMargins(8, 8, 10, 10);
@@ -682,6 +730,18 @@ public class Bills_Printing_Reports {
         PdfPCell c00 = new PdfPCell(new Paragraph("", f));
         c00.setBorder(0);
         table.addCell(c00);
+        if (type.equals("سفرة")) {
+            PdfPCell c8 = new PdfPCell(new Paragraph("رقم التربيزة:", f));
+            c8.setPadding(5f);
+            c8.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c8.setBorder(0);
+            table.addCell(c8);
+            PdfPCell c9 = new PdfPCell(new Paragraph(tabNum, f));
+            c9.setBorder(0);
+            c9.setColspan(2);
+            c9.setPadding(5f);
+            table.addCell(c9);
+        }
         ///type of order
         PdfPCell cc = new PdfPCell(new Paragraph("نوع الطلب :", f));
         cc.setBorder(0);
