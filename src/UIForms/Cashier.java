@@ -297,7 +297,7 @@ public class Cashier extends javax.swing.JFrame {
 
         productTypeCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         productTypeCB.setForeground(new java.awt.Color(255, 0, 0));
-        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "فرعي", "الاضافات", "الكافيه" }));
+        productTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "كريب و بيتزا", "الاضافات", "الكافيه" }));
         productTypeCB.setPreferredSize(new java.awt.Dimension(175, 26));
         productTypeCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

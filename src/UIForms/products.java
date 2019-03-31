@@ -275,7 +275,7 @@ public class products extends javax.swing.JFrame {
 
         type.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         type.setForeground(new java.awt.Color(255, 0, 0));
-        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "فرعي", "الاضافات", "الكافيه" }));
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "شرقي", "غربي", "كريب و بيتزا", "الاضافات", "الكافيه" }));
         type.setPreferredSize(new java.awt.Dimension(175, 26));
         type.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
