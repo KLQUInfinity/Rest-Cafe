@@ -21,12 +21,12 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Adel Amer
  */
-public class Orders extends javax.swing.JFrame {
+public class Orders1 extends javax.swing.JFrame {
     
     private final ImportantClass IC = ImportantClass.getInstance();
     public String Num1;
     private DefaultTableModel dtm;
-    public Orders() {
+    public Orders1() {
         // Check Conection to DB
         if (!IC.dbc.check) {
             IC.dbc.ConnectDB();
@@ -417,7 +417,7 @@ public void tabel1() {
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -476,14 +476,14 @@ public void tabel1() {
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         try {
             double tot=Double.parseDouble(PeacesNO.getText())*Double.parseDouble(price.getText());
-            String query = "UPDATE order SET orderNum=?, orderProduct=?, orderCount=?,orderPrice=?,orderTotal=?,orderKind=? WHERE id='" + Num1 + "' ";
+            String query = "UPDATE rest_cafe.`order` SET orderNum=?, orderProduct=?, orderCount=?,orderPrice=?,orderTotal=?,orderKind=? WHERE id='" + Num1 + "' ";
             IC.pst = IC.dbc.conn.prepareStatement(query);
-            IC.pst.setString(1, billNum.getText());
+            IC.pst.setInt(1, Integer.parseInt(billNum.getText()));
             IC.pst.setString(2, name.getText());
             IC.pst.setDouble(3, Double.parseDouble(PeacesNO.getText()));
             IC.pst.setDouble(4, Double.parseDouble(price.getText()));
-            IC.pst.setString(5, type.getSelectedItem().toString());
-            IC.pst.setDouble(6, tot);
+            IC.pst.setDouble(5, tot);
+            IC.pst.setString(6, type.getSelectedItem().toString());
             IC.pst.executeUpdate();
             name.setText("");
             price.setText("");
@@ -491,6 +491,7 @@ public void tabel1() {
             billNum.setText("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "ادخل بيانات صحيحه");
+            e.printStackTrace();
         }
         tabel1();
     }//GEN-LAST:event_updateBtnActionPerformed
@@ -499,7 +500,7 @@ public void tabel1() {
         int p = JOptionPane.showConfirmDialog(null, " هل تريد حذفه؟", "حذف", JOptionPane.YES_NO_OPTION);
         if (p == 0) {
             try {
-                String query = "DELETE FROM order WHERE id='" + Num1 + "' ";
+                String query = "DELETE FROM rest_cafe.order WHERE id='" + Num1 + "' ";
                 IC.pst = IC.dbc.conn.prepareStatement(query);
                 IC.pst.executeUpdate();
             name.setText("");
@@ -608,20 +609,21 @@ public void tabel1() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orders1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orders1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orders1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orders1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Orders().setVisible(true);
+                new Orders1().setVisible(true);
             }
         });
     }

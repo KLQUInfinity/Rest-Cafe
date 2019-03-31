@@ -39,7 +39,7 @@ public class products extends javax.swing.JFrame {
     public void tabel1() {
 
         try {
-            String query = "SELECT id,productSubType,productType,productPrice, productName     FROM product WHERE productName = '" + Search.getText() + "'";
+            String query = "SELECT id,productSubType,productType,productPrice, productName     FROM rest_cafe.product WHERE productName = '" + Search.getText() + "'";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.rs = IC.pst.executeQuery();
             if (IC.rs == null) {
@@ -434,7 +434,7 @@ public class products extends javax.swing.JFrame {
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         try {
-            String query = "UPDATE product SET productName=?, productPrice=?, productType=?, productSubType=? WHERE id='" + Num + "' ";
+            String query = "UPDATE rest_cafe.product SET productName=?, productPrice=?, productType=?, productSubType=? WHERE id='" + Num + "' ";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.pst.setString(1, name.getText());
             IC.pst.setDouble(2, Double.parseDouble(price.getText()));
@@ -454,7 +454,7 @@ public class products extends javax.swing.JFrame {
         int p = JOptionPane.showConfirmDialog(null, " هل تريد حذفه؟", "حذف", JOptionPane.YES_NO_OPTION);
         if (p == 0) {
             try {
-                String query = "DELETE FROM product WHERE id='" + Num + "' ";
+                String query = "DELETE FROM rest_cafe.product WHERE id='" + Num + "' ";
                 IC.pst = IC.dbc.conn.prepareStatement(query);
                 IC.pst.executeUpdate();
                 name.setText("");
@@ -469,7 +469,7 @@ public class products extends javax.swing.JFrame {
 
     private void isertBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isertBtnActionPerformed
         try {
-            String query = "INSERT INTO product (productName, productPrice, productType, productSubType) VALUES ( ?, ?, ?, ?); ";
+            String query = "INSERT INTO rest_cafe.product (productName, productPrice, productType, productSubType) VALUES ( ?, ?, ?, ?); ";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.pst.setString(1, name.getText());
             IC.pst.setDouble(2, Double.parseDouble(price.getText()));
@@ -523,7 +523,7 @@ public class products extends javax.swing.JFrame {
         try {
             int row = productsTable.getSelectedRow();
             Num = (productsTable.getModel().getValueAt(row, 0).toString());
-            String query = "SELECT * FROM product WHERE id='" + Num + "'";
+            String query = "SELECT * FROM rest_cafe.product WHERE id='" + Num + "'";
             IC.pst = IC.dbc.conn.prepareStatement(query);
             IC.rs = IC.pst.executeQuery();
             if (IC.rs.next()) {

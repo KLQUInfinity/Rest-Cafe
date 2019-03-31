@@ -212,7 +212,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Orders o = new Orders();
+        Orders1 o = new Orders1();
         o.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
