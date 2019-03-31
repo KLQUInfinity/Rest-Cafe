@@ -125,8 +125,8 @@ public class Cashier extends javax.swing.JFrame {
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
                     + ", productPrice "
                     + " from rest_cafe.product"
-                    + " where productSubType ='" + categoryCB.getSelectedItem().toString() + "'"
-                    + "AND productType ='" + productTypeCB.getSelectedItem().toString() + "'");
+                    + " where productType ='" + productTypeCB.getSelectedItem().toString() + "'"
+                    + "AND  productSubType ='" + categoryCB.getSelectedItem().toString() + "'");
             IC.rs = IC.pst.executeQuery();
             ArrayList<String> products = new ArrayList<>();
             while (IC.rs.next()) {
@@ -883,9 +883,15 @@ public class Cashier extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
-        if (categoryCB.getItemCount() > 0) {
-            getAllProductData();
-        }
+        new java.util.Timer().schedule( 
+        new java.util.TimerTask() {
+            @Override
+            public void run() {
+                getAllProductData();
+            }
+        }, 
+        500
+);
     }//GEN-LAST:event_categoryCBItemStateChanged
 
     /**
