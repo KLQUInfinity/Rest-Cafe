@@ -717,6 +717,7 @@ public class Cashier extends javax.swing.JFrame {
                         JOptionPane.YES_NO_OPTION);
                 if (y == 0) {
                     try {
+                        submitBtn.setEnabled(false);
                         for (int i = 0; i < casherTable.getRowCount(); i++) {
                             IC.pst = IC.dbc.conn.prepareStatement("insert into rest_cafe.order("
                                     + "orderNum, orderProduct,"
@@ -829,6 +830,7 @@ public class Cashier extends javax.swing.JFrame {
         Cafe = false;
         kitchin3 = false;
         IC.list.clear();
+        submitBtn.setEnabled(true);
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void countTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countTxtActionPerformed

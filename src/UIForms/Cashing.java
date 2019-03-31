@@ -417,6 +417,7 @@ public class Cashing extends javax.swing.JFrame {
     private void orderDoneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderDoneBtnActionPerformed
         if (Tabs.getTabCount() > 0) {
             try {
+                orderDoneBtn.setEnabled(false);
                 for (int i = 0; i < id.get(Tabs.getSelectedIndex()).size(); i++) {
                     IC.pst = IC.dbc.conn.prepareStatement("update rest_cafe.order"
                             + " set orderCashed=1 , Cachier='"+IC.userName+"'"
@@ -436,6 +437,7 @@ public class Cashing extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "لا يوجد طلبات لتنفذيها");
         }
+        orderDoneBtn.setEnabled(true);
     }//GEN-LAST:event_orderDoneBtnActionPerformed
 
     /**
