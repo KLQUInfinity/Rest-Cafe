@@ -128,7 +128,8 @@ public class Metre extends javax.swing.JFrame {
         };
         return exitListener;
     }
-/*Search
+
+    /*Search
     try {
             // Get all Product
             IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
@@ -145,7 +146,7 @@ public class Metre extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    */
+     */
     private void getAllProductData() {
         clearTextFields();
         try {
@@ -181,7 +182,9 @@ public class Metre extends javax.swing.JFrame {
                 productCategory.add(s);
             }
             categoryCB.setModel(new DefaultComboBoxModel(productCategory.toArray()));
-            if(categoryCB.getItemCount()>0){getAllProductData();}
+            if (categoryCB.getItemCount() > 0) {
+                getAllProductData();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -799,7 +802,7 @@ public class Metre extends javax.swing.JFrame {
                         price,
                         productPrice.get(productNameCB.getSelectedIndex()),
                         Integer.parseInt(countTxt.getText()),
-                        categoryCB.getSelectedItem().toString()+" "+productNameCB.getSelectedItem().toString()};
+                        categoryCB.getSelectedItem().toString() + " " + productNameCB.getSelectedItem().toString()};
                     dtm.addRow(rowData);
                     totalPrice += price;
                     totalLabel.setText("الاجمالي : " + totalPrice);
@@ -974,15 +977,13 @@ public class Metre extends javax.swing.JFrame {
                         }
                     }
                     if (titl.equals("دليفري")) {
-                        //client
-                        BPR.pdfPrint("client.pdf", "POS-80bu");
                         //backup
                         BPR.pdfPrint("client.pdf", "POS-80dv");
+                        //client
+                        BPR.pdfPrint("client.pdf", "POS-80bu");
                     } else {
 //                    client
                         BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
-                        //backup
-                        BPR.pdfPrint("client.pdf", "POS-80bu");
                     }
 
                     if (kitchin1 == true) {
@@ -1072,7 +1073,9 @@ public class Metre extends javax.swing.JFrame {
     }//GEN-LAST:event_casherTableMouseClicked
 
     private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
-        if(categoryCB.getItemCount()>0){getAllProductData();}
+        if (categoryCB.getItemCount() > 0) {
+            getAllProductData();
+        }
 //        new java.util.Timer().schedule(
 //                new java.util.TimerTask() {
 //            @Override
