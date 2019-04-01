@@ -256,6 +256,7 @@ public class Metre extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        deleteBtn1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         totalLabel = new javax.swing.JLabel();
         submitBtn = new javax.swing.JButton();
@@ -649,15 +650,28 @@ public class Metre extends javax.swing.JFrame {
             }
         });
 
+        deleteBtn1.setBackground(new java.awt.Color(255, 0, 0));
+        deleteBtn1.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        deleteBtn1.setForeground(new java.awt.Color(255, 255, 255));
+        deleteBtn1.setText("حذف الطلب");
+        deleteBtn1.setPreferredSize(new java.awt.Dimension(150, 78));
+        deleteBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtn1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(deleteBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -666,7 +680,8 @@ public class Metre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -698,7 +713,7 @@ public class Metre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(submitBtn)
                 .addGap(39, 39, 39)
-                .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -1041,6 +1056,16 @@ public class Metre extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_productNameCBItemStateChanged
 
+    private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
+        dtm.setRowCount(0);
+        if (IC.jobTitle.equals("Delivery")) {
+            totalPrice = delaveryValue;
+        } else {
+            totalPrice = 0;
+        }
+        totalLabel.setText("الاجمالي : " + totalPrice);
+    }//GEN-LAST:event_deleteBtn1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1090,6 +1115,7 @@ public class Metre extends javax.swing.JFrame {
     private javax.swing.JLabel countLabel3;
     private javax.swing.JTextField countTxt;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton deleteBtn1;
     private javax.swing.JComboBox<String> delverNameCB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
