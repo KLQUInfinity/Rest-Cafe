@@ -122,7 +122,7 @@ public class Cashier extends javax.swing.JFrame {
         clearTextFields();
         try {
             // Get all Product
-            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
+            IC.pst = IC.dbc.conn.prepareStatement("select productName "
                     + ", productPrice "
                     + " from rest_cafe.product"
                     + " where productType ='" + productTypeCB.getSelectedItem().toString() + "'"
@@ -267,8 +267,9 @@ public class Cashier extends javax.swing.JFrame {
         productLabel.setForeground(new java.awt.Color(255, 0, 0));
         productLabel.setText("اسم الصنف");
 
-        productNameCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        productNameCB.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         productNameCB.setForeground(new java.awt.Color(255, 0, 0));
+        productNameCB.setMaximumRowCount(20);
         productNameCB.setPreferredSize(new java.awt.Dimension(175, 26));
 
         countLabel.setBackground(new java.awt.Color(204, 204, 204));
@@ -311,6 +312,7 @@ public class Cashier extends javax.swing.JFrame {
 
         categoryCB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         categoryCB.setForeground(new java.awt.Color(255, 0, 0));
+        categoryCB.setMaximumRowCount(12);
         categoryCB.setPreferredSize(new java.awt.Dimension(175, 26));
         categoryCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -329,13 +331,16 @@ public class Cashier extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(productNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(countTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(productNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -358,12 +363,7 @@ public class Cashier extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -371,7 +371,8 @@ public class Cashier extends javax.swing.JFrame {
                     .addComponent(productNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productLabel)
                     .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -800,7 +801,6 @@ public class Cashier extends javax.swing.JFrame {
                         }
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي", "", "", "", "", "");
                         BPR.pdfPrint("client.pdf", "POS-80ch");
-                        BPR.pdfPrint("client.pdf", "POS-80bu");
                         if (kitchin1 == true) {
                             BPR.pdfPrint("kitchen1.pdf", "POS-80pz");
                         }
@@ -883,7 +883,7 @@ public class Cashier extends javax.swing.JFrame {
                         price,
                         productPrice.get(productNameCB.getSelectedIndex()),
                         Integer.parseInt(countTxt.getText()),
-                        productNameCB.getSelectedItem().toString()};
+                        categoryCB.getSelectedItem().toString()+" "+productNameCB.getSelectedItem().toString()};
                     dtm.addRow(rowData);
                     totalPrice += price;
 
