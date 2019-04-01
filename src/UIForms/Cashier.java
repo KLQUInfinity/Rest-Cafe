@@ -169,6 +169,9 @@ public class Cashier extends javax.swing.JFrame {
                 productCategory.add(s);
             }
             categoryCB.setModel(new DefaultComboBoxModel(productCategory.toArray()));
+            if (categoryCB.getItemCount() > 0) {
+                getAllProductData();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -900,15 +903,18 @@ public class Cashier extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-            @Override
-            public void run() {
-                getAllProductData();
-            }
-        },
-                500
-        );
+        if (categoryCB.getItemCount() > 0) {
+            getAllProductData();
+        }
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//            @Override
+//            public void run() {
+//                getAllProductData();
+//            }
+//        },
+//                500
+//        );
     }//GEN-LAST:event_categoryCBItemStateChanged
 
     private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed

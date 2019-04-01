@@ -128,7 +128,24 @@ public class Metre extends javax.swing.JFrame {
         };
         return exitListener;
     }
-
+/*Search
+    try {
+            // Get all Product
+            IC.pst = IC.dbc.conn.prepareStatement("select CONCAT(productSubType,' ',productName) as productName"
+                    + ", productPrice "
+                    + " from rest_cafe.product"
+                    + " where productName LIKE '%"+Search.getText()+"%'");
+            IC.rs = IC.pst.executeQuery();
+            ArrayList<String> products = new ArrayList<>();
+            while (IC.rs.next()) {
+                products.add(IC.rs.getString("productName"));
+                productPrice.add(IC.rs.getDouble("productPrice"));
+            }
+            productNameCB.setModel(new DefaultComboBoxModel(products.toArray()));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    */
     private void getAllProductData() {
         clearTextFields();
         try {
@@ -164,6 +181,7 @@ public class Metre extends javax.swing.JFrame {
                 productCategory.add(s);
             }
             categoryCB.setModel(new DefaultComboBoxModel(productCategory.toArray()));
+            if(categoryCB.getItemCount()>0){getAllProductData();}
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -286,6 +304,11 @@ public class Metre extends javax.swing.JFrame {
         productNameCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 productNameCBItemStateChanged(evt);
+            }
+        });
+        productNameCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productNameCBActionPerformed(evt);
             }
         });
 
@@ -595,10 +618,12 @@ public class Metre extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(orderNumLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(clearSelectionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)))
+                        .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(orderNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1041,15 +1066,16 @@ public class Metre extends javax.swing.JFrame {
     }//GEN-LAST:event_casherTableMouseClicked
 
     private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-            @Override
-            public void run() {
-                getAllProductData();
-            }
-        },
-                500
-        );
+        if(categoryCB.getItemCount()>0){getAllProductData();}
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//            @Override
+//            public void run() {
+//                getAllProductData();
+//            }
+//        },
+//                500
+//        );
     }//GEN-LAST:event_categoryCBItemStateChanged
 
     private void productNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productNameCBItemStateChanged
@@ -1065,6 +1091,10 @@ public class Metre extends javax.swing.JFrame {
         }
         totalLabel.setText("الاجمالي : " + totalPrice);
     }//GEN-LAST:event_deleteBtn1ActionPerformed
+
+    private void productNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productNameCBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameCBActionPerformed
 
     /**
      * @param args the command line arguments
