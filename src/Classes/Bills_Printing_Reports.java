@@ -102,10 +102,11 @@ public class Bills_Printing_Reports {
             c8.setPadding(5f);
             c8.setHorizontalAlignment(Element.ALIGN_CENTER);
             c8.setBorder(0);
+            c8.setColspan(3);
             table.addCell(c8);
             PdfPCell c9 = new PdfPCell(new Paragraph(tabNum, f));
             c9.setBorder(0);
-            c9.setColspan(2);
+            c9.setColspan(3);
             c9.setPadding(5f);
             table.addCell(c9);
         }
@@ -365,7 +366,7 @@ public class Bills_Printing_Reports {
         BillingData bd = new BillingData();
         for (int q = 0; q < IC.list.size(); q++) {
             bd = IC.list.get(q);
-            if (bd.getProductKitchen().equals("فرعي")) {
+            if (bd.getProductKitchen().equals("كريب و بيتزا")) {
                 PdfPCell c40 = new PdfPCell(new Paragraph(bd.getProductName(), f));
                 c40.setColspan(2);
                 table.addCell(c40);

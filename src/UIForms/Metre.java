@@ -917,7 +917,7 @@ public class Metre extends javax.swing.JFrame {
 
                         IC.pst.execute();
 
-                        if (casherTable.getValueAt(i, 0).toString().equals("فرعي")) {
+                        if (casherTable.getValueAt(i, 0).toString().equals("كريب و بيتزا")) {
                             kitchin1 = true;
                         }
 
