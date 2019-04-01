@@ -961,7 +961,11 @@ public class Metre extends javax.swing.JFrame {
                     // Rest all varibles
                     dtm.setRowCount(0);
                     getLastBillNum();
-                    totalPrice = delaveryValue;
+                    if (IC.jobTitle.equals("Delivery")) {
+                        totalPrice = delaveryValue;
+                    } else {
+                        totalPrice = 0;
+                    }
                     totalLabel.setText("الاجمالي : " + totalPrice);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -1022,15 +1026,15 @@ public class Metre extends javax.swing.JFrame {
     }//GEN-LAST:event_casherTableMouseClicked
 
     private void categoryCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryCBItemStateChanged
-        new java.util.Timer().schedule( 
-        new java.util.TimerTask() {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
             @Override
             public void run() {
                 getAllProductData();
             }
-        }, 
-        500
-);
+        },
+                500
+        );
     }//GEN-LAST:event_categoryCBItemStateChanged
 
     private void productNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productNameCBItemStateChanged
