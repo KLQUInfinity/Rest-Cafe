@@ -1003,7 +1003,7 @@ public class Metre extends javax.swing.JFrame {
                             BPR.pdfPrint("Cafe.pdf", "POS-80dv");
                         } else {
                         }
-                        BPR.pdfPrint("Cafe.pdf", "Xprinter XP-370B");
+                        BPR.pdfPrint("Cafe.pdf", "POS-80sala");
                     }
                     // Rest all varibles
                     dtm.setRowCount(0);
