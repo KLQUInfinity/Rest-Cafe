@@ -983,12 +983,12 @@ public class Metre extends javax.swing.JFrame {
                         BPR.pdfPrint("client.pdf", "POS-80bu");
                     } else {
 //                    client
-                        BPR.pdfPrint("client.pdf", "Xprinter XP-370B");
+                        BPR.pdfPrint("client.pdf", "POS-80sala");
                     }
 
                     if (kitchin1 == true) {
 //                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz on Pc1");
-                        BPR.pdfPrint("kitchen1.pdf", "POS-80pz");
+                        BPR.pdfPrint("kitchen1.pdf", "Xprinter XP-370B");
                     }
                     if (kitchin2 == true) {
 //                        BPR.pdfPrint("kitchen2.pdf", "POS-80ss on PC3");

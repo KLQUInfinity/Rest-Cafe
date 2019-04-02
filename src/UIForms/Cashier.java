@@ -802,7 +802,7 @@ public class Cashier extends javax.swing.JFrame {
                         BPR.printBill(billNum, totalPrice, paidTxt.getText(), totalChangeLabel.getText(), "تيك اواي", "", "", "", "", "");
                         BPR.pdfPrint("client.pdf", "POS-80ch");
                         if (kitchin1 == true) {
-                            BPR.pdfPrint("kitchen1.pdf", "POS-80pz");
+                            BPR.pdfPrint("kitchen1.pdf", "Xprinter XP-370B");
                         }
                         if (kitchin2 == true) {
                             BPR.pdfPrint("kitchen2.pdf", "POS-80ss");
