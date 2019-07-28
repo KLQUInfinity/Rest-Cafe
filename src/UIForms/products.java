@@ -39,8 +39,9 @@ public class products extends javax.swing.JFrame {
     public void tabel1() {
 
         try {
-            String query = "SELECT id,productSubType,productType,productPrice, productName     FROM rest_cafe.product WHERE productName = '" + Search.getText() + "'";
+            String query = "SELECT id,productSubType,productType,productPrice, productName     FROM rest_cafe.product WHERE productName like ?";
             IC.pst = IC.dbc.conn.prepareStatement(query);
+            IC.pst.setString(1, Search.getText()+"%");
             IC.rs = IC.pst.executeQuery();
             if (IC.rs == null) {
                 JOptionPane.showMessageDialog(rootPane, "البيانات غير موجود");
