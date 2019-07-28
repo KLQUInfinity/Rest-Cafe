@@ -41,7 +41,7 @@ public class ImportantClass {
     // This variable store the result of any sql statement from the database.
     public ResultSet rs = null;
     // This variable store the jobTitle of user.
-    public String jobTitle = "Cashier";
+    public String jobTitle = "Delivery";
     // This variable store the user name from the login session
     public String userName = "admin";
     // This variable store the order content from the casher
